@@ -2,8 +2,6 @@
   "pages": [{
     "path": "pages/home/home",
     "style": {
-      "navigationBarTitleText": "新友团",
-      "enablePullDownRefresh": false
     }
 
   }, {
@@ -16,9 +14,9 @@
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
+    "navigationBarTitleText": "新友团",
+    "navigationBarBackgroundColor": "#FD3423",
+    "backgroundColor": "#fff",
     "app-plus": {
       "background": "#efeff4"
     }

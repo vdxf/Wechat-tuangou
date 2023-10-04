@@ -1,1 +1,1 @@
-<view>Home</view>
+<view class="home-view"><swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{1000}}" circular="{{true}}"><block wx:for="{{bannerList}}" wx:for-item="item" wx:for-index="__i0__" wx:key="Id"><swiper-item><view class="swiper-item"><image src="{{item.ImageUrl}}"></image></view></swiper-item></block></swiper><date-choose vue-id="1da55560-1" bind:__l="__l"></date-choose><home-content vue-id="1da55560-2" bind:__l="__l"></home-content></view>

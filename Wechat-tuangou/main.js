@@ -2,6 +2,19 @@
 // #ifndef VUE3
 import Vue from 'vue'
 import App from './App'
+import { $http } from '@escook/request-miniprogram'
+wx.$http = $http
+$http.baseUrl = 'https://dz.xuetang51.com'
+//请求拦截器
+$http.beforeRequest = function(options){
+  wx.showLoading({
+    title: '数据加载中...'
+  })
+}
+//响应拦截器
+$http.afterRequest = function(){
+  wx.hideLoading()
+}
 
 Vue.config.productionTip = false
 

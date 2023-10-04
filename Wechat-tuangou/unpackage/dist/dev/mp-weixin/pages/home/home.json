@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "新友团",
-  "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "date-choose": "/components/date-choose/date-choose",
+    "home-content": "/components/home-content/home-content"
+  }
 }

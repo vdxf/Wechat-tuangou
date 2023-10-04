@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+.home-content {
+  background-color: #fff;
+  height: 2000rpx;
+  padding: 18rpx 20rpx 50rpx;
+  border-radius: 40rpx 40rpx 0 0;
+}
+

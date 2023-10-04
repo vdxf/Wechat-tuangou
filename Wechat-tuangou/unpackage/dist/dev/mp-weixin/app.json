@@ -6,9 +6,9 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarTitleText": "新友团",
+    "navigationBarBackgroundColor": "#FD3423",
+    "backgroundColor": "#fff"
   },
   "tabBar": {
     "selectedColor": "#FA2D19",

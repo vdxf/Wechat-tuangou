@@ -33,19 +33,22 @@
           })
         }
         this.bannerList = res.Data
-      }
+      },
     }
   }
 </script>
 
 <style lang="scss">
-page {
-  background-color: #FD3423;
+.home-view {
+  height: 380rpx;
+  background: linear-gradient(180deg, #FD3423 0%, rgba(253,52,35,0) 100%);
+  backdrop-filter: blur(10px);
+  padding: 20px 0;
 }
 swiper {
   height: 180rpx;
   padding: 0 20rpx;
-  margin: 20rpx 0;
+  margin-bottom: 20rpx;
 }
 .swiper-item {
   width: 710rpx;

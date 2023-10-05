@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "nav-list": "/components/nav-list/nav-list"
+    "nav-list": "/components/nav-list/nav-list",
+    "goods-cart": "/components/goods-cart/goods-cart"
   },
   "component": true
 }

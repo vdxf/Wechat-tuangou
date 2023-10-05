@@ -2,8 +2,17 @@
 /* 水平间距 */
 /* 水平间距 */
 .nav-box {
+  background-color: #fff;
+  height: 80rpx;
+  border-radius: 40rpx 40rpx 0 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+.nav-item {
+  font-size: 28rpx;
+}
+.nav-item.active text {
+  color: #ff1010;
 }
 

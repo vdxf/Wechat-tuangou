@@ -8,9 +8,11 @@
   justify-content: space-around;
   width: 710rpx;
   height: 68rpx;
-  background-color: #ddd;
+  background-color: rgba(255, 255, 255, 0.5);
   margin: 20rpx auto;
-  border-radius: 34rpx;
+  border-radius: 36rpx;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   font-size: 28rpx;
   font-weight: 600;
   padding: 0 40rpx;

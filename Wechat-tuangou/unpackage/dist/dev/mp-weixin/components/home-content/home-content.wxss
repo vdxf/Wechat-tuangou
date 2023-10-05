@@ -1,10 +1,11 @@
 @charset "UTF-8";
 /* 水平间距 */
 /* 水平间距 */
-.home-content {
-  background-color: #fff;
-  height: 2000rpx;
-  padding: 18rpx 20rpx 50rpx;
-  border-radius: 40rpx 40rpx 0 0;
+.home-goods-list {
+  background: linear-gradient(#FFF 0%, rgba(255, 255, 255, 0) 100%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 32rpx;
 }
 

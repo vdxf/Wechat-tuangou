@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4274031 */
+  src: url('/static/icon/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shandian:before {
+  content: "\e60f";
+}
+
+.icon-a-fenxiang2:before {
+  content: "\e620";
+}
+

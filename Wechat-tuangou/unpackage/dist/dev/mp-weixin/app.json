@@ -16,14 +16,14 @@
       {
         "pagePath": "pages/home/home",
         "text": "首页",
-        "iconPath": "static/home.png",
-        "selectedIconPath": "static/home-active.jpg"
+        "iconPath": "static/image/home.png",
+        "selectedIconPath": "static/image/home-active.jpg"
       },
       {
         "pagePath": "pages/search/search",
         "text": "搜索",
-        "iconPath": "static/search.jpg",
-        "selectedIconPath": "static/search-active.png"
+        "iconPath": "static/image/search.jpg",
+        "selectedIconPath": "static/image/search-active.png"
       }
     ]
   },

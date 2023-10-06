@@ -4,8 +4,6 @@
 .home-view {
   height: 380rpx;
   background: linear-gradient(180deg, #FD3423 0%, rgba(253, 52, 35, 0) 100%);
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
   padding: 20px 0;
 }
 swiper {

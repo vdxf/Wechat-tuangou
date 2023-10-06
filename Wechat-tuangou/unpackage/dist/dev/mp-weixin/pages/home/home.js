@@ -101,10 +101,10 @@ var components
 try {
   components = {
     dateChoose: function () {
-      return __webpack_require__.e(/*! import() | components/date-choose/date-choose */ "components/date-choose/date-choose").then(__webpack_require__.bind(null, /*! @/components/date-choose/date-choose.vue */ 51))
+      return __webpack_require__.e(/*! import() | components/date-choose/date-choose */ "components/date-choose/date-choose").then(__webpack_require__.bind(null, /*! @/components/date-choose/date-choose.vue */ 53))
     },
     homeContent: function () {
-      return __webpack_require__.e(/*! import() | components/home-content/home-content */ "components/home-content/home-content").then(__webpack_require__.bind(null, /*! @/components/home-content/home-content.vue */ 58))
+      return __webpack_require__.e(/*! import() | components/home-content/home-content */ "components/home-content/home-content").then(__webpack_require__.bind(null, /*! @/components/home-content/home-content.vue */ 60))
     },
   }
 } catch (e) {
@@ -170,6 +170,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 40));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 42));
+//
+//
 //
 //
 //

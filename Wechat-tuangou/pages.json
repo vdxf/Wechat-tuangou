@@ -1,21 +1,41 @@
 {
-  "pages": [{
-    "path": "pages/home/home",
-    "style": {
+  "pages": [
+    {
+      "path": "pages/home/home",
+      "style": {
+        "navigationBarBackgroundColor": "#FD3423",
+        "navigationBarTitleText": "新友团"
+      }
+    }, 
+    {
+      "path": "pages/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#f5f5f5",
+        "usingComponents": {
+          "van-search": "/wxcomponents/vant/weapp/search/index"
+        }
+      }
     }
-
-  }, {
-    "path": "pages/search/search",
-    "style": {
-      "navigationBarTitleText": "搜索",
-      "enablePullDownRefresh": false
+  ],
+  "subPackages": [
+    {
+      "root": "subpackage",
+      "pages": [
+        {
+          "path": "goods_detail/goods_detail",
+          "style": {
+            "navigationBarTitleText": "团品详情",
+            "navigationStyle": "custom"
+          }
+        }
+      ]
     }
-
-  }],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "新友团",
-    "navigationBarBackgroundColor": "#FD3423",
+    "navigationBarBackgroundColor": "#fff",
     "backgroundColor": "#fff",
     "app-plus": {
       "background": "#efeff4"

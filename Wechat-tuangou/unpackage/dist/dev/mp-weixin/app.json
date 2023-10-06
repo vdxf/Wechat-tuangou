@@ -3,11 +3,17 @@
     "pages/home/home",
     "pages/search/search"
   ],
-  "subPackages": [],
+  "subPackages": [
+    {
+      "root": "subpackage",
+      "pages": [
+        "goods_detail/goods_detail"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "新友团",
-    "navigationBarBackgroundColor": "#FD3423",
+    "navigationBarBackgroundColor": "#fff",
     "backgroundColor": "#fff"
   },
   "tabBar": {

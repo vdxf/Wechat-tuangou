@@ -27,8 +27,7 @@
       },
       handleChangeNav(index,item){
         this.currentIndex = index
-        console.log(item);
-        // this.$emit('hamdleChangeNav',item)
+        this.$emit('handleChangeNav',item.Sort)
       }
     }
   }

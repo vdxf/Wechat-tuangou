@@ -1,1 +1,0 @@
-<view><image src="{{item.ProductImageUrl}}" mode="widthFix"></image><text>{{item.SubTitle}}</text></view>

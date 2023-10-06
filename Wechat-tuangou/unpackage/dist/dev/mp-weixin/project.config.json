@@ -6,7 +6,7 @@
     },
     "setting": {
         "urlCheck": true,
-        "es6": false,
+        "es6": true,
         "postcss": false,
         "minified": false,
         "newFeature": true,
@@ -22,7 +22,24 @@
     "libVersion": "3.1.2",
     "appid": "wx10bb1fcaba169f16",
     "projectname": "Wechat-tuangou",
-    "condition": {},
+    "condition": {
+        "search": {
+            "current": -1,
+            "list": []
+        },
+        "conversation": {
+            "current": -1,
+            "list": []
+        },
+        "game": {
+            "current": -1,
+            "list": []
+        },
+        "miniprogram": {
+            "current": -1,
+            "list": []
+        }
+    },
     "editorSetting": {
         "tabIndent": "insertSpaces",
         "tabSize": 4

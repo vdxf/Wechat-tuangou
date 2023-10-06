@@ -31,8 +31,13 @@
         this.total = res.Data.Count
         this.goodsList = res.Data.Data
       },
-      handleChangeNav(item){
-        console.log('123');
+      handleChangeNav(options){
+        console.log('options =>', options);
+      },
+      handleGoodsDetail(item){
+        wx.navigateTo({
+          url: `/subpackage/goods_detail/goods_detail?id=${item.Id}`,
+        })
       }
     },
   }

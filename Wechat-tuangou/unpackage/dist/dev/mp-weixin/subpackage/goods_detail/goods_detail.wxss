@@ -1,0 +1,135 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+page {
+  background-color: #f2f2f2;
+}
+.back {
+  width: 64rpx;
+  height: 64rpx;
+  background-color: rgba(255, 255, 255, 0.6);
+  position: fixed;
+  top: 48rpx;
+  left: 12rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.top-image {
+  width: 750rpx;
+}
+.top-image image {
+  display: block;
+  width: 100%;
+}
+.goods-title {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 24rpx 32rpx;
+  margin-bottom: 20rpx;
+}
+.goods-name text {
+  height: 96rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  line-height: 48rpx;
+}
+.goods-title-buttom {
+  display: flex;
+  margin-top: 24rpx;
+  font-size: 20rpx;
+  color: #FFFFFF;
+  line-height: 20rpx;
+  white-space: nowrap;
+}
+.new {
+  display: flex;
+  align-items: center;
+  background-color: #F0190F;
+  padding: 4rpx;
+  border-radius: 4rpx;
+  margin-right: 6rpx;
+}
+.new image {
+  width: 10px;
+  height: 20rpx;
+  margin-right: 5rpx;
+}
+.welfare {
+  background-color: #F0AA05;
+  border-radius: 4rpx;
+  padding: 4rpx;
+}
+.goods-detail-cart {
+  background-color: #fff;
+  padding: 24rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+.cart-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+.cart-title::before {
+  content: '';
+  display: block;
+  width: 6rpx;
+  height: 28rpx;
+  background-color: #F0190F;
+  margin-right: 10rpx;
+}
+.cart-content {
+  background-color: #F7F7F7;
+  padding: 16rpx;
+  border-radius: 16rpx;
+}
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+  font-size: 24rpx;
+}
+.cart-item:last-child {
+  margin-bottom: 0;
+}
+.cart-item .left {
+  color: #1A1A1A;
+}
+.cart-item .right {
+  color: #999;
+}
+.cart-close {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.goods-capture {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.capture-title {
+  padding: 40rpx 0;
+  display: flex;
+  align-items: center;
+}
+.capture-title::before, .capture-title::after {
+  content: '';
+  display: block;
+  width: 94rpx;
+  height: 1rpx;
+  background-color: #EBEBEB;
+  margin: 0 20rpx;
+}
+

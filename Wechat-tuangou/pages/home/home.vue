@@ -7,8 +7,10 @@
         </view>
       </swiper-item>
     </swiper>
-    <date-choose></date-choose>
-    <home-content></home-content>
+    <div class="content">
+      <date-choose></date-choose>
+      <home-content></home-content>
+    </div>
   </view>
 </template>
 
@@ -42,7 +44,6 @@
 .home-view {
   height: 380rpx;
   background: linear-gradient(180deg, #FD3423 0%, rgba(253,52,35,0) 100%);
-  backdrop-filter: blur(10px);
   padding: 20px 0;
 }
 swiper {

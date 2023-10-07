@@ -27,7 +27,7 @@
       },
       handleChangeNav(index,item){
         this.currentIndex = index
-        this.$emit('handleChangeNav',item.Sort)
+        this.$emit('handleChangeNav',item.Id)
       }
     }
   }

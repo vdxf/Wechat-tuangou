@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="search-goods-list">
-      <view v-for="item in goodsList" :key="item.Id" @click="handleGoodsDetail(item)">
+      <view v-for="item in goodsList" :key="item.Id" @click="handleGoodsDetail(item.Id)">
         <goods-cart :item="item"></goods-cart>
       </view>
     </view>
@@ -18,6 +18,7 @@
         query: {
             "PageIndex": 1,
             "PageSize": 10,
+            "Keywords": '',
         }
       };
     },
@@ -25,11 +26,17 @@
       this.getGoodsList()
     },
     methods: {
-      async getGoodsList(){
+      async getGoodsList(kw){
+        this.query.Keywords = kw
         const { data: res } = await wx.$http.post('/api/Product/GetProductList', this.query)
         this.total = res.Data.Count
         this.goodsList = res.Data.Data
       },
+      handleGoodsDetail(Id){
+        wx.navigateTo({
+          url: `/subpackage/goods_detail/goods_detail?id=${Id}`,
+        })
+      }
     },
   }
 </script>

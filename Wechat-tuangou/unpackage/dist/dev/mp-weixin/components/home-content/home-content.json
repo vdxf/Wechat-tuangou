@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "date-choose": "/components/date-choose/date-choose",
     "nav-list": "/components/nav-list/nav-list",
     "goods-cart": "/components/goods-cart/goods-cart"
   },

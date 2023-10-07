@@ -1,7 +1,7 @@
 <template>
   <view class="goods-cart">
     <image :src="item.ProductImageUrl || defaultImg"></image>
-    <view class="goods-title">{{item.SubTitle}}</view>
+    <view class="goods-title">{{item.Name}}</view>
     <view class="cart-bottom">
       <view class="left">
         <view class="new">

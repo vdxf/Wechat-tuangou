@@ -21,6 +21,7 @@
     },
     created() {
       this.today = this.getCurrentDay(0)
+      this.$emit('handleChangeDate', this.today)
     },
     methods: {
       //获取当前日期
@@ -34,17 +35,15 @@
         day = day < 10 ? '0' + day : day
         return `${year}-${month}-${day}`
       },
-      //切换日期
-      changedate(n){
-        
-      },
       prevDate(){
         const n = --this.num
         this.today = this.getCurrentDay(n)
+        this.$emit('handleChangeDate', this.today)
       },
       nextDate(){
         const n = ++this.num
         this.today = this.getCurrentDay(n)
+        this.$emit('handleChangeDate', this.today)
       }
     }
   }

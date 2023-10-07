@@ -1,8 +1,9 @@
 <template>
   <view>
+    <date-choose @handleChangeDate="handleChangeDate"></date-choose>
     <nav-list @handleChangeNav="handleChangeNav"></nav-list>
     <view class="home-goods-list">
-      <view v-for="item in goodsList" :key="item.Id" @click="handleGoodsDetail(item)">
+      <view v-for="item in goodsList" :key="item.Id" @click="handleGoodsDetail(item.Id)">
         <goods-cart :item="item"></goods-cart>
       </view>
     </view>
@@ -19,11 +20,14 @@
         query: {
             "PageIndex": 1,
             "PageSize": 10,
-        }
+            "BuyGroupId": 1,
+            "GroupDate": '',
+            
+        },
       };
     },
     created() {
-      this.getGoodsList()
+      this.handleChangeDate()
     },
     methods: {
       async getGoodsList(){
@@ -32,11 +36,16 @@
         this.goodsList = res.Data.Data
       },
       handleChangeNav(options){
-        console.log('options =>', options);
+        this.query.BuyGroupId = options
+        this.getGoodsList()
       },
-      handleGoodsDetail(item){
+      handleChangeDate(options){
+        this.query.GroupDate = options
+        this.getGoodsList()
+      },
+      handleGoodsDetail(Id){
         wx.navigateTo({
-          url: `/subpackage/goods_detail/goods_detail?id=${item.Id}`,
+          url: `/subpackage/goods_detail/goods_detail?id=${Id}`,
         })
       }
     },

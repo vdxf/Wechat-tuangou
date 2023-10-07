@@ -1,14 +1,14 @@
 <template>
   <view>
      <view class="search-box">
-       <van-search v-model="keyword" background="transparent" placeholder="请输入关键词搜索" use-action-slot bind:search="onSearch" shape="round">
-         <view class="search-btn" slot="action" bind:tap="onClick">搜索</view>
+       <van-search @change="onChange" @search="handleSearch" background="transparent" placeholder="请输入关键词搜索" use-action-slot shape="round">
+         <view class="search-btn" slot="action" @click="handleSearch">搜索</view>
        </van-search>
      </view> 
-     <view class="search-result">
+     <view class="search-result"  v-if="showResult === 0">
        <text>暂未找到相关商品，为您推荐更多内容</text>
      </view>
-     <search-content></search-content>
+     <search-content class="searchContent"></search-content>
   </view>
 </template>
 
@@ -16,15 +16,19 @@
   export default {
     data() {
       return {
-      };
+        keyword: '',
+        showResult: 1,
+      }
     },
     methods: {
-     onSearch() {
-       console.log('搜索' + this.data.value);
-     },
-     onClick() {
-       console.log('搜索' + this.data.value);
-     },
+      onChange(e){
+        this.keyword = e.detail
+      },
+      async handleSearch() {
+        const Search = this.selectComponent('.searchContent')
+        await Search.$vm.getGoodsList(this.keyword)
+        this.showResult = Search.data.total
+      },
     }
   }
 </script>

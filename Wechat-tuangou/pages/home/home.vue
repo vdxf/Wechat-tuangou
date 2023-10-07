@@ -8,7 +8,6 @@
       </swiper-item>
     </swiper>
     <div class="content">
-      <date-choose></date-choose>
       <home-content></home-content>
     </div>
   </view>

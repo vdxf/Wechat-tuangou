@@ -1,0 +1,21 @@
+<!--components/goods-cart/goods-cart.wxml-->
+<view class="goods-cart">
+    <image class="image1" src="{{item.ProductImageUrl || defaultImg}}"></image>
+    <view class="goods-title">{{item.Name}}</view>
+    <view class="cart-bottom">
+      <view class="left">
+        <view class="new" wx:if="{{isHome}}">
+            <text class="iconfont icon-shandian"></text>
+            <text>新品首团</text>
+        </view>
+        <view class="repeated" wx:else>
+            <text class="iconfont icon-shandian"></text>
+            <text>好物复团</text>
+        </view>
+        <view class="welfare">
+          <text>福利品</text>
+        </view>
+      </view>
+      <text class="iconfont icon-a-fenxiang2"></text>
+    </view>
+  </view>

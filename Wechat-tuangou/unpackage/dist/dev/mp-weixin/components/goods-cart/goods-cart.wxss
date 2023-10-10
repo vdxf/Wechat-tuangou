@@ -36,22 +36,30 @@
 .left {
   display: flex;
 }
-.new {
+.new,
+.repeated {
   display: flex;
   align-items: center;
-  background-color: #F0190F;
   color: #fff;
   padding: 2rpx 6rpx;
   border-radius: 4rpx;
   margin-right: 5rpx;
 }
-.new text {
+.new text,
+.repeated text {
   white-space: nowrap;
 }
-.new image {
+.new image,
+.repeated image {
   width: 10px;
   height: 20rpx;
   margin-right: 5rpx;
+}
+.new {
+  background-color: #F0190F;
+}
+.repeated {
+  background-color: #05BE87;
 }
 .welfare {
   background-color: #F0AA05;

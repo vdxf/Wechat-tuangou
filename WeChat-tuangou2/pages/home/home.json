@@ -1,0 +1,9 @@
+{
+    "usingComponents": {
+        "data-change": "/components/data-change/data-change",
+        "nav-list": "/components/nav-list/nav-list",
+        "goods-cart": "/components/goods-cart/goods-cart"
+    },
+    "navigationBarTitleText": "新友团",
+    "navigationBarBackgroundColor": "#FD3423"
+}

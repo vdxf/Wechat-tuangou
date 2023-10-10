@@ -101,7 +101,7 @@ var components
 try {
   components = {
     uniIcons: function () {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 85))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 78))
     },
   }
 } catch (e) {
@@ -290,6 +290,19 @@ var _default = {
     back: function back() {
       wx.navigateBack({
         delta: 1
+      });
+    },
+    showModal: function showModal() {
+      wx.showModal({
+        title: '提示',
+        content: '这是一个模态弹窗',
+        success: function success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定');
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
+        }
       });
     }
   }

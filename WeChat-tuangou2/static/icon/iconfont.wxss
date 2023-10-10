@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'iconfont';  /* Project id 4274031 */
+    src: 
+         url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAT4AAsAAAAAB4wAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADsAAABUIIslek9TLzIAAAFEAAAARAAAAGA8JEjwY21hcAAAAYgAAABWAAABhmTn0OxnbHlmAAAB4AAAASUAAAFczbyaIWhlYWQAAAMIAAAALwAAADYltTunaGhlYQAAAzgAAAAcAAAAJAfeA4RobXR4AAADVAAAAAwAAAAMDAAAAGxvY2EAAANgAAAACAAAAAgAFACubWF4cAAAA2gAAAAfAAAAIAEVAG1uYW1lAAADiAAAAUAAAAJnEKM8sHBvc3QAAATIAAAALgAAAEDQ+KwUeJxjYGRgYOBiMGCwY2BycfMJYeDLSSzJY5BiYGGAAJA8MpsxJzM9kYEDxgPKsYBpDiBmg4gCACY7BUgAeJxjYGFhYJzAwMrAwNTJdIaBgaEfQjO+ZjBi5ACKMrAyM2AFAWmuKQwHnvE/U2Bu+N/AwMB8hwFIMjCiKGICAGeyDI94nO2QsQ2AMAwEz05IgZBYISUFA1ExftYIHwe24KXzy29XDyxAEqfIYDfG0KXUIk+skef4KXLD295q7/C5ZLqVcNco/NpiHu/mo63JaLbVCf4A9JoOAgAAeJxt0DtOw0AQANAZG+9arGUXcRxlLSx/En8UycUS7MKSZSQHp0gTxAFooKGhouAECHGI3IGLIEouQEGLEBQ4LKkjjWZnnma2GECA7avaqCYQAAzUYxwEeI/XD++9+9T/qGb/+fuCV6DLuTf1TmVgwBBCyKGCDi7gUm6FJtoeihrnOVLh2CSM54Um1VNqPNmhh6aSy7oY7GescaTJDpNpjlh4SKhGcixK9LM2Tdvz/5RFQpwJgd9J41nlajkLq8j2Ld2NJ07M92H/SDhDxqg5Nvovg+CUcUs73IJ8DpjCsna9SNPFus0a0QkZH7PlqrS8JomqsHGixNWtYMBj5WbnR6eJ/L1xJrF03+Zxf8so3dDxiJAN5djpmsPpM9WGXN7rD/C3OxsAAAB4nGNgZGBgAGK2N0oz4vltvjJwszCAwEOv308R9P9LLAzMfEAuBwMTSBQAP0YLYwB4nGNgZGBgbvjfwBDDwgACQJKRARUwAwBHCQJsBAAAAAQAAAAEAAAAAAAAAAAUAK54nGNgZGBgYGZIZOBgAAEmIOYCQgaG/2A+AwASzAGDAHichZE9bsJAEIWfwZAElChKpDRpVikoEsn8lEipUKCnoAez5ke211ovSNQ5TY6QE+QI6Whzikh52EMDRbza2W/evpkdyQDusIeH8rvnLtnDJbOSK7jAo3CV+pOwT34WrqGJnnCd+qtwAy94E26yY8YOnn/FrIV3YQ+3+BCu4AafwlXqX8I++Vu4hgf8CNep/wo3MPGuhZtoeeHA6qnTczXbqVVo0sik7niO9WITT+2pPNE2X5lUdYPOURrpVNtjm3y76DkXqciaRA15q+PYqMyatQ5dsHQu67fbkehBaBIMYKExhWOcQ2GGHeMKIQxSREV0Z/mY7gU2iFlp/3VP6LbIqR9yhS4CdM5cI7rSwnk6TY4tX+tRdXQrbsuahDSUWs1JYrLiDzzcramE1AMsi6oMfbS5ohN/UMyQ/AHYk29XeJxjYGKAAC4G7ICZkYmRmZGFgaM4IzEvJTMxjztRNy01rwLISjdiYAAAYvkHhQAA') format('woff'),
+         url('//at.alicdn.com/t/c/font_4274031_9jj025p2uy.ttf?t=1696942949923') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-shandian:before {
+    content: "\e60f";
+  }
+  
+  .icon-a-fenxiang2:before {
+    content: "\e620";
+  }
+  
+  

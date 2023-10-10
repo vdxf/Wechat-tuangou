@@ -16,7 +16,8 @@
     data() {
       return {
         today: '',
-        num: 0
+        num: 0,
+        onDisplay: false,
       };
     },
     created() {
@@ -44,7 +45,7 @@
         const n = ++this.num
         this.today = this.getCurrentDay(n)
         this.$emit('handleChangeDate', this.today)
-      }
+      },
     }
   }
 </script>

@@ -1,0 +1,10 @@
+<!--components/data-change/data-change.wxml-->
+<view class="choose-date">
+    <view class="yesterday" bind:tap="prevDate">前一天</view>
+    <view class="choose-box">
+      <view class="today">
+        <text>{{today}}</text>
+      </view>
+    </view>
+    <view class="tomorrow" bind:tap="nextDate">后一天</view>
+  </view>

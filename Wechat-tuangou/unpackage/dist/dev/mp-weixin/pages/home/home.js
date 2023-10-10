@@ -101,7 +101,7 @@ var components
 try {
   components = {
     homeContent: function () {
-      return __webpack_require__.e(/*! import() | components/home-content/home-content */ "components/home-content/home-content").then(__webpack_require__.bind(null, /*! @/components/home-content/home-content.vue */ 71))
+      return __webpack_require__.e(/*! import() | components/home-content/home-content */ "components/home-content/home-content").then(__webpack_require__.bind(null, /*! @/components/home-content/home-content.vue */ 64))
     },
   }
 } catch (e) {

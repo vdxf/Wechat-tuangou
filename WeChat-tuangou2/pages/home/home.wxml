@@ -1,0 +1,17 @@
+<!--pages/home/home.wxml-->
+<view class="home-view">
+    <swiper indicator-dots autoplay :interval="3000" :duration="1000" circular>
+        <swiper-item wx:for="{{bannerList}}" wx:key="Id">
+            <view class="swiper-item">
+                <image src="{{item.ImageUrl}}"></image>
+            </view>
+        </swiper-item>
+    </swiper>
+    <data-change bindhandleChangeDate="handleChangeDate"></data-change>
+    <nav-list bindhandleChangeNav="handleChangeNav"></nav-list>
+    <view class="home-goods-list">
+      <view wx:for="{{goodsList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
+        <goods-cart item="{{item}}" isHome></goods-cart>
+      </view>
+    </view>
+</view>

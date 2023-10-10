@@ -4,9 +4,13 @@
     <view class="goods-title">{{item.Name}}</view>
     <view class="cart-bottom">
       <view class="left">
-        <view class="new">
+        <view class="new" v-if="isHome">
           <image src="../../static/image/shandian.png"></image>
           <text>新品首团</text>
+        </view>
+        <view class="repeated" v-else>
+          <image src="../../static/image/shandian.png"></image>
+          <text>好物复团</text>
         </view>
         <view class="welfare">
           <text>福利品</text>
@@ -27,6 +31,10 @@
         type: Object,
         default: {},
       },
+      isHome: {
+        type: Boolean,
+        default: true,
+      }
     },
     data() {
       return {
@@ -72,10 +80,10 @@
 .left {
   display: flex;
 }
-.new {
+.new,
+.repeated {
   display: flex;
   align-items: center;
-  background-color: #F0190F;
   color: #fff;
   padding: 2rpx 6rpx;
   border-radius: 4rpx;
@@ -88,6 +96,12 @@
     height: 20rpx;
     margin-right: 5rpx;
   }
+}
+.new {
+  background-color: #F0190F;
+}
+.repeated {
+  background-color: #05BE87; 
 }
 .welfare {
   background-color: #F0AA05;

@@ -1,0 +1,15 @@
+/* components/nav-list/nav-list.wxss */
+.nav-box {
+    background-color: #fff;
+    height: 80rpx;
+    border-radius: 40rpx 40rpx 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .nav-item {
+    font-size: 28rpx;
+  }
+  .active {
+      color: #ff1010;
+  }

@@ -65,7 +65,7 @@
         <view class="service-send">关于退换货</view>
         <text>团品如出现吊牌已摘、或显著使用痕迹等影响二次销售的情形，且无质量问题的，不支持无理由退还。</text>
       </view>
-      <view class="feedback">点击查看：如何拍照反馈团品问题>></view>
+      <view class="feedback" @click="showModal">点击查看：如何拍照反馈团品问题>></view>
     </view>
     <view class="share-btn">
       <button>分享给好友</button>
@@ -98,6 +98,19 @@
           delta: 1
         })
       },
+      showModal(){
+        wx.showModal({
+          title: '提示',
+          content: '这是一个模态弹窗',
+          success (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
     }
   }
 </script>

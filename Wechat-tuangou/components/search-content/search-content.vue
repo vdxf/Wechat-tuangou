@@ -2,7 +2,7 @@
   <view>
     <view class="search-goods-list">
       <view v-for="item in goodsList" :key="item.Id" @click="handleGoodsDetail(item.Id)">
-        <goods-cart :item="item"></goods-cart>
+        <goods-cart :item="item" :isHome="false"></goods-cart>
       </view>
     </view>
   </view>

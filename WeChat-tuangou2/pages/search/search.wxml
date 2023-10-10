@@ -1,0 +1,23 @@
+<!--pages/search/search.wxml-->
+<van-search
+  value="{{ value }}"
+  placeholder="请输入搜索关键词"
+  use-action-slot
+  bind:change="onChange"
+  bind:search="onSearch"
+  shape="round"
+  background="transparent"
+>
+  <view class="search-btn" slot="action" bind:tap="onClick">搜索</view>
+</van-search>
+<!-- <view>
+     <view class="search-box">
+       <van-search @change="onChange" @search="handleSearch" background="transparent" placeholder="请输入关键词搜索" use-action-slot shape="round">
+         <view class="search-btn" slot="action" @click="handleSearch">搜索</view>
+       </van-search>
+     </view> 
+     <view class="search-result"  v-if="showResult === 0">
+       <text>暂未找到相关商品，为您推荐更多内容</text>
+     </view>
+     <search-content class="searchContent"></search-content>
+  </view> -->

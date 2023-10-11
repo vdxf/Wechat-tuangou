@@ -1,5 +1,11 @@
 {
-    "usingComponents": {},
+    "usingComponents": {
+        "goods-cart": "/components/goods-cart/goods-cart"
+    },
     "navigationBarTitleText": "搜索",
-    "navigationBarBackgroundColor": "#fff"
+    "navigationBarBackgroundColor": "#fff",
+    "onReachBottomDistance": 150,
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#f1f1f1",
+    "backgroundTextStyle":"dark"
 }

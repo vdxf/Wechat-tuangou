@@ -19,10 +19,10 @@
     height: 100%;
   }
   .home-goods-list {
-    position: absolute;
     background: -webkit-linear-gradient(top,#FFF, rgba(240, 240, 240, 0.9));
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding:  0 32rpx;
+    min-height: 350px;
   }

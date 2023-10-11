@@ -1,42 +1,42 @@
 {
-  "pages":[
-    "pages/home/home",
-    "pages/search/search"
-  ],
-  "subpackages": [
-    {
-        "root": "subpackage",
-        "pages": [
-            "goods-detail/goods-detail"
+    "pages": [
+        "pages/home/home",
+        "pages/search/search"
+    ],
+    "subpackages": [
+        {
+            "root": "subpackage",
+            "pages": [
+                "goods_detail/goods_detail"
+            ]
+        }
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "新友团",
+        "navigationBarTextStyle": "black"
+    },
+    "sitemapLocation": "sitemap.json",
+    "tabBar": {
+        "selectedColor": "#FA2D19",
+        "list": [
+            {
+                "pagePath": "pages/home/home",
+                "text": "首页",
+                "iconPath": "static/image/home.png",
+                "selectedIconPath": "static/image/home-active.jpg"
+            },
+            {
+                "pagePath": "pages/search/search",
+                "text": "搜索",
+                "iconPath": "static/image/search.jpg",
+                "selectedIconPath": "static/image/search-active.png"
+            }
         ]
-      }
-  ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "新友团",
-    "navigationBarTextStyle":"black"
-  },
-  "sitemapLocation": "sitemap.json",
-  "tabBar": {
-    "selectedColor": "#FA2D19",
-    "list": [
-      {
-        "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "static/image/home.png",
-        "selectedIconPath": "static/image/home-active.jpg"
-      },
-      {
-        "pagePath": "pages/search/search",
-        "text": "搜索",
-        "iconPath": "static/image/search.jpg",
-        "selectedIconPath": "static/image/search-active.png"
-      }
-    ]
-  },
-  "usingComponents": {
-    "van-button": "@vant/weapp/button/index",
-    "van-search": "@vant/weapp/search/index"
-  }
+    },
+    "usingComponents": {
+        "van-button": "@vant/weapp/button/index",
+        "van-search": "@vant/weapp/search/index"
+    }
 }

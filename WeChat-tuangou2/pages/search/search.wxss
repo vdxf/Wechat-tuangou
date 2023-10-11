@@ -1,5 +1,49 @@
 /* pages/search/search.wxss */
-/* page {
-background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
-backdrop-filter: blur(10px);
-} */
+.search-view {
+    height: 100%; 
+    min-height: 555px;
+    background: linear-gradient(to bottom,#FFF, #f1f1f1);
+}
+.search-box {
+    position: sticky;  
+    top: 0;  
+    z-index: 99;
+    background-color: #fff;
+    padding: 20rpx;
+}
+.van-search {
+    border: 2rpx solid #EBEBEB;
+    padding: 0;
+    height: 70rpx;
+    border-radius: 32rpx;
+}
+.search-box .van-search__content {
+    background-color: #fff;
+    margin-right: 20rpx;
+    padding: 0;
+    height: 66rpx;
+}
+.search-btn {
+    width: 128rpx;
+    height: 64rpx;
+    background: linear-gradient(90deg, #F0190F 0%, #F03C0A 100%);
+    border-radius: 32rpx;
+    font-size: 28rpx;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 64rpx;
+}
+.search-result {
+    height: 40rpx;
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 40rpx;
+    padding: 0 40rpx;
+    margin-bottom: 20rpx;
+  }
+.search-goods-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding:  0 32rpx;
+  }

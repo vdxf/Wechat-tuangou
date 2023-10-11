@@ -1,10 +1,5 @@
 // components/goods-cart/goods-cart.js
 Component({
-    lifetimes: {
-        attached(){
-            console.log(this.properties)
-        }
-    },
     /**
      * 组件的属性列表
      */

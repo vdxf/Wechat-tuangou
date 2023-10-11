@@ -1,20 +1,45 @@
-// subpackage/goods-detail/goods-detail.js
+// subpackage/goods_detail/goods_detail.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        Id: '',
+        goodsDetail: {},
+        videoList: {},
+        close: true,
     },
-
+    handleClose(){
+        this.setData({
+            close: !this.data.close
+        })
+    },
+    showDialog(){
+        console.log(123)
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        this.setData({
+            Id: options.id 
+        })
+        this.getGoodsDetail()
     },
-
+    getGoodsDetail(){
+        const Id = this.data.Id
+        wx.request({
+          url: `https://dz.xuetang51.com/api/Product/GetProductInfo?id=${Id}`,
+          method: 'GET',
+          success: (res) => {
+              this.setData({
+                  goodsDetail: res.data.Data,
+                  videoList: res.data.Data.VideoUrls.split(';')
+              })
+          }
+        })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

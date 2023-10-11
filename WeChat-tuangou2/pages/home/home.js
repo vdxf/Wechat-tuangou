@@ -24,7 +24,7 @@ Page({
     },
     getBannerList(){
         wx.request({
-            url: 'https://dz.xuetang51.com/api/Banner/GetBannerList',
+            url: '/api/Banner/GetBannerList',
             method: 'POST',
             success: (res) => {
                 this.setData({
@@ -49,7 +49,7 @@ Page({
     handleGoodsDetail(e){
         const id = e.currentTarget.dataset.item.Id
         wx.navigateTo({
-          url: `/subpackage/goods-detail/goods-detail?id=${id}`,
+          url: `/subpackage/goods_detail/goods_detail?id=${id}`,
         })
     },
     handleChangeDate(e){

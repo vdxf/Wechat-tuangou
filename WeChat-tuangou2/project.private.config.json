@@ -3,5 +3,18 @@
     "projectname": "WeChat-tuangou2",
     "setting": {
         "compileHotReLoad": true
+    },
+    "condition": {
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "",
+                    "pathName": "subpackage/goods_detail/goods_detail",
+                    "query": "id=3",
+                    "launchMode": "default",
+                    "scene": null
+                }
+            ]
+        }
     }
 }

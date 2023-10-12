@@ -1,0 +1,18 @@
+<!--components/dialog-content/dialog-content.wxml-->
+<page-container class="dialog" show="{{show}}" overlay round bind:enter="onEnter">
+    <view class="dialog-content">
+        <view class="title">如何拍照反馈团品问题</view>
+        <text class="iconfont icon-guanbi" bind:tap="close"></text>
+        <text class="tips">物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+        <view class="content">
+            <text class="refer">参考如下图提供完整的售后凭证，确保您的售后无忧！</text>
+            <view class="photo">123</view>
+            <view class="group">
+                <text class="item">外装箱参考图</text>
+                <text class="item">面单参考图</text>
+                <text class="item">产品平铺参考图</text>
+            </view>
+        </view>
+        <text class="thank">家人们图上为拍照模板，为尽快帮大家核实，请家人们按图提报，谢谢配合。祝大家购物愉快！</text>
+    </view>  
+</page-container>  

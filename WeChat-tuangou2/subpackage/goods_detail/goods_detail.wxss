@@ -2,6 +2,63 @@
 page {
     background-color: #f2f2f2;
   }
+  .navBar {
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+        top: 0;
+        z-index: 99;
+  }
+  .nav-title {
+    background-color: #fff;
+    text-align: center;
+    padding: 60rpx 0 20rpx 0;
+  }
+  .nav-list {
+    height: 88rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+  }
+  .nav-item {
+    width: 25%;
+    height: 44rpx;
+    font-size: 28rpx;
+    color: #1A1A1A;
+    line-height: 44rpx;
+    text-align: center;
+  }
+  .active {
+    color: #FA2D19;
+  }
+  .active::after {
+    content: '';
+    display: block;
+    width: 56rpx;
+    height: 6rpx;
+    background: linear-gradient(90deg, #F0190F 0%, #F03C0A 100%);
+    z-index: 3;
+    margin-left: 35%;
+  } 
+  .back {
+    width: 64rpx;
+    height: 64rpx;
+    background-color: rgba(255, 255, 255, 0.6);
+    position: fixed;
+    top: 48rpx;
+    z-index: 99;
+    left: 12rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  .detail-view {
+      height: 100%;
+  }
+  .icon-left {
+    font-size: 40rpx;
+  }
 .top-image image {
     display: block;
     width: 100%;
@@ -199,7 +256,8 @@ page {
     color: #FFFFFF;
     line-height: 80rpx;
   }
-  .iconfont {
+  .icon-up, 
+  .icon-down {
       font-size: 20rpx;
       margin-left: 10rpx;
   }

@@ -1,0 +1,60 @@
+/* components/dialog-content/dialog-content.wxss */
+@import "../../static/icon/iconfont.wxss";
+.icon-guanbi {
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    right: 32rpx;
+    top: 32rpx;
+    font-size: 30rpx;
+    color: #888;
+}
+.dialog-content {
+    box-sizing: border-box;
+    height: 900rpx;
+    display: flex;
+    flex-direction: column;
+    padding: 32rpx;
+}
+.title {
+    font-size: 34rpx;
+    font-weight: 500;
+    color: #1A1A1A;
+    line-height: 48rpx;
+    text-align: center;
+}
+.tips {
+    font-size: 28rpx;
+    color: #999999;
+    line-height: 44rpx;
+    margin: 40rpx 0;
+}
+.content {
+    margin-bottom: 40rpx;
+}
+.refer {
+    font-size: 28rpx;
+    color: #1A1A1A;
+    line-height: 44rpx;
+}
+.photo {
+    margin: 16rpx 0;
+    width: 686rpx;
+    height: 310rpx;
+    background-color: #ccc;
+}
+.group {
+    display: flex;
+    justify-content: space-around;
+}
+.item {
+    font-size: 24rpx;
+    font-weight: 500;
+    color: #666666;
+    line-height: 40rpx;
+}
+.thank {
+    font-size: 28rpx;
+    color: #999999;
+    line-height: 44rpx;
+}

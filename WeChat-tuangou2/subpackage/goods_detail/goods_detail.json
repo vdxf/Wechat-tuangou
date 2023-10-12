@@ -1,5 +1,8 @@
 {
-    "usingComponents": {},
+    "usingComponents": {
+        "dialog-content": "/components/dialog-content/dialog-content"
+    },
     "navigationBarTitleText": "团品详情",
-    "navigationStyle": "custom"
+    "navigationBarBackgroundColor": "#fff",
+    "navigationStyle":"custom"
 }

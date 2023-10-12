@@ -9,6 +9,16 @@ Page({
         goodsDetail: {},
         videoList: {},
         close: true,
+        showdialog: false,
+        showNav: false,
+        navList: [
+            {name: '商品详情', id: 'tag1'},
+            {name: '团品实拍', id: 'tag2'},
+            {name: '资质授权', id: 'tag3'},
+            {name: '关于售后', id: 'tag4'}
+        ],
+        currentIndex: 0,
+        scrollTopTag: '',
     },
     handleClose(){
         this.setData({
@@ -16,7 +26,63 @@ Page({
         })
     },
     showDialog(){
-        console.log(123)
+        this.setData({
+            showdialog: true
+        })
+    },
+    handleChangeNav(e){
+        const {tag} = e.currentTarget.dataset
+        const query = wx.createSelectorQuery()
+        query.selectViewport().scrollOffset()
+        query.select(`#${tag}`).boundingClientRect()
+        query.exec((res) => {
+            const scrollTop = res[0].scrollTop
+            wx.pageScrollTo({
+                scrollTop: scrollTop + res[1].top - 110,
+                duration: 500
+            })
+        })
+    },
+    onPageScroll(e){
+        const query = wx.createSelectorQuery()
+        query.selectViewport().scrollOffset()
+        query.select(`#tag1`).boundingClientRect()
+        query.select(`#tag2`).boundingClientRect()
+        query.select(`#tag3`).boundingClientRect()
+        query.select(`#tag4`).boundingClientRect()
+        query.exec((res) => {
+            let scrollTop = res[0].scrollTop
+            const tag1 = scrollTop + res[1].top - 120
+            const tag2 = scrollTop + res[2].top - 120
+            const tag3 = scrollTop + res[3].top - 120
+            const tag4 = scrollTop + res[4].top - 120
+            if (e.scrollTop > tag1) {
+                this.setData({
+                    showNav: true
+                })
+                if (e.scrollTop >= tag1 && e.scrollTop < tag2){
+                    this.setData({
+                        currentIndex: 0
+                    })
+                } else if (e.scrollTop >= tag2 && e.scrollTop < tag3) {
+                    this.setData({
+                        currentIndex: 1
+                    })
+                } else if (e.scrollTop >= tag3 && e.scrollTop < tag4) {
+                    this.setData({
+                        currentIndex: 2
+                    })
+                } else if (e.scrollTop >= tag4) {
+                    this.setData({
+                        currentIndex: 3
+                    })
+                }
+            } else {
+                this.setData({
+                    showNav: false
+                }) 
+            }
+        })
     },
     /**
      * 生命周期函数--监听页面加载
@@ -39,6 +105,9 @@ Page({
               })
           }
         })
+    },
+    back(){
+        wx.navigateBack()
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

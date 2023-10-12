@@ -1,5 +1,16 @@
 <!--subpackage/goods_detail/goods_detail.wxml-->
-<view class="detail-view">
+<view class="navBar" wx:if="{{showNav}}">
+    <view class="nav-title">
+        <text>团品详情</text>
+    </view>
+    <view class="nav-list">
+        <view class="nav-item {{currentIndex === index ? 'active' : ''}}" data-index="{{index}}" data-tag="{{item.id}}" wx:for="{{navList}}" wx:key="id" wx:for-index="index" bind:tap="handleChangeNav">{{item.name}}</view>
+    </view>
+</view>
+<view class="back" bind:tap="back">
+    <text class="iconfont icon-left"></text>
+</view>
+<scroll-view class="detail-view" scroll-y="{{true}}">
     <view class="top-image">
       <image src="{{goodsDetail.ProductImageUrl}}" mode="widthFix"></image>
     </view>
@@ -15,7 +26,7 @@
         </view>
       </view>
     </view>
-    <view class="goods-detail-cart">
+    <view class="goods-detail-cart" id="tag1">
       <text class="cart-title">商品详情</text>
       <view class="cart-content" wx:if="{{close}}">
         <view class="cart-item" wx:for="item in 8" wx:key="item">
@@ -31,7 +42,7 @@
          </view>
       </view>
     </view>
-    <view class="goods-capture">
+    <view class="goods-capture" id="tag2">
       <view class="capture-title">团品实拍</view>
       <view class="video-list">
         <view class="video-item" wx:for="{{videoList}}" wx:key="index" wx:for-item="{{item}}">
@@ -42,13 +53,13 @@
         <button>保存视频</button>
       </view>
     </view>
-    <view class="goods-qualifications">
+    <view class="goods-qualifications"  id="tag3">
       <view class="capture-title">资质授权</view>
       <view class="capture-image">
         <image src="{{goodsDetail.Credential}}" mode="widthFix"></image>
       </view>
     </view>
-    <view class="goods-service">
+    <view class="goods-service" id="tag4">
       <text class="cart-title">关于售后</text>
       <view class="service-item">
         <view class="service-send">关于发货</view>
@@ -68,7 +79,8 @@
       </view>
       <view class="feedback" bind:tap="showDialog">点击查看：如何拍照反馈团品问题>></view>
     </view>
+    <dialog-content show="{{showdialog}}"></dialog-content>
     <view class="share-btn">
       <button>分享给好友</button>
     </view>
-  </view>
+  </scroll-view>

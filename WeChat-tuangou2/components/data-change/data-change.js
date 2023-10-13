@@ -20,6 +20,7 @@ Component({
     data: {
         today: '',
         num: 0,
+        unClick: false,
     },
     /**
      * 组件的方法列表
@@ -37,17 +38,29 @@ Component({
         },
         prevDate(){
             const n = --this.data.num
-            this.setData({
-                today: this.getCurrentDay(n)
-            }),
-            this.triggerEvent('handleChangeDate', { date: this.getCurrentDay(n) })
+            this.handleChange(n)
         },
         nextDate(){
-            const n = ++this.data.num
-            this.setData({
-                today: this.getCurrentDay(n)
-            }),
-            this.triggerEvent('handleChangeDate', { date: this.getCurrentDay(n) })
+            const unClick = this.data.unClick
+           if (!unClick) {
+            let n = ++this.data.num
+            this.handleChange(n)
+           }
         },
+        handleChange(n){
+            if (n >= 1) {
+                this.setData({
+                    unClick: true,
+                    num: 1,
+                    today: this.getCurrentDay(1)
+                })
+            } else {
+                this.setData({
+                    unClick: false,
+                    today: this.getCurrentDay(n)
+                })
+            }
+            this.triggerEvent('handleChangeDate', { date: this.getCurrentDay(n) })
+        }
     }
 })

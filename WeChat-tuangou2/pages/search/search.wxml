@@ -9,6 +9,17 @@
     <view class="search-result"  wx:if="{{total === 0}}">
         <text>暂未找到相关商品，为您推荐更多内容</text>
     </view>
+    <view class="search-result"  wx:if="{{resultList.length}}">
+        <text>搜索结果</text>
+    </view>
+    <view class="search-goods-list">
+        <view wx:for="{{resultList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
+            <goods-cart item="{{item}}" :isHome="false"></goods-cart>
+        </view>
+    </view>
+    <view class="search-result"  wx:if="{{resultList.length}}">
+        <text>推荐商品</text>
+    </view>
     <view class="search-goods-list">
         <view wx:for="{{goodsList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
             <goods-cart item="{{item}}" :isHome="false"></goods-cart>

@@ -7,6 +7,7 @@ Page({
     data: {
         value: '',
         goodsList: [],
+        resultList: [],
         total: 0,
         query: {
             "PageIndex": 1,
@@ -15,17 +16,20 @@ Page({
         },
         isLoading: false,
     },
-    onChange(e) {
+    onChange(e){
+        const kw = e.detail
         this.setData({
-          value: e.detail,
+            value: kw,
         });
-      },
-      onSearch(e) {
-        this.getGoodsList(e.detail)
-      },
-      onClick() {
-        this.getGoodsList(this.data.value)
-      },
+    },
+    onSearch() {
+        this.onClick()
+    },
+    onClick() {
+        if (this.data.value){
+            this.getGoodsList(this.data.value)
+        }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -49,10 +53,18 @@ Page({
           method: 'POST',
           data: this.data.query,
           success: (res) => {
-              this.setData({
-                goodsList: [...this.data.goodsList, ...res.data.Data.Data],
-                total: res.data.Data.Count
-              })
+            const { Data, Count } = res.data.Data
+            if(kw){
+                this.setData({
+                    resultList: Data,
+                    total: Count
+                })
+            } else {
+                this.setData({
+                    goodsList: [...this.data.goodsList, ...Data],
+                    total: Count
+                })
+            }
           },
           complete: () => {
             wx.hideLoading()

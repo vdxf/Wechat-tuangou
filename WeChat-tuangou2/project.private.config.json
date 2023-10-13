@@ -4,5 +4,17 @@
     "setting": {
         "compileHotReLoad": true
     },
-    "condition": {}
+    "condition": {
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "",
+                    "pathName": "pages/search/search",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                }
+            ]
+        }
+    }
 }

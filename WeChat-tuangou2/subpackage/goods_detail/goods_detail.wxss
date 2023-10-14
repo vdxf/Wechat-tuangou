@@ -11,8 +11,13 @@ page {
   }
   .nav-title {
     background-color: #fff;
-    text-align: center;
-    padding: 60rpx 0 20rpx 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 128rpx;
+  }
+  .nav-title-IPX {
+    padding-top: 48rpx;
   }
   .nav-list {
     height: 88rpx;
@@ -53,8 +58,12 @@ page {
     align-items: center;
     border-radius: 50%;
   }
+  .back-IPX {
+    top: 96rpx;
+  }
   .detail-view {
       height: 100%;
+      padding-bottom: 120rpx;
   }
   .icon-left {
     font-size: 40rpx;
@@ -241,10 +250,17 @@ page {
   .share-btn {
     border-top: 1rpx solid #f1f1f1;
     height: 112rpx;
-    background: rgba(255,255,255,0.9);
+    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .share-btn-IPX {
+    padding-bottom: 32rpx;
   }
   .share-btn button {
     width: 686rpx;

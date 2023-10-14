@@ -19,6 +19,7 @@ Page({
         ],
         currentIndex: 0,
         scrollTopTag: '',
+        isIphoneX: false,
     },
     handleClose(){
         this.setData({
@@ -88,7 +89,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        const app = getApp()
+        const isIphoneX = app.globalData.isIphoneX
         this.setData({
+            isIphoneX: isIphoneX,
             Id: options.id 
         })
         this.getGoodsDetail()

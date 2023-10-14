@@ -14,11 +14,17 @@ Page({
             "BuyGroupId": 1,
             "GroupDate": '',
         },
+        isIphoneX: false,
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        const app = getApp()
+        const isIphoneX = app.globalData.isIphoneX
+        this.setData({
+            isIphoneX: isIphoneX,
+        })
         this.getBannerList()
         this.getGoodsList()
     },

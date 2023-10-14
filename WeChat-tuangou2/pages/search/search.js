@@ -15,6 +15,7 @@ Page({
             "Keywords": '',
         },
         isLoading: false,
+        finished: false,
     },
     onChange(e){
         const kw = e.detail
@@ -126,6 +127,9 @@ Page({
      */
     onReachBottom() {
         if (this.data.query.PageIndex * this.data.query.PageSize >= this.data.total){
+            this.setData({
+                finished: true
+            })
             return wx.showToast({
               title: '数据加载完毕！',
               icon: 'none',

@@ -10,7 +10,7 @@
     <data-change bindhandleChangeDate="handleChangeDate"></data-change>
     <nav-list bindhandleChangeNav="handleChangeNav"></nav-list>
 </view>
-<scroll-view scroll-y class="home-scroll">
+<scroll-view scroll-y refresher-enabled refresher-threshold="3" slot="refresher" class="home-scroll {{isIphoneX ? 'home-scroll-IPX' : ''}}">
     <view class="home-goods-list">
         <view wx:for="{{goodsList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
     <goods-cart item="{{item}}" isHome></goods-cart>

@@ -13,8 +13,25 @@ App({
         console.log('res => ', res)
       }
     })
+    //判断是否为iPhoneX
+    this.checkIsIphoneX()
+  },
+  checkIsIphoneX(){
+    const that = this
+    wx.getSystemInfo({
+      success: (res) => {
+        const model = res.model 
+        if(/iphone\sx/i.test(model) || (/iphone/i.test(model) && /unknown/.test(model)) || /iphone\s11/i.test(model)){
+          that.globalData.isIphoneX = true
+        } else {
+          that.globalData.isIphoneX = false
+        }
+      } 
+    })
+
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    isIphoneX: false,
   }
 })

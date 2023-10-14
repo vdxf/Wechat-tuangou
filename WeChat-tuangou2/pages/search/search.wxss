@@ -47,3 +47,9 @@
     justify-content: space-between;
     padding:  0 32rpx;
   }
+.finished {
+    font-size: 24rpx;
+    color: #999999;
+    text-align: center;
+    padding-bottom: 40rpx;
+}

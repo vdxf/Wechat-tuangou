@@ -35,26 +35,23 @@
   .left {
     display: flex;
   }
-  .new,
-  .repeated {
+  .new {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     color: #fff;
-    padding: 2rpx 6rpx;
     border-radius: 4rpx;
-    margin-right: 5rpx;
-  }
-  .new {
     background-color: #F0190F;
   }
-  .repeated {
-    background-color: #05BE87; 
-  }
   .welfare {
+    box-sizing: border-box;
     background-color: #F0AA05;
     color: #fff;
     border-radius: 4rpx;
-    padding: 2rpx 6rpx;
+    margin: 0 10rpx;
+  }
+  .new, .welfare{
+    padding: 4rpx;
   }
   .icon-a-fenxiang2 {
     background-color: #F0190F;
@@ -65,8 +62,5 @@
     justify-content: center;
     align-items: center;
     color: #fff;
-  }
-  .icon-shandian {
-      font-size: 12px;
-      color: yellow;
+    margin-left: 6rpx;
   }

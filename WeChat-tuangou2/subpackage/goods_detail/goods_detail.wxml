@@ -1,13 +1,13 @@
 <!--subpackage/goods_detail/goods_detail.wxml-->
-<view class="navBar" wx:if="{{showNav}}">
-    <view class="nav-title">
+    <view class="navBar" wx:if="{{showNav}}">
+    <view class="nav-title {{isIphoneX ? 'nav-title-IPX' : ''}}">
         <text>团品详情</text>
     </view>
     <view class="nav-list">
         <view class="nav-item {{currentIndex === index ? 'active' : ''}}" data-index="{{index}}" data-tag="{{item.id}}" wx:for="{{navList}}" wx:key="id" wx:for-index="index" bind:tap="handleChangeNav">{{item.name}}</view>
     </view>
 </view>
-<view class="back" bind:tap="back">
+<view class="back {{isIphoneX ? 'back-IPX' : ''}}" bind:tap="back">
     <text class="iconfont icon-left"></text>
 </view>
 <scroll-view class="detail-view" scroll-y="{{true}}">
@@ -80,7 +80,7 @@
       <view class="feedback" bind:tap="showDialog">点击查看：如何拍照反馈团品问题>></view>
     </view>
     <dialog-content show="{{showdialog}}"></dialog-content>
-    <view class="share-btn">
+    <view class="share-btn {{isIphoneX ? 'share-btn-IPX' : ''}}">
       <button>分享给好友</button>
     </view>
   </scroll-view>

@@ -1,14 +1,21 @@
 import { withPromise } from "./withPromise"
 
-export const reqUserInfo = withLoading((data) => request('/api/user/list', data, { method: 'post' }))
+// export const reqUserInfo = withLoading((data) => request('/api/Banner/GetBannerList', data, { method: 'post' }))
 
-export const request = (url, data = {}, options = {}) => {
-  return withPromise(wx.request, { 
-    url: '111',
-    method: 'get',
-    data: {
-      xxx: '11'
-    }
-  })
+const baseUrl = 'https://dz.xuetang51.com/api/'
+
+export const $request = (url, data = {}, options = {}) => {
+  if (data) {
+    return withPromise(wx.request, { 
+        url: baseUrl + url,
+        method: options.method,
+        data,
+      })
+  } else {
+    return withPromise(wx.request, { 
+        url: baseUrl + url,
+        method: options.method,
+      })
+  }
 }
 

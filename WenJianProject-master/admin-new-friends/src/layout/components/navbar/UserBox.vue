@@ -1,0 +1,54 @@
+<template>
+  <ElDropdown class="layout-user-box" trigger="hover">
+    <div class="layout-user-content">
+      <img src="@/assets/img/avatar.png" alt="头像" />
+      <ElIcon>
+        <CaretBottom />
+      </ElIcon>
+    </div>
+    <template #dropdown>
+      <ElDropdownMenu>
+        <ElDropdownItem @click="handleExit">安全退出</ElDropdownItem>
+      </ElDropdownMenu>
+    </template>
+  </ElDropdown>
+</template>
+
+<script setup lang="ts">
+  import { doAdminUserLogout } from '@/api'
+  import { useUserinfoStore } from '@/stores'
+  import { CaretBottom } from '@element-plus/icons-vue'
+
+  const router = useRouter()
+  const { setUserinfo } = useUserinfoStore()
+
+  const handleExit = async () => {
+    await ElMessageBox.confirm(`确认是否退出该账号？`)
+    doAdminUserLogout()
+    setUserinfo(void 0)
+    router.replace('/login')
+    ElMessage.success(`退出成功`)
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import '@/layout/styles/define.scss';
+  .layout-user-content {
+    @extend %df;
+    @extend %aic;
+    @extend %cp;
+    outline: none;
+    font-size: 14px;
+    padding: 0 15px;
+    span {
+      @extend %twno;
+      max-width: 60px;
+      margin-right: 5px;
+    }
+    img {
+      width: 32px;
+      height: 32px;
+      margin-right: 5px;
+    }
+  }
+</style>

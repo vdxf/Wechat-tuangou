@@ -1,0 +1,42 @@
+@import 'src/assets/scss/define';
+
+.pager-section{
+  @extend %ma;
+  @extend %df;
+  @extend %aic;
+  margin-top: j(16);
+  width: j(710);
+  height: j(64);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: j(36);
+  backdrop-filter: blur(10px);
+}
+.pager-item{
+  @extend %df;
+  @extend %aic;
+  @extend %jcc;
+  @extend %dan;
+  padding: 0;
+  background-color: transparent;
+  font-size: j(28);
+  color: #1A1A1A;
+  &.is-active{
+    @extend %fwb;
+    width: j(278);
+    color: $color-primary;
+    background-color: #fff;
+    height: j(56);
+    border-radius: j(28);
+  }
+  &.is-btn{
+    @extend %df1;
+    @extend %cp;
+  }
+  &.is-disabled{
+    @extend %c9;
+    background-color: transparent !important;
+  }
+  .iconfont{
+    font-size: j(24);
+  }
+}

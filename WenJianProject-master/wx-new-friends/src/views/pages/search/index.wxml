@@ -1,0 +1,34 @@
+<search-section 
+  bindsearch="handleSearch"
+  keyword="{{ Keywords }}"
+></search-section>
+
+<wow-skeleton
+  wx:if="{{ pagingTotal <= 0 }}"
+  error="{{ error }}"
+  is-loading="{{ pagingTotal === -1 }}"
+  bindrefresh="pagingRefresh"
+  emptyPrompt="亲~ 暂无商品~~"
+></wow-skeleton>
+
+<view class="content" wx:else>
+  <block
+      wx:for="{{ pagingData }}"
+      wx:key="arrIndex"
+      wx:for-item="arrData"
+      wx:for-index="arrIndex">
+      <goods-item
+        wx:for="{{ arrData }}"
+        wx:key="index"
+        class="goods-item"
+        item="{{ item }}"
+        data-item="{{ item }}"
+        bindshare="handleShare"
+      ></goods-item>
+  </block>
+</view>
+
+<wow-end
+  wx:if="{{ pagingTotal > 0}}"
+  is-loading="{{ pagingTotal > pagingNumTotal }}"
+></wow-end>

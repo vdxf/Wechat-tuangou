@@ -1,0 +1,33 @@
+@import 'src/assets/scss/define';
+
+page{
+  background-color: #f2f2f2;
+}
+
+.content{
+  @extend %df;
+  @extend %pr;
+  @extend %fww;
+  @extend %jcs;
+  @extend %pr;
+  padding: j(16) j(32);
+  background-color: #f2f2f2;
+  &::before{
+    @extend %pa;
+    @extend %t0;
+    @extend %l0;
+    @extend %r0;
+    content: '';
+    height: j(480);
+    background: linear-gradient(to bottom, #FFFFFF 20%, #F2F2F2 100%);
+  }
+}
+
+.goods-item{
+  @extend %pr;
+  margin-top: j(16);
+  &:nth-child(2),
+  &:nth-child(1) {
+    margin-top: 0;
+  }
+}

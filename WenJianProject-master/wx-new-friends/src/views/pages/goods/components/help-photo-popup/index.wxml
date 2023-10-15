@@ -1,0 +1,27 @@
+<view class="help-btn" bindtap="inputHandle" data-item="visible" data-value="{{ true }}">
+  <text>点击查看：如何拍照反馈团品问题>></text>
+</view>
+
+<view class="help-popup-mask" wx:if="{{ visible }}" bindtap="inputHandle" data-item="visible" data-value="{{ false }}"></view>
+
+<view class="help-popup {{ visible && 'is-active' }}">
+  <view class="help-popup-header">
+    <view class="help-popup-title">
+      <text>如何拍照反馈团品问题</text>
+    </view>
+    <image class="help-popup-close" src="/assets/images/icon-close.png" bindtap="inputHandle" data-item="visible" data-value="{{ false }}"></image>
+  </view>
+  <view class="help-popup-content">
+    <view class="help-popup-prompt">
+      <text>物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+      <text>物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+      <text>物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+    </view>
+    <view class="help-popup-prompt">
+      <text>物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+      <text>物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+      <text>物流显示签收48小时内，如出现少货、漏发、错发、破损、瑕疵等情况之一，请拍外装箱、快递面单、产品平铺照片给售后客服处理：</text>
+    </view>
+  </view>
+  <view class="c-ios-seat"></view>
+</view>

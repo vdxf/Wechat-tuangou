@@ -1,4 +1,5 @@
 // pages/home/home.js
+import { reqBannerList, reqGoodsList } from '../../api/index'
 Page({
 
     /**
@@ -28,22 +29,11 @@ Page({
         this.getBannerList()
         this.getGoodsList()
     },
-    getBannerList(){
-        wx.request({
-            url: '/api/Banner/GetBannerList',
-            method: 'POST',
-            success: (res) => {
-                this.setData({
-                    bannerList: res.data.Data
-                })
-            },
-            fail(){
-                wx.showToast({
-                    title: '数据请求失败！',
-                    duration: 1500,
-                    icon: 'none'
-                })
-            }
+    async getBannerList(){
+        const {data: res} = await reqBannerList()
+        console.log(res)
+        this.setData({
+            bannerList: res.Data
         })
     },
     handleChangeNav(options){
@@ -66,17 +56,12 @@ Page({
         //     })
         //     this.getGoodsList()
     },
-    getGoodsList(){
-        wx.request({
-          url: 'https://dz.xuetang51.com/api/Product/GetProductList',
-          data: this.data.query,
-          method: 'POST',
-          success: (res) => {
-            this.setData({
-                goodsList: res.data.Data.Data,
-                total: res.data.Data.Count
-            })
-          }
+    async getGoodsList(){
+        const query = this.data.query
+        const { data: res } = await reqGoodsList(query)
+        this.setData({
+            goodsList: res.Data.Data,
+            total: res.Data.Count
         })
       },
     /**

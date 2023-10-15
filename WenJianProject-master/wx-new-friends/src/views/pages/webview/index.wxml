@@ -1,0 +1,5 @@
+<web-view
+    bindmessage="handleMessage"
+    src="{{ url }}"
+    wx:if="{{ url }}"
+></web-view>

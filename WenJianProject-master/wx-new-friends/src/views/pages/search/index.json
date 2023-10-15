@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "搜索",
+  "usingComponents": {
+    "wow-skeleton": "/components/wow-skeleton/index",
+    "wow-end": "/components/wow-end/index",
+    "goods-item": "/components/goods-item/index",
+    "search-section": "./components/search-section/index"
+  }
+}

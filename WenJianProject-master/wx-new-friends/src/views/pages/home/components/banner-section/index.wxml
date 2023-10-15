@@ -1,0 +1,25 @@
+<view class="banner-sizebox"></view>
+<swiper
+  class="banner-section"
+  indicator-dots
+  indicator-color="rgba(255,255,255,0.45)"
+  indicator-active-color="#ffffff"
+  autoplay
+  circular
+>
+  <swiper-item 
+    class="banner-item"
+    wx:for="{{ list }}"
+    wx:key="index"
+    data-item="{{ item }}"
+    bindtap="handleSelect"
+  >
+    <image 
+      class="banner-image" 
+      src="{{ item.ImageUrl }}"
+      mode="aspectFill"
+      lazy-load
+      show-menu-by-longpress
+    ></image>
+  </swiper-item>
+</swiper>

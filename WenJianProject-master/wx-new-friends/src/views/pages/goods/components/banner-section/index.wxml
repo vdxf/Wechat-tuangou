@@ -1,0 +1,28 @@
+<swiper
+  class="banner-section"
+  indicator-dots
+  indicator-color="rgba(255,255,255,0.45)"
+  indicator-active-color="#ffffff"
+  circular
+>
+  <swiper-item 
+    class="banner-item"
+    wx:for="{{ arrData }}"
+    wx:key="index"
+  >
+    <image 
+      wx:if="{{ item.type === 1 }}"
+      class="banner-image" 
+      src="{{ item.url }}"
+      mode="aspectFill"
+      lazy-load
+      show-menu-by-longpress
+    ></image>
+    <video 
+      class="banner-video" 
+      wx:elif="{{ item.type == 2 }}"
+      src="{{ item.url }}"
+      controls
+    ></video>
+  </swiper-item>
+</swiper>

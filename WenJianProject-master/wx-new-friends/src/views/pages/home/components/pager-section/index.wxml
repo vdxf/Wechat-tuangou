@@ -1,0 +1,25 @@
+<view class="pager-section">
+  <button 
+    class="pager-item is-btn {{ prevDisabled && 'is-disabled'}}" 
+    data-type="{{ -1 }}"
+    bindtap="handleSwitch"
+    disabled="{{ prevDisabled }}"
+  >
+    <view class="iconfont icon-arrow-left"></view>
+    <text>前一天</text>
+  </button>
+
+  <view class="pager-item is-active">
+    <text>{{ value }}</text>
+  </view>
+
+  <button 
+    class="pager-item is-btn {{ nextDisabled && 'is-disabled'}}" 
+    data-type="{{ 1 }}" 
+    bindtap="handleSwitch"
+    disabled="{{ nextDisabled }}"
+  >
+    <text>后一天</text>
+    <view class="iconfont icon-arrow-right"></view>
+  </button>
+</view>

@@ -6,13 +6,8 @@
             <view class="search-btn" slot="action" bind:tap="onClick">搜索</view>
         </van-search>
     </view> 
-    <view class="search-goods-list" wx:if="{{value}}">
+    <view class="search-goods-list">
         <view wx:for="{{resultList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
-            <goods-cart item="{{item}}" :isHome="false"></goods-cart>
-        </view>
-    </view>
-    <view class="search-goods-list" wx:else>
-        <view wx:for="{{goodsList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
             <goods-cart item="{{item}}" :isHome="false"></goods-cart>
         </view>
     </view>

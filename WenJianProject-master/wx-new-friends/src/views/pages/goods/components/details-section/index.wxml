@@ -1,0 +1,26 @@
+<wxs src="/wxs/filter.wxs" module="filter"/>
+
+<view class="section">
+  <view class="section-title">
+    <text>商品详情</text>
+  </view>
+  <view class="section-content">
+    <view class="section-prompt" wx:if="{{ objData.DescriptionInfo }}">
+      <text user-select>{{ objData.DescriptionInfo }}</text>
+    </view>
+    
+    <image 
+      wx:for="{{ filter.split(objData.Description, ';') }}"
+      wx:key="index"
+      class="section-image" 
+      mode="widthFix" 
+      src="{{ item }}" 
+      lazy-load
+      show-menu-by-longpress
+    ></image>
+
+    <view class="section-prompt" wx:if="{{ objData.DescriptionAttri }}">
+      <text user-select>{{ objData.DescriptionAttri }}</text>
+    </view>
+  </view>
+</view>

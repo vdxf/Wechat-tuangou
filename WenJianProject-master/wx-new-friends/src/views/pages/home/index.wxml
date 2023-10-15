@@ -1,0 +1,38 @@
+<wow-skeleton 
+  wx:if="{{ !arrGroup }}"
+  error="{{ error }}" 
+  bindrefresh="getDataInfo"
+></wow-skeleton>
+
+<block wx:else>
+  <view class="bg"></view>
+
+  <banner-section 
+    list="{{ arrBanner }}"
+  ></banner-section>
+
+  <pager-section
+    value="{{ currentDate }}"
+    bindchange="handleDateChange"
+  ></pager-section>
+
+  <wow-tabs 
+    class="content c-flex1"
+    bindchange="inputHandle"
+    data-item="current"
+    label-key="Name"
+    value="{{ current }}"
+    tabs="{{ arrGroup }}"
+  >
+    <tab-content 
+      wx:for="{{ arrGroup }}"
+      wx:key="index"
+      id="refContent{{ index }}"
+      item="{{ item }}"
+      date="{{ currentDate }}"
+      slot="{{ index }}"
+      is-show="{{ current === index }}"
+      bindshare="handleShare"
+    ></tab-content>
+  </wow-tabs>
+</block>

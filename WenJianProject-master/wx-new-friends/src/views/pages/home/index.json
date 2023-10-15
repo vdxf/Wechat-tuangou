@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "新友团素材分享",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#FA2D19",
+  "usingComponents": {
+    "wow-skeleton": "/components/wow-skeleton/index",
+    "wow-tabs": "/components/wow-tabs/index",
+    "wow-end": "/components/wow-end/index",
+    "goods-item": "/components/goods-item/index",
+    "tab-content": "./components/tab-content/index",
+    "banner-section": "./components/banner-section/index",
+    "pager-section": "./components/pager-section/index"
+  }
+}

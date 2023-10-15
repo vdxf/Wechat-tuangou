@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "help-photo-popup": "../help-photo-popup/index"
+  }
+}

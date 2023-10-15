@@ -1,0 +1,22 @@
+<wxs src="/wxs/filter.wxs" module="filter"/>
+
+<view class="section">
+  <view class="section-title">
+    <text>关于售后</text>
+  </view>
+  <view class="section-content">
+    <view class="section-prompt" wx:if="{{ objData.AfterSalesInfo }}">
+      <text user-select>{{ objData.AfterSalesInfo }}</text>
+    </view>
+
+    <image 
+      wx:for="{{ filter.split(objData.AfterSales, ';') }}"
+      wx:key="index"
+      class="section-image" 
+      mode="widthFix" 
+      src="{{ item }}" 
+      lazy-load
+      show-menu-by-longpress
+    ></image>
+  </view>
+</view>

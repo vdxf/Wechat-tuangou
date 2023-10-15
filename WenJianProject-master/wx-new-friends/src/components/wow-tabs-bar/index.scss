@@ -1,0 +1,46 @@
+@import 'src/assets/scss/wow-define';
+
+@include b(tabs) {
+
+  @include e(bar) {
+    @extend %df;
+    @extend %w100;
+    @extend %aic;
+    height: j(40);
+    background-color: #fff;
+    border-radius: j(40) j(40) 0 0;
+
+    @include m(text) {
+      @extend %pr;
+    }
+
+    @include m(item) {
+      @extend %df;
+      @extend %df1;
+      @extend %fdc;
+      @extend %aic;
+      @extend %jcc;
+      @extend %c3;
+      @extend %h100;
+      @extend %cp;
+      @extend %ao8;
+      @extend %pr;
+      @extend %fwb;
+      font-weight: 900;
+      font-size: j(16);
+      text-shadow: 0 0 0 j(30) rgba(51, 51, 51, 2),  0 0 j(10) j(30) red;
+      @include when(active) {
+        color: $color-primary;
+        &::after{
+          @extend %pa;
+          @extend %b0;
+          width: j(28);
+          height: j(4);
+          content: '';
+          background-color: $color-primary;
+        }
+      }
+    }
+  }
+
+}

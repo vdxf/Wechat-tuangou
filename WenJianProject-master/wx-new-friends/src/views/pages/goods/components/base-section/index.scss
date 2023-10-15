@@ -1,0 +1,36 @@
+@import 'src/assets/scss/define';
+
+.base-section{
+  background-color: #fff;
+  padding: j(24) j(32);
+}
+.base-title{
+  @extend %fwb;
+  @include twno(2);
+  font-size: j(32);
+  color: #1A1A1A;
+  line-height: j(48);
+}
+.base-tags{
+  @extend %df;
+  @extend %aic;
+  @extend %fww;
+  margin-top: j(24);
+}
+.base-tag{
+  @extend %df;
+  @extend %aic;
+  @extend %jcc;
+  @extend %cfff;
+  border-radius: j(4);
+  height: j(32);
+  font-size: j(20);
+  padding: 0 j(6);
+  margin-right: j(12);
+  &:nth-child(odd){
+    background-color: $color-primary;
+  }
+  &:nth-child(even){
+    background-color: #F0AA05;
+  }
+}

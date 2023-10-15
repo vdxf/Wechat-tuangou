@@ -1,0 +1,37 @@
+{
+    "pages": [
+        "pages/home/index",
+        "pages/auth/index",
+        "pages/demo/index",
+        "pages/goods/index",
+        "pages/search/index",
+        "pages/webview/index"
+    ],
+    "subpackages": [],
+    "window": {
+        "navigationBarTitleText": "新友团",
+        "navigationBarTextStyle": "black",
+        "navigationBarBackgroundColor": "#ffffff"
+    },
+    "tabBar": {
+        "color": "#9EA6B9",
+        "selectedColor": "#FA2D19",
+        "backgroundColor": "#fff",
+        "borderStyle": "black",
+        "position": "bottom",
+        "list": [
+            {
+                "pagePath": "pages/home/index",
+                "text": "首页",
+                "iconPath": "assets/images/tabbar-home-1.png",
+                "selectedIconPath": "assets/images/tabbar-home-2.png"
+            },
+            {
+                "pagePath": "pages/search/index",
+                "text": "搜索",
+                "iconPath": "assets/images/tabbar-search-1.png",
+                "selectedIconPath": "assets/images/tabbar-search-2.png"
+            }
+        ]
+    }
+}

@@ -1,0 +1,93 @@
+/* components/search-action/search-action.wxss */
+@import "../../static/icon/iconfont.wxss";
+.search-section {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  padding: 20rpx;
+  background-color: #fff;
+}
+.search-content {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 710rpx;
+  height: 72rpx;
+  border: 1rpx solid #ebebeb;
+  border-radius: 36rpx;
+  padding-left: 24rpx;
+  padding-right: 4rpx;
+}
+.icon-sousuo {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1A1A1A;
+}
+.search-input-place {
+  color: #BFBFBF;
+}
+.search-close {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-Icon_huabanfuben {
+  color: #ccc;
+  font-size: 32rpx;
+}
+.search-btn {
+  width: 128rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+  background: linear-gradient(90deg, #F0190F 0%, #F03C0A 100%);
+  color: #fff;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-history {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  background-color: rgba(0, 0, 0, .7);
+  backdrop-filter: blur(10px);
+}
+.search-history-content {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  padding: 112rpx 16rpx 32rpx 32rpx;
+}
+.search-history-item {
+  color: #999;
+  font-size: 24rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  background-color: #efefef;
+  max-width: 45%;
+  margin-top: 16rpx;
+  margin-right: 16rpx;
+  display: block;
+  text-wrap: nowrap;
+}
+.search-history-clear {
+  color: #F0190F;
+  background-color: #fff;
+  font-size: 28rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

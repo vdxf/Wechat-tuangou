@@ -17,37 +17,39 @@ Page({
         },
         isLoading: false,
         finished: false,
+        kw: false
     },
-    onChange(e){
-        const kw = e.detail
-        this.setData({
-            value: kw,
-        });
-    },
-    onSearch() {
-        this.onClick()
-    },
-    onClick() {
-        if (this.data.value){
-            this.getGoodsList(this.data.value)
-        }
-    },
-    /**
-     * 生命周期函数--监听页面加载
-     */
     onLoad(options) {
         this.getGoodsList()
     },
+    handleSearch(e){
+        this.setData({
+            'query.Keywords': e.detail,
+            'query.PageIndex': 1,
+        })
+        this.getGoodsList()
+    },
     async getGoodsList(){
+        if (this.data.query.Keywords) {
+            this.setData({kw: true})
+        }
         this.setData({
             isLoading: true
         })
         const { data: res } = await reqGoodsList(this.data.query)
-        this.setData({
-            resultList: [...this.data.resultList, ...res.Data.Data],
-            total: res.Data.Count,
-            isLoading: true
-        })
+        if (!this.data.kw) {
+            this.setData({
+                goodsList: [...this.data.goodsList, ...res.Data.Data],
+                total: res.Data.Count,
+                isLoading: true
+            })
+        } else {
+            this.setData({
+                resultList: this.data.query.PageIndex === 1 ? res.Data.Data : [...this.data.resultList, ...res.Data.Data],
+                total: res.Data.Count,
+                isLoading: true
+            })
+        }
     },
     handleGoodsDetail(e){
         const id = e.currentTarget.dataset.item.Id

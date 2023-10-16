@@ -1,17 +1,12 @@
 <!--pages/search/search.wxml-->
+<search-action bindsearch="handleSearch" keyword="{{KeyWords}}"></search-action>
 <view class="search-view">
-    <view class="search-box">
-        <van-search value="{{ value }}" placeholder="请输入搜索关键词" use-action-slot
-        bind:change="onChange" bind:search="onSearch" shape="round">
-            <view class="search-btn" slot="action" bind:tap="onClick">搜索</view>
-        </van-search>
-    </view> 
     <view class="search-goods-list">
-        <view wx:for="{{resultList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
+        <view wx:for="{{kw ? resultList : goodsList}}" wx:key="Id" wx:for-item="item" data-item="{{item}}" bind:tap="handleGoodsDetail">
             <goods-cart item="{{item}}" :isHome="false"></goods-cart>
         </view>
     </view>
-    <view class="search-result"  wx:if="{{total === 0}}">
+    <view class="search-result"  wx:if="{{total <= 0}}">
         <text>暂未找到相关商品，为您推荐更多内容</text>
     </view>
     <view class="finished" wx:if="{{total && finished}}">

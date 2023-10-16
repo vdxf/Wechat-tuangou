@@ -16,6 +16,9 @@ Page({
             "GroupDate": '',
         },
         isIphoneX: false,
+        isFresh: true,
+        isLoading: false,
+        finished: false,
     },
     /**
      * 生命周期函数--监听页面加载
@@ -57,59 +60,34 @@ Page({
         //     this.getGoodsList()
     },
     async getGoodsList(){
+        this.setData({
+            isLoading: true
+        })
         const query = this.data.query
         const { data: res } = await reqGoodsList(query)
         this.setData({
             goodsList: res.Data.Data,
-            total: res.Data.Count
+            total: res.Data.Count,
+            isLoading: true
         })
-      },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
     },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
+    async handleRefresh(){
+        await this.getGoodsList()
+        this.setData({
+            isFresh: false
+        })
     },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
+    handleReachBottom(){
+        if (this.data.query.PageIndex * this.data.query.PageSize >= this.data.total){
+            this.setData({
+                finished: true
+            })
+            return 
+        }
+        if (!this.data.isLoading) return
+        this.setData({
+            'query.PageIndex': this.data.query.PageIndex + 1
+        })
+        this.getGoodsList()
     },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    }
 })

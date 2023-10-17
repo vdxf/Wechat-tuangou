@@ -14,5 +14,15 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  //配置代理跨域
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://dz.xuetang51.com',
+        changeOrigin: true
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

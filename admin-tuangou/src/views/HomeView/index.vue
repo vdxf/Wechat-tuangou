@@ -1,11 +1,12 @@
 <template>
-  <div>主页</div>
+  <div class="home-view">
+  home
+  </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 </script>
 
 <style scoped lang="scss">
-
 </style>

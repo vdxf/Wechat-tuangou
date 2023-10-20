@@ -1,16 +1,16 @@
 <template>
   <div class="layout-view">
-    <div class="left-nav">
+    <div class="left-nav" :class="{ fold: LayoutSetting.fold ? true : false }">
       <Logo></Logo>
       <el-scrollbar class="scrollbar">
-        <el-menu background-color="#304156" text-color="#fff">
+        <el-menu :collapse="LayoutSetting.fold" :default-active="route.path" background-color="#304156" text-color="#fff">
           <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
     <div class="right">
-      <div class="home-tabbar">
-        456
+      <div class="home-tabbar" :class="{ fold: LayoutSetting.fold ? true : false }">
+        <Tabbar />
       </div>
       <div class="home-content">
         <Main></Main>
@@ -23,6 +23,14 @@
 import Logo from './logo/index.vue'
 import Menu from './menu/index.vue'
 import Main from './main/index.vue'
+import Tabbar from './tabbar/index.vue'
+import useTabbarStore from '@/stores/modules/tabbar'
+const LayoutSetting = useTabbarStore() 
+
+import { useRoute, useRouter } from 'vue-router'
+const route = useRoute()
+const routes = useRouter().options.routes
+console.log('routes =>', routes)
 
 import useUserStore from '@/stores/modules/user'
 const userStore = useUserStore()
@@ -38,6 +46,10 @@ const userStore = useUserStore()
   width: 210px;
   height: 100vh;
   background-color: #304156;
+  transition: all 0.3s;
+  &.fold {
+    width: 60px;
+  }
 }
 .right {
   flex: 1;
@@ -51,6 +63,11 @@ const userStore = useUserStore()
   height: 88px;
   z-index: 9;
   background-color: #fff;
+  transition: all 0.3s;
+  &.fold {
+    width: calc(100vw - 60px);
+    left: 60px;
+  }
 }
 .home-content {
   position: absolute;

@@ -1,15 +1,15 @@
-import axios from 'axios'
+import useUserStore from '@/stores/modules/user'
+import axios, { type AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
-const request = axios.create({
+const ajax = axios.create({
   baseURL: '/api/admin',
   timeout: 10000
 })
 // 请求拦截
-request.interceptors.request.use(
+ajax.interceptors.request.use(
   (config) => {
-    //config: 请求拦截器回调注入的对象(配置对象)
-    //可以通过请求头携带公共参数-token
-    console.log(config, '请求参数 => ')
+    const { data, params } = config
+    console.log(config, '请求参数 => ', data || params)
     return config
   },
   (err) => {
@@ -17,7 +17,7 @@ request.interceptors.request.use(
   }
 )
 // 响应拦截器
-request.interceptors.response.use(
+ajax.interceptors.response.use(
   (response) => {
     const { data: respData, config } = response
     console.log(config, '请求结果 => ', respData)
@@ -53,5 +53,31 @@ request.interceptors.response.use(
     return Promise.reject(new Error(error))
   }
 )
+
+const request = <T = any>(
+  url: string,
+  data: Record<string, any> = {},
+  options?: Omit<AxiosRequestConfig, 'params' | 'data' | 'url'>,
+): Promise<T> => {
+  const { method, headers = {} } = (options = Object.assign(
+    {
+      url,
+      method: 'get',
+    },
+    options,
+  ))
+
+  const userInfo = useUserStore()
+  const { AccessToken } = userInfo || {}
+  if (AccessToken) {
+    options.headers = Object.assign(headers, { AccessToken })
+  }
+
+  return ajax({
+    ...options,
+    url,
+    [method.toLocaleLowerCase() === 'get' ? 'params' : 'data']: data,
+  })
+}
 
 export default request

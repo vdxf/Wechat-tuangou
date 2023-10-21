@@ -13,9 +13,7 @@ export const firstRoute = [
     redirect: '/home',
     name: 'layout',
     component: () => import('@/layout/index.vue'),
-    meta: {
-      title: 'layout'
-    },
+    meta: {},
     children: [
       {
         path: '/home',
@@ -30,6 +28,7 @@ export const firstRoute = [
   {
     path: '/goods',
     name: 'goods',
+    redirect: '/goods/productList',
     component: () => import('@/layout/index.vue'),
     meta: {
       title: '商品管理',
@@ -76,9 +75,7 @@ export const firstRoute = [
   {
     path: '/banner',
     component: () => import('@/layout/index.vue'),
-    meta: {
-      title: 'Banner管理',
-    },
+    meta: {},
     children: [
       {
         path: '/banner',
@@ -92,6 +89,7 @@ export const firstRoute = [
   },
   {
     path: '/data',
+    redirect: '/data/share',
     component: () => import('@/layout/index.vue'),
     meta: {
       title: '数据中心',

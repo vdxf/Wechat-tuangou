@@ -30,7 +30,6 @@ const LayoutSetting = useTabbarStore()
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const routes = useRouter().options.routes
-console.log('routes =>', routes)
 
 import useUserStore from '@/stores/modules/user'
 const userStore = useUserStore()

@@ -6,11 +6,12 @@
       </el-icon>
       <div class="tabber-inner">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="(item, index) in route.matched" :key="index" v-show="item.meta.title">
+            <span>{{ item.meta.title }}</span>
+          </el-breadcrumb-item>
         </el-breadcrumb>
         <div class="tabber-right">
-          <el-button size="default" style="border: none;">
+          <el-button size="default" style="border: none;" @click="handleScreenFull">
             <el-icon size="20"><FullScreen /></el-icon>
           </el-button>
           <el-dropdown>
@@ -20,7 +21,7 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>安全退出</el-dropdown-item>
+                <el-dropdown-item @click="handleLoginOut">安全退出</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -32,12 +33,28 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
+const route = useRoute()
 import useTabbarStore from '@/stores/modules/tabbar'
 const TabbarSetting = useTabbarStore() 
-import { ref } from 'vue'
-const fold = ref(false)
 const handleChangeIcon = () => {
   TabbarSetting.fold = !TabbarSetting.fold
+}
+const handleScreenFull = () => {
+  const full = document.fullscreenElement // 判断当前是否为全屏
+  //切换全屏
+  if (!full) {
+    document.documentElement.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+}
+import useUserStore from '@/stores/modules/user'
+import router from '@/router';
+const userStore = useUserStore()
+const handleLoginOut = async () => {
+  await userStore.userLoginOut()
+  router.replace('/login')
 }
 </script>
 <style lang="scss" scoped>

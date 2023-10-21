@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 const useTabbarStore = defineStore('TabbarStore', {
   state: () => {
     return {
-      fold: false
+      fold: false,
+      history: [],
     }
   },
   actions: {

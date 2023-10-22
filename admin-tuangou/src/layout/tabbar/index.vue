@@ -2,7 +2,7 @@
   <div class="tabber-view">
     <div class="tabbar-content">
       <el-icon class="change" size="20" @click="handleChangeIcon">
-        <component :is="TabbarSetting.fold ? 'Fold' : 'Expand'"></component>
+        <component :is="TabbarSetting.fold ? 'Expand' : 'Fold'"></component>
       </el-icon>
       <div class="tabber-inner">
         <el-breadcrumb separator="/">

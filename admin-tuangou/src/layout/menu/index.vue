@@ -40,15 +40,9 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-// import useTabbarStore from '@/stores/modules/tabbar'
-// const TabbarSetting = useTabbarStore()
+import { useRouter } from 'vue-router'
 defineProps(['menuList'])
 const router = useRouter()
-// const historyArray = ref([])
-// const route = useRoute()
-// watch(route, (ov, nv) => {console.log('ov => ', ov, 'nv => ', nv)})
 const handleRoute = (e: any) => {
   router.push(e.index)
 }

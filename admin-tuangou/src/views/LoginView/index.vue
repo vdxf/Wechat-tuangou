@@ -46,12 +46,12 @@ const handleLogin = async () => {
   loading.value = true
   try {
     await userStore.userLogin(loginForm)
-    router.replace('/')
     ElMessage({
       type: 'success',
       message: '登录成功'
     })
     loading.value = false
+    router.replace('/home')
   } catch (error) {
     loading.value = false
     ElMessage({

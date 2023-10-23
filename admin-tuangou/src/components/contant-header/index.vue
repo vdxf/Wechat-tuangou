@@ -81,7 +81,6 @@ const openDate = ref('')
 <style scoped lang="scss">
 .card {
   display: flex;
-  width: 100%;
   margin-bottom: 20px;
 }
 .item {

@@ -1,6 +1,6 @@
+import router from '@/router'
 import useUserStore from '@/stores/modules/user'
 import axios, { type AxiosRequestConfig } from 'axios'
-import { ElMessage } from 'element-plus'
 const ajax = axios.create({
   baseURL: '/api/admin',
   timeout: 10000
@@ -21,36 +21,35 @@ ajax.interceptors.response.use(
   (response) => {
     const { data: respData, config } = response
     console.log(config, '请求结果 => ', respData)
+    if (!respData) {
+      return Promise.reject(`网络繁忙，请稍后再试(1)`)
+    }
+    const { Status, Message } = respData
+    if ([201].includes(Status)) {
+      localStorage.removeItem('AccessToken')
+      router.replace('/login')
+      return Promise.reject(`登录已失效，请重新登录`)
+    }
+    if (Status !== 0) {
+      return Promise.reject(Message || `网络繁忙，请稍后再试(2)`)
+    }
     return respData
   },
   (error) => {
-    const status = error.response.status
-    let message = ''
-    switch (status) {
-      case 401:
-        message = '登录时间过期'
-        break
-      case 403: 
-        message = '无权访问'
-        break
-      case 404:
-        message = '请求地址错误'
-        break
-      case 500:
-      case 501:
-      case 502:
-      case 503:
-        message = '服务器出现问题'
-        break
-      default:
-        message = '网络出现问题'
-        break
+    console.log(error.config, '请求错误 => ', error)
+
+    if (error && error.response) {
+      const { status, data: respData } = error.response
+      error = status ? `网络繁忙，请稍后再试[${status}]` : `网络繁忙，请稍后再试(3)`
+      if (respData && respData.Message) {
+        error = respData.Message
+      }
+    } else if (error && error.message) {
+      error = error.message
+    } else {
+      error = `网络繁忙，请稍后再试(4)`
     }
-    ElMessage({
-      type: 'error',
-      message
-    })
-    return Promise.reject(new Error(error))
+    return Promise.reject(error)
   }
 )
 

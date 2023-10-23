@@ -22,7 +22,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to: any, from: any, next: any) => {
-  Nprogress.start()
   const { AccessToken } = userStore
   if (AccessToken) {
     if (to.path === '/login') {
@@ -37,6 +36,7 @@ router.beforeEach((to: any, from: any, next: any) => {
       next({ path: '/login' })
     }
   }
+  Nprogress.start()
 })
 
 router.afterEach((to, from) => {

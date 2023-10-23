@@ -10,7 +10,7 @@ export function setupGuards(router: Router) {
     const isLogin = !!userinfo?.AccessToken
 
     // 是否需要授权，1 需要授权、-1 不需要登录、0 登录、不登录都可以
-    const requiresAuth = to.meta.requiresAuth ?? 1
+    const requiresAuth = to.meta.requires ?? 1
     // 已登录进入到不需要登录的页面，直接跳转回首页
     if (isLogin && requiresAuth === -1) {
       return { path: '/', replace: true }

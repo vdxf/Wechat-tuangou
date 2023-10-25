@@ -7,7 +7,6 @@ Nprogress.configure({ showSpinner: false })
 
 import pinia from '@/stores/index'
 import useUserStore from '@/stores/modules/user'
-const userStore = useUserStore(pinia)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +21,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to: any, from: any, next: any) => {
+  const userStore = useUserStore(pinia)
   const { AccessToken } = userStore
   if (AccessToken) {
     if (to.path === '/login') {

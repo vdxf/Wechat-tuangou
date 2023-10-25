@@ -26,6 +26,8 @@ ajax.interceptors.response.use(
     }
     const { Status, Message } = respData
     if ([201].includes(Status)) {
+      const userInfo = useUserStore()
+      userInfo.AccessToken = ''
       localStorage.removeItem('AccessToken')
       router.replace('/login')
       return Promise.reject(`登录已失效，请重新登录`)

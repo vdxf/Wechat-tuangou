@@ -17,6 +17,8 @@ const useUserStore = defineStore('User', {
       if (res.Status === 0){
         localStorage.setItem("AccessToken", res.Data.AccessToken)
         localStorage.setItem("Id", res.Id)
+        this.AccessToken = res.Data.AccessToken
+        this.Id = res.Data.Id
       } else {
         return Promise.reject(new Error(res.Message))
       }
@@ -25,6 +27,8 @@ const useUserStore = defineStore('User', {
       await reqLoginOut()
       localStorage.removeItem('AccessToken')
       localStorage.removeItem('Id')
+      this.AccessToken =''
+      this.Id = ''
     }
   },
   getters: {}

@@ -13,7 +13,7 @@
         <Tabbar />
       </div>
       <div class="home-content">
-        <Main></Main>
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import Logo from './logo/index.vue'
 import Menu from './menu/index.vue'
-import Main from './main/index.vue'
 import Tabbar from './tabbar/index.vue'
 import useTabbarStore from '@/stores/modules/tabbar'
 const LayoutSetting = useTabbarStore() 

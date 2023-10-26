@@ -95,3 +95,21 @@ export interface PageResponse {
 export interface GetProductListResponse extends Response {
   Data: PageResponse
 }
+//获取商品品牌全部列表返回数据
+export interface Brand {
+  Sort: number,
+  Id: number,
+  Name: string,
+  CreatedDate: string,
+  LastModified: string,
+  IsSuspent: boolean,
+  IsDeleted: boolean,
+  DbOperateType: number
+}
+export interface GetProductBrandAllLisResponse extends Response  {
+  Data: [Brand]
+}
+//新增商品信息返回数据
+export interface PostProduct {
+
+}

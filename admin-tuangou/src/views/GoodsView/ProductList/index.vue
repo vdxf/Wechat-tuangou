@@ -17,23 +17,23 @@
           <template #default="scope">
             <el-row :gutter="20">
               <el-col :span="12">
-                <span>Id: </span>
+                <span>Id</span>
                 <span>{{ scope.row.Id }}</span>
               </el-col>
               <el-col :span="12">
-                <span>品牌: </span>
+                <span>品牌</span>
                 <span>{{ scope.row.BrandName }}</span>
               </el-col>
               <el-col :span="12">
-                <span>编号: </span>
+                <span>编号</span>
                 <span>{{ scope.row.ProductNo }}</span>
               </el-col>
               <el-col :span="12">
-                <span>分组: </span>
+                <span>分组</span>
                 <span>{{ scope.row.BuyGroupName }}</span>
               </el-col>
               <el-col :span="12">
-                <span>小标题: </span>
+                <span>小标题</span>
                 <span>{{ scope.row.SubTitle }}</span>
               </el-col>
               <el-col :span="12">
@@ -188,7 +188,7 @@
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column prop="Name" label="商品" width="500">
+        <el-table-column prop="Name" label="商品" min-width="420px">
           <template #default="scope">
             <div class="goods-data">
               <el-image
@@ -227,21 +227,24 @@
         <el-table-column fixed="right" label="操作" width="80">
           <template #default>
             <div class="edit-group">
-              <el-button type="primary" link>编辑</el-button>
-              <el-button type="warning" link>复制</el-button>
-              <el-button type="danger" link>删除</el-button>
+              <el-button type="primary" link @click="handleEdit">编辑</el-button>
+              <el-button type="warning" link @click="handleCopy">复制</el-button>
+              <el-button type="danger" link @click="handleDelete">删除</el-button>
             </div>
           </template>
         </el-table-column>
       </el-table>
     </template>
   </Table>
+  <FormDialog :show="dialogShow" :formData="formData" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
+import FormDialog from '@/components/FormDialog/index.vue'
 import type { ProductModel } from '@/api/product/type'
+import { ImageType, VideoType } from '@/utils/enums'
 import Table from '@/components/TableView/index.vue'
 import { Plus, Edit } from '@element-plus/icons-vue'
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 //排序
 const handleSort = (e:any) => {
   console.log('sort =>', e)
@@ -250,18 +253,414 @@ const handleSort = (e:any) => {
 const checkedArr = ref<number[]>([])
 const handleSelectionChange = (e:ProductModel[]) => {
   checkedArr.value = e.map((item) => item.Id)
-  console.log(typeof checkedArr.value)
 }
 const handleBatchUpdate = () => {
 
 }
 //新增
+const dialogShow = ref<boolean>(false)
 const handleAddedOrUpdate = () => {
+  dialogShow.value = true
+}
+//编辑
+const handleEdit = () => {
+  dialogShow.value = true
+}
+//复制
+const handleCopy = () => {
+  dialogShow.value = true
+}
+//删除
+const handleDelete = () => {
+  dialogShow.value = true
+}
+const handleCancle = () => {
+  dialogShow.value = false
+}
+const handleSubmit = () => {
   
 }
+const formData = reactive({
+  Name: {
+    label: '名称',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品名称',
+    },
+    rules: [{ required: true, message: '请填写商品名称', trigger: 'blur' }],
+  },
+  ProductNo: {
+    label: '编号',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品编号',
+    },
+  },
+  BrandName: {
+    label: '品牌',
+    value: '',
+    is: 'form-select',
+    labelKey: 'Name',
+    valueKey: 'Name',
+    props: {
+      placeholder: '请选择品牌',
+    },
+  },
+  SubTitle: {
+    label: '小标题',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品小标题',
+    },
+    rules: [{ required: true, message: '请填写商品小标题', trigger: 'blur' }],
+  },
+  ProductModelImageUrl: {
+    label: '模板图片(750 * 600)',
+    value: '',
+    is: 'form-image-upload',
+    width: '45%',
+    props: {
+      imageType: ImageType.GOODS,
+    },
+    rules: [{ required: true, message: '请选择商品模板图片', trigger: 'blur' }],
+  },
+  ProductImageUrl: {
+    label: '主图预览',
+    value: '',
+    is: 'form-image-upload',
+    width: '45%',
+    props: {
+      disabled: true,
+      imageType: ImageType.GOODS,
+    },
+  },
+  Specification: {
+    label: '规格说明',
+    value: '',
+    is: 'form-input',
+    props: {
+      maxlength: 20,
+      showWordLimit: true,
+      placeholder: '请填写规格说明',
+    },
+  },
+  OpenGroupId: {
+    label: '开团日期',
+    is: 'form-select',
+    value: '',
+    labelKey: 'Name',
+    valueKey: 'Id',
+    props: {
+      filterable: true,
+      placeholder: '请选择开团日期',
+    },
+    rules: [{ required: true, message: '请选择开团日期', trigger: 'blur' }],
+  },
+  ProductBannerImageUrl: {
+    label: '商品轮播图(750 * 600)，最多上传10张',
+    value: [],
+    is: 'form-image-upload',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      f.value = d.ProductBannerImageUrl ? d.ProductBannerImageUrl.split(';') : []
+    },
+    props: {
+      max: 10,
+      imageType: ImageType.GOODS,
+    },
+  },
+  ProductBannerVideoUrl: {
+    label: '商品Banner视频',
+    value: '',
+    is: 'form-file-upload',
+    props: {
+      max: 1,
+      fileType: VideoType.GOODS,
+    },
+  },
+  VideoUrls: {
+    label: '团品实拍',
+    value: [],
+    is: 'form-file-upload',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      f.value = d.VideoUrls ? d.VideoUrls.split(';') : []
+    },
+    props: {
+      max: 5,
+      fileType: VideoType.GOODS,
+    },
+  },
+  BuyGroupName: {
+    label: '分组',
+    value: [],
+    is: 'form-select',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
+    },
+    labelKey: 'Name',
+    valueKey: 'Name',
+    width: '100%',
+    props: {
+      filterable: true,
+      multiple: true,
+      placeholder: '请选择商品分组',
+    },
+    rules: [{ required: true, message: '请选择商品分组', trigger: 'blur' }],
+  },
+  Tags: {
+    label: '标签',
+    value: [],
+    is: 'form-select',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      const v = d.Tags || ''
+      f.value = v ? v.split(';') : []
+    },
+    options: [],
+    labelKey: 'Name',
+    valueKey: 'Name',
+    width: '100%',
+    props: {
+      filterable: true,
+      multiple: true,
+      multipleLimit: 4,
+    },
+  },
+  Unit: {
+    label: '单位',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品单位',
+    },
+    rules: [{ required: true, message: '请填写商品单位', trigger: 'blur' }],
+  },
+  Price1: {
+    label: '团购价1（默认RMB）',
+    value: null,
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写商品团购价',
+    },
+    rules: [{ required: true, message: '请填写商品团购价', trigger: 'blur' }],
+  },
+  Price2: {
+    label: '团购价2（新加坡币）',
+    value: null,
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写商品团购价',
+    },
+  },
+  RetailPrice: {
+    label: '分销商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写分销商差价',
+    },
+    rules: [{ required: true, message: '请填写分销商差价', trigger: 'blur' }],
+  },
+  SmallWholesalePrice: {
+    label: '小批发商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写小批发商差价',
+    },
+    rules: [{ required: true, message: '请填写小批发商差价', trigger: 'blur' }],
+  },
+  MiddleWholesalePrice: {
+    label: '中批发商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写中批发商差价',
+    },
+    rules: [{ required: true, message: '请填写中批发商差价', trigger: 'blur' }],
+  },
+  BigWholesalePrice: {
+    label: '大批发商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写大批发商差价',
+    },
+    rules: [{ required: true, message: '请填写大批发商差价', trigger: 'blur' }],
+  },
+  PromotionCost: {
+    label: '推广费用',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写商品推广费用',
+    },
+    rules: [{ required: true, message: '请填写商品推广费用', trigger: 'blur' }],
+  },
+  StockNum: {
+    label: '库存',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 0,
+      placeholder: '请填写商品库存',
+    },
+    rules: [{ required: true, message: '请填写商品库存', trigger: 'blur' }],
+  },
+  Sort: {
+    label: '排序',
+    value: 1,
+    is: 'form-input-number',
+    props: {
+      placeholder: '请填写排序',
+    },
+    rules: [{ required: true, message: '请填写排序', trigger: 'blur' }],
+  },
+  DescriptionInfo: {
+    label: '商品详情文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写商品详情文案',
+    },
+  },
+  Description: {
+    label: '商品详情(最多上传25张)',
+    value: [],
+    is: 'form-image-upload',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      f.value = d.Description ? d.Description.split(';') : []
+    },
+    props: {
+      max: 25,
+      imageType: ImageType.GOODS,
+    },
+  },
+  DescriptionAttri: {
+    label: '商品属性文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写商品属性文案',
+    },
+  },
+  CredentialInfo: {
+    label: '资质认证文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写商品详情文案',
+    },
+  },
+  Credential: {
+    label: '资质认证图片(最多上传5张)',
+    value: [],
+    is: 'form-image-upload',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      f.value = d.Credential ? d.Credential.split(';') : []
+    },
+    width: '100%',
+    props: {
+      max: 5,
+      imageType: ImageType.GOODS,
+    },
+  },
+  AfterSalesInfo: {
+    label: '关于售后文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写关于售后文案',
+    },
+  },
+  AfterSales: {
+    label: '关于售后图片(最多上传5张)',
+    value: [],
+    is: 'form-image-upload',
+    get: (v) => v.join(';'),
+    set: (d, f) => {
+      f.value = d.AfterSales ? d.AfterSales.split(';') : []
+    },
+    width: '100%',
+    props: {
+      max: 5,
+      imageType: ImageType.GOODS,
+    },
+  },
+  IsShelfed: {
+    is: 'form-radio',
+    value: '',
+    label: '是否上架',
+    options: [
+      { label: '是', value: true },
+      { label: '否', value: false },
+    ],
+    rules: [{ required: true, message: '请选择是否上架', trigger: 'blur' }],
+  },
+})
 
 </script>
 <style scoped lang="scss">
+.el-table__expanded-cell{
+  padding: 10px 32px !important;
+  .el-row{
+    font-size: 12px;
+    word-break: break-all;
+  }
+  .el-col{
+    display: flex;
+    padding: 5px 0;
+    span {
+      &:nth-child(1) {
+        color: #999;
+        &::after{
+          content: "：";
+        }
+      }
+      &:nth-child(2) {
+        color: #333;
+      }
+      .el-image{
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+      }
+      a{
+        display: block;
+        text-decoration: underline;
+        color: #134eff;
+      }
+    }
+  }
+}
 .edit-group {
   .el-button {
     padding: 0;
@@ -269,6 +668,26 @@ const handleAddedOrUpdate = () => {
     &:hover {
       opacity: 0.5;
     }
+  }
+}
+.goods-data {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+.goods-info {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  span {
+    color: #333;
+    white-space: nowrap;
+  }
+  p {
+    color: 999px;
+    font-size: 12px;
   }
 }
 </style>

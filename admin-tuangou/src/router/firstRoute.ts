@@ -37,35 +37,35 @@ export const firstRoute = [
     children: [
       {
         path: '/goods/productList',
-        component: () => import('@/views/GoodsView/ProductList/index.vue'),
+        component: () => import('@/views/Goods/ProductListView.vue'),
         meta: {
           title: '商品列表',
         }
       },
       {
         path: '/goods/group',
-        component: () => import('@/views/GoodsView/GroupList/index.vue'),
+        component: () => import('@/views//Goods/GroupListView.vue'),
         meta: {
           title: '分组列表',
         }
       },
       {
         path: '/goods/tag',
-        component: () => import('@/views/GoodsView/TagList/index.vue'),
+        component: () => import('@/views/Goods/TagListView.vue'),
         meta: {
           title: '标签列表',
         }
       },
       {
         path: '/goods/brand',
-        component: () => import('@/views/GoodsView/BrandList/index.vue'),
+        component: () => import('@/views/Goods/BrandListView.vue'),
         meta: {
           title: '品牌列表',
         }
       },
       {
         path: '/goods/open-group',
-        component: () => import('@/views/GoodsView/CreatList/index.vue'),
+        component: () => import('@/views/Goods/OpenGroupView.vue'),
         meta: {
           title: '开团列表',
         }

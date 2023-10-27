@@ -1,7 +1,7 @@
 <template>
   <el-card class="card" body-style="display: flex; align-items: center; flex-wrap: wrap;">
-    <el-input class="item" v-model="form.input" placeholder="请输入搜索关键词" clearable></el-input>
-    <el-select v-model="form.value1" class="item" placeholder="请选择分组" size="default">
+    <el-input class="item" v-model="form.Keywords" placeholder="请输入搜索关键词" clearable></el-input>
+    <el-select v-model="form.BuyGroupId" class="item" placeholder="请选择分组" size="default" v-if="show">
       <el-option
         v-for="item1 in options1"
         :key="item1.value"
@@ -9,7 +9,7 @@
         :value="item1.value"
       />
     </el-select>
-    <el-select v-model="form.value2" class="item" placeholder="请选择是否上架" size="default">
+    <el-select v-model="form.IsShelfed" class="item" placeholder="请选择是否上架" size="default" v-if="show">
         <el-option
           v-for="item2 in options2"
           :key="item2.value"
@@ -17,9 +17,9 @@
           :value="item2.value"
         />
     </el-select>
-    <div class="block">
+    <div class="block" v-if="show">
       <el-date-picker
-        v-model="form.startDate"
+        v-model="form.date"
         type="datetimerange"
         start-placeholder="开始时间"
         end-placeholder="结束时间"
@@ -27,10 +27,10 @@
         value-format="YYYY-MM-DD HH:mm:ss"
       />
     </div>
-    <div class="block">
+    <div class="block" v-if="show">
       <el-date-picker
       style="width: 180px;"
-        v-model="form.openDate"
+        v-model="form.GroupDate"
         type="datetime"
         placeholder="开团时间"
         format="YYYY/MM/DD HH:mm:ss"
@@ -45,21 +45,33 @@
 </template>
 <script lang="ts" setup>
 import { Search, RefreshRight } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
+import { onBeforeMount, reactive, ref } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const show = ref<boolean>(true)
+onBeforeMount(() => {
+  if (route.path === '/goods/productList') {
+    show.value = true
+  } else {
+    show.value = false
+  }
+})
+
+console.log('route => ', route.path)
 defineProps(['loading'])
 let form = reactive({
-  input: '',
-  value1: '',
-  value2: '',
-  startDate: '',
-  openDate: ''
+  Keywords: '',
+  BuyGroupId: '',
+  IsShelfed: '',
+  date: [],
+  GroupDate: ''
 })
 const handleClear = () => {
-  form.input = ''
-  form.value1 = ''
-  form.value2 = ''
-  form.startDate = ''
-  form.openDate = ''
+  form.Keywords = ''
+  form.BuyGroupId = ''
+  form.IsShelfed = ''
+  form.date = []
+  form.GroupDate = ''
 }
 const options1 = [
   {

@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="props.show" title="新增" @close="$emit('cancle')">
-   <el-form :rules="rules">
-    <el-form-item v-for="(item, key) in formData" :key="key" :label="item.label" :prop="key">
+   <el-form :rules="rules" :model="formData">
+    <el-form-item v-for="(item, key) in formData" :key="key" :label="item.label" :prop="item.rules">
       <el-input v-if="item.is === 'form-input'" v-model="item.value" placeholder="请填写" clearable v-bind="item.props" />
       <el-select v-else-if="item.is === 'form-select'" v-model="item.value" placeholder="请选择" clearable v-bind="item.props">
         <el-options v-for="(option, index) in item.options" :key="index" v-bind="option.props" :label="option[item.labelKey || 'label'] || option"
@@ -72,8 +72,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 const props = defineProps(['show','formData'])
-const rules = ref<Record<string, any>>({})
 const loading = ref<boolean>(false)
+const rules = ref()
 
 </script>
 <style scoped lang="scss"></style>

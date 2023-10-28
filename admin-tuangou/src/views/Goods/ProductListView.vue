@@ -236,7 +236,7 @@
       </el-table>
     </template>
   </Table>
-  <FormDialog :show="dialogShow" :formData="formData" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
+  <FormDialog :show="dialogShow" :formData="formData" :title="title" :Id="Id" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
 import FormDialog from '@/components/FormDialog/index.vue'
@@ -247,6 +247,8 @@ import { Plus, Edit } from '@element-plus/icons-vue'
 import { onBeforeMount, reactive, ref } from 'vue';
 import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList } from '@/api/product'
 
+const title = ref<string>('')
+const Id = ref<number>()
 const data = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqProductList({PageIndex, PageSize, ...query})
@@ -256,18 +258,27 @@ const handleRequest = async ([PageIndex, PageSize], query) => {
 const handleSort = (e:any) => {
   console.log('sort =>', e)
 }
-//批量修改
+//勾选 / 取消勾选
 const checkedArr = ref<number[]>([])
 const handleSelectionChange = (e:ProductModel[]) => {
   checkedArr.value = e.map((item) => item.Id)
 }
+//批量处理
 const handleBatchUpdate = () => {
 
 } 
 //新增  / 编辑
 const dialogShow = ref<boolean>(false)
 const handleAddedOrUpdate = (e?:any) => {
-  console.log('e => ', e)
+  title.value = e?.Id ? '编辑' : '新增'
+  if (e?.Id) {
+    Id.value = e.Id
+    Object.entries(e).forEach(([key, value]) => {
+      if ( formData[key] ) {
+        formData[key].value = value
+      }
+    })
+  }
   dialogShow.value = true
 }
 //复制

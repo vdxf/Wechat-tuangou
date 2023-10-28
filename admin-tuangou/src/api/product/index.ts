@@ -15,3 +15,5 @@ export const reqOpenGroupList = (data: PageParams) => request<GetOpenGroupListRe
 export const reqPostProduct = (data:ProductModel) => request<PostProductResponse>('/Product/PostProduct', data, { method: 'POST' })
 //新增/修改团购分组信息
 export const reqPostBuyGroup = (data:PostBuyGroup) => request<PostBuyGroupResponse>('/Product/PostBuyGroup', data, { method: 'POST' })
+//删除团购分组详情
+export const reqDeleteBuyGroup = (data: {Id:number}) => request('/Product/DelBuyGroupInfo', data, { method: 'GET' })

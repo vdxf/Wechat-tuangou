@@ -1,5 +1,5 @@
 <template>
-  <Table @request="handleRequest" :data="data">
+  <Table @request="handleRequest" :data="data" ref="childRef">
     <template #actions>
       <el-button type="primary" plain :icon="Plus" @click="handleAddedOrUpdate">新增</el-button>
     </template>
@@ -34,14 +34,18 @@
       </template>
     </ElTableColumn>
   </Table>
-  <FormDialog :show="dialogShow" :formData="formData" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
+  <FormDialog :show="dialogShow" :title="title" :Id="Id" :formData="formData" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
 import FormDialog from '@/components/FormDialog/index.vue'
 import { Plus } from '@element-plus/icons-vue'
-import { reqBuyGroupList, reqPostBuyGroup } from '@/api/product';
+import { reqBuyGroupList, reqDeleteBuyGroup, reqPostBuyGroup } from '@/api/product';
 import Table from '@/components/Table/TableView.vue'
 import { reactive, ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus';
+const childRef = ref()
+const title = ref<string>('')
+const Id = ref<number>()
 const data = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqBuyGroupList({PageIndex, PageSize, ...query})
@@ -50,19 +54,56 @@ const handleRequest = async ([PageIndex, PageSize], query) => {
 //新增 / 编辑
 const dialogShow = ref<boolean>(false)
 const handleAddedOrUpdate = (e?:any) => {
+  title.value = e.Id ? '编辑' : '新增' 
+  if (e.Id) {
+    Id.value = e.Id
+    Object.entries(e).forEach(([key, value]) => {
+      if ( formData[key] ) {
+        formData[key].value = value
+      }
+    })
+  }
   dialogShow.value = true
 }
 //删除
-const handleDelete = (e:any) => {
-  console.log('e => ', e)
+const handleDelete = async (e:any) => {
+  ElMessageBox.confirm(
+    '您确认要删除此项吗？',
+    '温馨提示！',
+    {
+      confirmButtonText: '确认删除',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+  .then(async () => {
+    await reqDeleteBuyGroup({Id: e.Id})
+    ElMessage({
+      type: 'success',
+      message: '删除成功',
+    })
+    childRef.value.handleReqTableList([1,10])
+  })
+  .catch(() => {
+    ElMessage({
+      type: 'info',
+      message: '取消删除',
+    })
+  })
 }
 const handleCancle = () => {
+  Object.entries(formData).forEach(([key]) => {
+    if (key !== 'Sort') {
+      formData[key].value = ''
+    }
+  })
   dialogShow.value = false
 }
-const handleSubmit = async () => {
-  const query = Object.entries(formData)
-  await reqPostBuyGroup({...query})
+const handleSubmit = async (query: any, Id:any) => {
+  await reqPostBuyGroup({...query, Id})
+  childRef.value.handleReqTableList([1,10])
   dialogShow.value = false
+  ElMessage.success('操作成功')
 }
 const formData = reactive({
   Name: {

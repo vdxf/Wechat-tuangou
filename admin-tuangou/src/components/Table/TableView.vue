@@ -43,9 +43,12 @@ const handleSearch = (value:any) => {
   setData()
 }
 const handleReqTableList = async (e:any) => {
-  $emit('request', [e.pageIndex, e.pageSize || 10])
+  $emit('request', [e.pageIndex || 1, e.pageSize || 10])
   setData()
 }
+defineExpose({
+  handleReqTableList
+})
 </script>
 
 <style scoped lang="scss"></style>

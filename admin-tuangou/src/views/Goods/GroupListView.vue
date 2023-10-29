@@ -43,6 +43,7 @@ import { reqBuyGroupList, reqDeleteBuyGroup, reqPostBuyGroup } from '@/api/produ
 import Table from '@/components/Table/TableView.vue'
 import { reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
+
 const childRef = ref()
 const title = ref<string>('')
 const Id = ref<number>()

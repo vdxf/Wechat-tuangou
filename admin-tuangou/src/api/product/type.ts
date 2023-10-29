@@ -149,8 +149,11 @@ export interface Brand {
   IsDeleted: boolean,
   DbOperateType: number
 }
-export interface GetProductBrandListResponse extends Response  {
+export interface BrandList extends PageResult {
   Data: [Brand]
+}
+export interface GetProductBrandListResponse extends Response  {
+  Data: BrandList
 }
 //获取团购分组列表
 export interface BuyGroup extends Brand {
@@ -267,4 +270,23 @@ export interface PostBuyGroup {
 //新增/修改团购分组信息返回数据
 export interface PostBuyGroupResponse extends Response {
   Data: BuyGroup
+}
+//新增/修改商品标签信息
+export interface PostProductTag {
+  Id: string,
+  CreatedDate: string,
+  Name: string,
+  Sort: number,
+}
+//新增/修改商品标签信息返回数据
+export interface PostProductTagResponse extends Response {
+  Data: Brand
+}
+//新增/修改开团信息
+export interface PostOpenGroup {
+  Id: string,
+  CreatedDate: string,
+  Name: string,
+  GroupDate: string,
+  GroupEndDate: string
 }

@@ -2,10 +2,10 @@
   <el-dialog v-model="props.show" :title="props.title" @close="$emit('cancle')">
    <el-form :rules="rules" :model="formData">
     <el-form-item v-for="(item, key) in formData" :key="key" :label="item.label" :prop="key">
+    <p>{{ item?.options?.Data }}</p>
       <el-input v-if="item.is === 'form-input'" v-model="item.value" placeholder="请填写" clearable v-bind="item.props" />
       <el-select v-else-if="item.is === 'form-select'" v-model="item.value" placeholder="请选择" clearable v-bind="item.props">
-        <el-options v-for="(option, index) in item.options" :key="index" v-bind="option.props" :label="option[item.labelKey || 'label'] || option"
-            :value="option[item.valueKey || 'value'] ?? option" />
+        <el-options v-for="option1 in item?.options?.Data" :key="option1.Id" :label="option1.Name" :value="option1.Id" />
       </el-select>
       <template v-else-if="item.is === 'form-radio'">
         <el-radio-group>
@@ -70,9 +70,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, onBeforeMount, reactive } from 'vue'
 const $emit = defineEmits(['submit'])
-const props = defineProps(['show','formData', 'title', 'Id'])
+const props = defineProps(['show','formData', 'title', 'Id', 'metadata'])
 const rules = reactive<Record<string, any>>({})
 const computedProps = computed(() => {
   const formModel: Record<string, any> = {}

@@ -1,5 +1,5 @@
 <template>
-  <Table @request="handleRequest" :data="data">
+  <Table @request="handleRequest" :data="data" ref="childRef">
     <template #actions>
       <el-button type="warning" plain :icon="Edit" @click="handleBatchUpdate()" :disabled="!checkedArr.length">批量处理</el-button>
       <el-button type="primary" plain :icon="Plus" @click="handleAddedOrUpdate()">新增</el-button>
@@ -245,15 +245,42 @@ import { ImageType, VideoType } from '@/utils/enums'
 import Table from '@/components/Table/TableView.vue'
 import { Plus, Edit } from '@element-plus/icons-vue'
 import { onBeforeMount, reactive, ref } from 'vue';
-import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList } from '@/api/product'
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList, reqDeleteProductInfo } from '@/api/product'
 
 const title = ref<string>('')
 const Id = ref<number>()
 const data = ref()
+const childRef = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqProductList({PageIndex, PageSize, ...query})
  data.value = [res.Data, res.Count]
 }
+//获取分组
+const mapOptions = reactive<{
+  groups: BuyGroup[]
+  tags: Brand[]
+  brands: Brand[]
+  openGroups: OpenGroup[]
+}>({
+  groups: [],
+  tags: [],
+  brands: [],
+  openGroups: [],
+})
+onBeforeMount(async () => {
+  const [{ Data: groups }, { Data: tags }, { Data: brands }, { Data: openGroups }] =
+    await Promise.all([
+      reqBuyGroupList({ PageIndex: 1, PageSize: 99999 }),
+      reqProductTagList({ PageIndex: 1, PageSize: 99999 }),
+      reqProductBrandList({ PageIndex: 1, PageSize: 99999 }),
+      reqOpenGroupList({ PageIndex: 1, PageSize: 99999 }),
+    ])
+  mapOptions.groups = groups
+  mapOptions.tags = tags
+  mapOptions.brands = brands
+  mapOptions.openGroups = openGroups
+})
 //排序
 const handleSort = (e:any) => {
   console.log('sort =>', e)
@@ -270,6 +297,10 @@ const handleBatchUpdate = () => {
 //新增  / 编辑
 const dialogShow = ref<boolean>(false)
 const handleAddedOrUpdate = (e?:any) => {
+  formData.BuyGroupName.options = mapOptions.groups
+  formData.Tags.options = mapOptions.tags
+  formData.BrandName.options = mapOptions.brands
+  formData.OpenGroupId.options = mapOptions.openGroups
   title.value = e?.Id ? '编辑' : '新增'
   if (e?.Id) {
     Id.value = e.Id
@@ -287,42 +318,44 @@ const handleCopy = () => {
 }
 //删除
 const handleDelete = (e:any) => {
-  console.log('e => ', e)
-  dialogShow.value = true
+  ElMessageBox.confirm(
+    '您确认要删除此项吗？',
+    '温馨提示！',
+    {
+      confirmButtonText: '确认删除',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+  .then(async () => {
+    await reqDeleteProductInfo({Id: e.Id})
+    ElMessage({
+      type: 'success',
+      message: '删除成功',
+    })
+    childRef.value.handleReqTableList([1,10])
+  })
+  .catch(() => {
+    ElMessage({
+      type: 'info',
+      message: '取消删除',
+    })
+  })
 }
 const handleCancle = () => {
-  dialogShow.value = false
-}
-const handleSubmit = async () => {
-  const { Data: res } = await reqPostProduct({
+  Object.entries(formData).forEach(([key]) => {
+    if (key !== 'Sort') {
+      formData[key].value = ''
+    }
   })
   dialogShow.value = false
 }
- //获取分组
- const mapOptions = reactive<{
-    groups: BuyGroup[]
-    tags: Brand[]
-    brands: Brand[]
-    openGroups: OpenGroup[]
-  }>({
-    groups: [],
-    tags: [],
-    brands: [],
-    openGroups: [],
-  })
-  onBeforeMount(async () => {
-    const [{ Data: groups }, { Data: tags }, { Data: brands }, { Data: openGroups }] =
-      await Promise.all([
-        reqBuyGroupList({ PageIndex: 1, PageSize: 99999 }),
-        reqProductTagList({ PageIndex: 1, PageSize: 99999 }),
-        reqProductBrandList({ PageIndex: 1, PageSize: 99999 }),
-        reqOpenGroupList({ PageIndex: 1, PageSize: 99999 }),
-      ])
-    mapOptions.groups = groups
-    mapOptions.tags = tags
-    mapOptions.brands = brands
-    mapOptions.openGroups = openGroups
-  })
+const handleSubmit = async (query:any, Id:any) => {
+  await reqPostProduct({...query, Id})
+  childRef.value.handleReqTableList([1,10])
+  dialogShow.value = false
+  ElMessage.success('操作成功')
+}
 const formData = reactive({
   Name: {
     label: '名称',
@@ -343,7 +376,8 @@ const formData = reactive({
   },
   BrandName: {
     label: '品牌',
-    value: '',
+    value: '222',
+    options: [],
     is: 'form-select',
     props: {
       placeholder: '请选择品牌',
@@ -392,8 +426,7 @@ const formData = reactive({
     label: '开团日期',
     is: 'form-select',
     value: '',
-    labelKey: 'Name',
-    valueKey: 'Id',
+    options: [],
     props: {
       filterable: true,
       placeholder: '请选择开团日期',
@@ -443,8 +476,7 @@ const formData = reactive({
     set: (d, f) => {
       f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
     },
-    labelKey: 'Name',
-    valueKey: 'Name',
+    options: [],
     width: '100%',
     props: {
       filterable: true,
@@ -463,8 +495,6 @@ const formData = reactive({
       f.value = v ? v.split(';') : []
     },
     options: [],
-    labelKey: 'Name',
-    valueKey: 'Name',
     width: '100%',
     props: {
       filterable: true,

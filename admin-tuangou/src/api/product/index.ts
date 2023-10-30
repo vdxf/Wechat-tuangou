@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import type { GetProductList, GetProductListResponse, PageParams, GetProductBrandListResponse, GetBuyGroupListResponse,GetProductTagListResponse, GetOpenGroupListResponse, ProductModel, PostProductResponse,PostBuyGroup, PostBuyGroupResponse, PostProductTag, PostOpenGroup, OpenGroup } from './type'
+import type { GetProductList, GetProductListResponse, PageParams, GetProductBrandListResponse, GetBuyGroupListResponse,GetProductTagListResponse, GetOpenGroupListResponse, ProductModel, PostProductResponse,PostBuyGroup, PostBuyGroupResponse, PostProductTag, PostOpenGroup, OpenGroup, GetBannerListResponse, PostBanner, GetBannerResponse, ClickParamsResponse } from './type'
 
 //获取商品列表
 export const reqProductList = (data: GetProductList) => request<GetProductListResponse>('/Product/GetProductList', data, { method: 'POST' })
@@ -11,6 +11,8 @@ export const reqBuyGroupList = (data: PageParams) => request<GetBuyGroupListResp
 export const reqProductTagList = (data: PageParams) => request<GetProductTagListResponse>('/Product/GetProductTagList',data, { method: 'POST' })
 //获取开团列表
 export const reqOpenGroupList = (data: PageParams) => request<GetOpenGroupListResponse>('/Market/GetOpenGroupList',data, { method: 'POST' })
+//获取Banner列表
+export const reqBannerList = (data: PageParams) => request<GetBannerListResponse>('/Banner/GetBannerList',data, { method: 'POST' })
 //新增/修改商品信息
 export const reqPostProduct = (data:ProductModel) => request<PostProductResponse>('/Product/PostProduct', data, { method: 'POST' })
 //删除商品详情
@@ -31,3 +33,11 @@ export const reqDeleteProductBrand = (data: {Id:number}) => request('/Product/De
 export const reqPostOpenGroup = (data:PostOpenGroup) => request<OpenGroup>('/Market/PostOpenGroup', data, { method: 'POST' })
 //删除开团详情
 export const reqDeleteOpenGroup = (data: {Id:number}) => request('/Market/DelOpenGroupInfo', data, { method: 'GET' })
+//新增/修改开团信息
+export const reqPostBanner = (data:PostBanner) => request<GetBannerResponse>('/Banner/PostBanner', data, { method: 'POST' })
+//删除Banner详情
+export const reqDeleteBannerInfo = (data: {Id:number}) => request('/Banner/DelBannerInfo', data, { method: 'GET' })
+//获取商品点击数据列表
+export const reqClickList = (data: GetProductList) => request<ClickParamsResponse>('/Market/GetTrackDetailClickList',data, { method: 'POST' })
+//获取商品分享数据列表
+export const reqShareList = (data: GetProductList) => request<ClickParamsResponse>('/Market/GetTrackDetailShareList',data, { method: 'POST' })

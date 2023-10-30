@@ -290,3 +290,51 @@ export interface PostOpenGroup {
   GroupDate: string,
   GroupEndDate: string
 }
+//获取Banner列表返回数据
+export interface GetBanner {
+  CreatedDate: string,
+  LastModified: string,
+  IsSuspent: boolean,
+  IsDeleted: boolean,
+  DbOperateType: number,
+  Id: number,
+  Name: string,
+  BannerType: number,
+  ImageUrl: string,
+  AppId: string,
+  PagePath: string,
+  Sort: number,
+} 
+export interface GetBannerResponse extends Response {
+  Data: GetBanner
+}
+export interface GetBannerListResponse extends Response {
+  Data: {
+    PageIndex: number,
+    PageSize: number,
+    Count: number,
+    Data: [GetBanner]
+  }
+}
+//新增/修改Banner信息
+export interface PostBanner extends PostProductTag {
+  BannerType: number,
+  ImageUrl: string,
+  AppId: string,
+  PagePath: string,
+}
+//获取商品点击数据列表
+export interface ClickParams extends ProductModel {
+  OpenId: string,
+  WechatNickName: string,
+  IP: string,
+  ProductNo: string
+}
+export interface ClickParamsResponse extends Response {
+  Data: {
+    PageIndex: number,
+    PageSize: number,
+    Count: number,
+    Data: [ClickParams]
+  }
+}

@@ -98,14 +98,14 @@ export const firstRoute = [
     children: [
       {
         path: '/data/share',
-        component: () => import('@/views/DataView/GoodsShare/index.vue'),
+        component: () => import('@/views/DataView/GoodsShareView.vue'),
         meta: {
           title: '商品分享',
         }
       },
       {
         path: '/data/click',
-        component: () => import('@/views/DataView/GoodsClick/index.vue'),
+        component: () => import('@/views/DataView/GoodsClickView.vue'),
         meta: {
           title: '商品点击',
         }

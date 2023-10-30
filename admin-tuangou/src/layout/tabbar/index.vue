@@ -28,14 +28,23 @@
         </div>
       </div>
     </div>
-    <div class="tabber-history">111111
+    <div class="tabber-history" ref="refTags">
+      <el-tabs type="card" class="tabber-item" closable :model-value="route.path" @tab-remove="handleRemoveTab" @tab-change="handleChangeTab">
+        <el-tab-pane v-for="item in historyList" :key="item.path" :name="item.path" style="height: 30px;">
+          <template #label>
+            <span @contextmenu.prevent="handleContentMenu(item, $event)">
+              {{ item?.meta?.title }}
+            </span>
+          </template>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-const route = useRoute()
 import useTabbarStore from '@/stores/modules/tabbar'
+import { reactive, ref, watch } from 'vue';
+
 const TabbarSetting = useTabbarStore() 
 const handleChangeIcon = () => {
   TabbarSetting.fold = !TabbarSetting.fold
@@ -49,18 +58,69 @@ const handleScreenFull = () => {
     document.exitFullscreen()
   }
 }
+import { useRoute, useRouter } from 'vue-router'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import useUserStore from '@/stores/modules/user'
-import router from '@/router';
+const route = useRoute()
+const router = useRouter()
 const userStore = useUserStore()
 const handleLoginOut = async () => {
   await userStore.userLoginOut()
   router.replace('/login')
 }
+
+const position = reactive({ left: 0, top: 0, visible: false })
+const refTags = ref<HTMLElement>()
+const selectedTag = ref<RouteLocationNormalizedLoaded>()
+const handleContentMenu = (tag: RouteLocationNormalizedLoaded, event: MouseEvent) => {
+  selectedTag.value = tag
+  if (refTags.value) {
+    const menuMinWidth = 105
+    const offsetLeft = refTags.value.getBoundingClientRect().left
+    const { offsetWidth, offsetHeight } = refTags.value
+    const maxLeft = offsetWidth - menuMinWidth
+    const left = event.clientX - offsetLeft + 15
+    position.left = left > maxLeft ? maxLeft : left
+    position.top = event.clientY - offsetHeight
+    position.visible = true
+  }
+}
+const historyList = ref<Array<RouteLocationNormalizedLoaded>>([])
+watch(
+  route, 
+  (value) => {
+    if (!historyList.value.find((item) => item.path === value.path)) {
+      historyList.value.push(Object.assign({}, value))
+    }
+  },
+  { immediate: true }
+)
+const handleChangeTab = (path?: any) => {
+  if(Array.isArray(path)) {
+    historyList.value = []
+  } else {
+    const tag = historyList.value.find((item) => item.path === path)
+    if (tag) {
+      router.push(tag)
+    }
+  }
+}
+const handleRemoveTab = (path: any) => {
+  selectedTag.value = { path } as any
+  handleClose()
+}
+const handleClose = () => {
+    historyList.value = historyList.value.filter((item) => item.path !== selectedTag.value?.path)
+    const latestTag = historyList.value.slice(-1)[0]
+    if (latestTag) {
+      router.push(latestTag)
+    } else {
+      router.replace('/')
+    }
+  }
 </script>
 <style lang="scss" scoped>
 .tabber-view {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -96,8 +156,33 @@ const handleLoginOut = async () => {
   }
 }
 .tabber-history {
-  display: flex;
-  align-items: center;
-  padding: 5px 20px 0 20px;
+  position: relative;
+  box-shadow: 0 1px 1px 0 #f6f6f6 inset;
+  padding: 5px 10px 0;
+  :deep(.el-tabs) {
+    --el-tabs-header-height: 32px;
+  }
+  :deep(.el-tabs__header) {
+    margin-bottom: 0;
+  }
+  :deep(.el-tabs__nav) {
+    border: none;
+  }
+  :deep(.el-tabs__item) {
+    user-select: none;
+    overflow: hidden;
+    padding: 0 24px !important;
+    margin-right: -15px;
+    border: 0;
+    font-size: 13px;
+    font-weight: 400;
+    &:hover {
+      color: #515a6e;
+      background: #dee1e6;
+    }
+  }
+  :deep(.is-icon-close){
+    width: 14px !important;
+  }
 }
 </style>

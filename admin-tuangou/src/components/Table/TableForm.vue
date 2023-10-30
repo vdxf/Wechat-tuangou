@@ -17,7 +17,7 @@
           :value="item2.value"
         />
     </el-select>
-    <div class="block" v-if="show">
+    <div class="block" v-if="show || route.path === '/data/share' || route.path === '/data/click'">
       <el-date-picker
         v-model="form.date"
         type="datetimerange"
@@ -27,7 +27,7 @@
         value-format="YYYY-MM-DD HH:mm:ss"
       />
     </div>
-    <div class="block" v-if="show">
+    <div class="block" v-if="show || route.path === '/data/share' || route.path === '/data/click'">
       <el-date-picker
       style="width: 180px;"
         v-model="form.GroupDate"

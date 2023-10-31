@@ -2,15 +2,14 @@
   <el-dialog v-model="props.show" :title="props.title" @close="$emit('cancle')">
    <el-form :rules="rules" :model="formData">
     <el-form-item v-for="(item, key) in formData" :key="key" :label="item.label" :prop="key">
-    <p>{{ item?.options?.Data }}</p>
       <el-input v-if="item.is === 'form-input'" v-model="item.value" placeholder="请填写" clearable v-bind="item.props" />
       <el-select v-else-if="item.is === 'form-select'" v-model="item.value" placeholder="请选择" clearable v-bind="item.props">
-        <el-options v-for="option1 in item?.options?.Data" :key="option1.Id" :label="option1.Name" :value="option1.Id" />
+        <el-option v-for="option1 in item?.options?.Data" :key="option1.Id" :label="option1.Name" :value="option1.Id" />
       </el-select>
       <template v-else-if="item.is === 'form-radio'">
-        <el-radio-group>
-          <el-radio v-for="(option, index) in item.options" :key="index" v-bind="option.props" :label="option[item.labelKey || 'label'] || option">
-            {{ option[item.labelKey || 'label'] || option }}
+        <el-radio-group v-model="item.value">
+          <el-radio v-for="(option, index) in item.options" :key="index" :label="option.value">
+            {{ option.label }}
           </el-radio>
         </el-radio-group>
       </template>
@@ -41,22 +40,18 @@
           v-model="item.value"
           v-bind="item.props"
         />
-        <ImageUpload
-          v-else-if="item.is === 'form-image-upload'"
-          v-model="item.value"
-          v-bind="item.props"
-        />
+        <div class="image-content" v-else-if="item.is === 'form-image-upload'">
+          <label class="image-box">
+            <el-icon v-if="!imgUrl" class="avatar-uploader-icon"><Plus /></el-icon>
+            <div class="image-choose">
+              <img v-if="imgUrl" :src="imgUrl" class="avatar" />
+            </div>
+            <input type="file" @change="handleFiles" style="opacity: 0;" />
+          </label>
+        </div>
         <FileUpload
-          v-else-if="item.is === 'form-file-upload'"
           v-model="item.value"
           v-bind="item.props"
-        />
-        <ProTags v-else-if="item.is === 'form-tags'" v-model="item.value" v-bind="item.props" />
-        <Component
-          v-else-if="item.is"
-          v-model="item.value"
-          v-bind="{ ...item, ...item.props }"
-          :is="item.is"
         />
     </el-form-item>
    </el-form>
@@ -90,4 +85,21 @@ const handleSubmit = () => {
 }
 
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.image-content {
+  width: 180px;
+  height: 180px;
+  .image-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #119dc8;
+    input {
+      width: 100%;
+    }
+  }
+}
+</style>

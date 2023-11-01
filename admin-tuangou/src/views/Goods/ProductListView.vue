@@ -377,7 +377,6 @@ const formData = reactive({
   BrandName: {
     label: '品牌',
     value: '',
-    options: '',
     labelKey: 'Name',
     valueKey: 'Name',
     is: 'form-select',
@@ -428,7 +427,6 @@ const formData = reactive({
     label: '开团日期',
     is: 'form-select',
     value: '',
-    options: [],
     labelKey: 'Name',
     valueKey: 'Name',
     props: {
@@ -480,10 +478,8 @@ const formData = reactive({
     set: (d, f) => {
       f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
     },
-    options: [],
     labelKey: 'Name',
     valueKey: 'Name',
-    width: '100%',
     props: {
       filterable: true,
       multiple: true,
@@ -500,10 +496,8 @@ const formData = reactive({
       const v = d.Tags || ''
       f.value = v ? v.split(';') : []
     },
-    options: [],
     labelKey: 'Name',
     valueKey: 'Name',
-    width: '100%',
     props: {
       filterable: true,
       multiple: true,

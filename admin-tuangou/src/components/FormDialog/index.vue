@@ -4,7 +4,8 @@
     <el-form-item v-for="(item, key) in formData" :key="key" :label="item.label" :prop="key">
       <el-input v-if="item.is === 'form-input'" v-model="item.value" placeholder="请填写" clearable v-bind="item.props" />
       <el-select v-else-if="item.is === 'form-select'" v-model="item.value" placeholder="请选择" clearable v-bind="item.props">
-        <el-option v-for="option1 in item?.options?.Data" :key="option1.Id" :label="option1.Name" :value="option1.Id" />
+        <el-option v-for="option1 in item?.options?.Data" :key="option1.Id" :label="option1[item.labelKey || 'label'] || option1"
+        :value="option1[item.valueKey || 'value'] ?? option1" />
       </el-select>
       <template v-else-if="item.is === 'form-radio'">
         <el-radio-group v-model="item.value">
@@ -46,13 +47,16 @@
             <div class="image-choose">
               <img v-if="imgUrl" :src="imgUrl" class="avatar" />
             </div>
-            <input type="file" @change="handleFiles" style="opacity: 0;" />
+            <input type="file" @change="handleUploadImage" style="opacity: 0;" />
           </label>
         </div>
-        <FileUpload
-          v-model="item.value"
-          v-bind="item.props"
-        />
+        <div class="upload-file"  v-else-if="item.is === 'form-file-upload'">
+          <el-button type="primary" icon="upload">
+            上传文件
+            <input type="file" @change="handleUpoadFiles" style="opacity: 0;">
+          </el-button>
+        </div>
+        
     </el-form-item>
    </el-form>
    <template #footer>
@@ -65,7 +69,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive } from 'vue'
+import { reqUploadImage } from '@/api/product';
+import { computed, reactive, ref } from 'vue'
 const $emit = defineEmits(['submit'])
 const props = defineProps(['show','formData', 'title', 'Id', 'metadata'])
 const rules = reactive<Record<string, any>>({})
@@ -84,6 +89,16 @@ const handleSubmit = () => {
   $emit('submit', computedProps.value.formModel, props.Id)
 }
 
+const files = ref('')
+const imgUrl = ref('')
+const handleUploadImage = async (event:any) => {
+  files.value = event.target.files
+  let formData = new FormData()
+  formData.append('file', files.value[0])
+
+  const res = await reqUploadImage()
+}
+const handleUpoadFiles = () => {}
 </script>
 <style scoped lang="scss">
 .image-content {

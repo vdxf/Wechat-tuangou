@@ -1,5 +1,6 @@
 import request from '@/utils/request'
-import type { GetProductList, GetProductListResponse, PageParams, GetProductBrandListResponse, GetBuyGroupListResponse,GetProductTagListResponse, GetOpenGroupListResponse, ProductModel, PostProductResponse,PostBuyGroup, PostBuyGroupResponse, PostProductTag, PostOpenGroup, OpenGroup, GetBannerListResponse, PostBanner, GetBannerResponse, ClickParamsResponse } from './type'
+import type { ImageType, VideoType } from '@/utils/enums'
+import type { GetProductList, GetProductListResponse, PageParams, GetProductBrandListResponse, GetBuyGroupListResponse,GetProductTagListResponse, GetOpenGroupListResponse, ProductModel, PostProductResponse,PostBuyGroup, PostBuyGroupResponse, PostProductTag, PostOpenGroup, OpenGroup, GetBannerListResponse, PostBanner, GetBannerResponse, ClickParamsResponse, UploadImage } from './type'
 
 //获取商品列表
 export const reqProductList = (data: GetProductList) => request<GetProductListResponse>('/Product/GetProductList', data, { method: 'POST' })
@@ -41,3 +42,7 @@ export const reqDeleteBannerInfo = (data: {Id:number}) => request('/Banner/DelBa
 export const reqClickList = (data: GetProductList) => request<ClickParamsResponse>('/Market/GetTrackDetailClickList',data, { method: 'POST' })
 //获取商品分享数据列表
 export const reqShareList = (data: GetProductList) => request<ClickParamsResponse>('/Market/GetTrackDetailShareList',data, { method: 'POST' })
+//上传图片
+export const reqUploadImage = (data: {Basic: string; Suffix: string; ImageType: ImageType}) => request<UploadImage>('/Comm/UploadImage',data, { method: 'POST' })
+//上传视频
+export const reqUploadVideo = (data: {VideoFile: string; VideoType: VideoType; IsRawFileName: Boolean}) => request('/Comm/UploadImage',data, { method: 'POST' })

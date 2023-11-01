@@ -338,3 +338,6 @@ export interface ClickParamsResponse extends Response {
     Data: [ClickParams]
   }
 }
+export interface UploadImage extends Response {
+  Data: string
+}

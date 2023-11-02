@@ -23,16 +23,13 @@ import { ref, onBeforeMount } from 'vue'
 const Data = ref()
 const Count = ref()
 const $emit = defineEmits(['request'])
-const props = defineProps(['data'])
+const currenPage = ref<number>(1)
 onBeforeMount(() => {
   $emit('request', [1, 10])
-  setData()
 })
-const setData = () => {
-  setTimeout(() => {
-    Data.value = props.data[0]
-    Count.value = props.data[1]
-  },1000)
+const setData = (e:any) => {
+ Data.value = e[0]
+ Count.value = e[1]
 }
 const handleSearch = (value:any) => {
   if (value.date){
@@ -40,13 +37,15 @@ const handleSearch = (value:any) => {
     value.EndDate = value.date[1]
   }
   $emit('request', [1, 10], value)
-  setData()
 }
 const handleReqTableList = async (e:any) => {
-  $emit('request', [e.pageIndex || 1, e.pageSize || 10])
-  setData()
+  if (e.pageIndex){
+    currenPage.value = e.pageIndex
+  }
+  $emit('request', [currenPage.value, e.pageSize || 10])
 }
 defineExpose({
+  setData,
   handleReqTableList
 })
 </script>

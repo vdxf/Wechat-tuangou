@@ -1,5 +1,5 @@
 <template>
-  <Table @request="handleRequest" :data="data" ref="childRef">
+  <Table @request="handleRequest" ref="childRef">
     <template #actions>
       <el-button type="primary" plain :icon="Plus" @click="handleAddedOrUpdate">新增</el-button>
     </template>
@@ -71,10 +71,9 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 const childRef = ref()
 const title = ref<string>('')
 const Id = ref<number>()
-const data = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqBannerList({PageIndex, PageSize, ...query})
- data.value = [res.Data, res.Count]
+ childRef.value.setData([res.Data, res.Count])
 }
 //新增 / 编辑
 const dialogShow = ref<boolean>(false)
@@ -117,6 +116,7 @@ const handleDelete = async (e:any) => {
   })
 }
 const handleCancle = () => {
+  Id.value = undefined
   Object.entries(formData).forEach(([key]) => {
     if (key !== 'Sort') {
       formData[key].value = ''
@@ -130,7 +130,7 @@ const handleSubmit = async (query: any, Id:any) => {
   dialogShow.value = false
   ElMessage.success('操作成功')
 }
-const formData = reactive({
+const formData = reactive<any>({
   Name: {
     label: '名称',
     value: '',

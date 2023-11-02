@@ -1,5 +1,5 @@
 <template>
-  <Table @request="handleRequest" :data="data" ref="childRef">
+  <Table @request="handleRequest" ref="childRef">
     <template #actions>
       <el-button type="warning" plain :icon="Edit" @click="handleBatchUpdate()" :disabled="!checkedArr.length">批量处理</el-button>
       <el-button type="primary" plain :icon="Plus" @click="handleAddedOrUpdate()">新增</el-button>
@@ -228,7 +228,7 @@
           <template #default="scope">
             <div class="edit-group">
               <el-button type="primary" link @click="handleAddedOrUpdate(scope.row)">编辑</el-button>
-              <el-button type="warning" link @click="handleCopy">复制</el-button>
+              <el-button type="warning" link @click="handleCopy(scope.row)">复制</el-button>
               <el-button type="danger" link @click="handleDelete(scope.row)">删除</el-button>
             </div>
           </template>
@@ -239,22 +239,23 @@
   <FormDialog :show="dialogShow" :formData="formData" :title="title" :Id="Id" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
+import { formatDate, isEmptyObject, debounce } from '@daysnap/utils'
+import banana from '@daysnap/banana'
 import FormDialog from '@/components/FormDialog/index.vue'
 import type { Brand, BuyGroup, OpenGroup, ProductModel } from '@/api/product/type'
 import { ImageType, VideoType } from '@/utils/enums'
 import Table from '@/components/Table/TableView.vue'
 import { Plus, Edit } from '@element-plus/icons-vue'
-import { onBeforeMount, reactive, ref } from 'vue';
+import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList, reqDeleteProductInfo } from '@/api/product'
 
 const title = ref<string>('')
 const Id = ref<number>()
-const data = ref()
 const childRef = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqProductList({PageIndex, PageSize, ...query})
- data.value = [res.Data, res.Count]
+ childRef.value.setData([res.Data, res.Count])
 }
 //获取分组
 const mapOptions = reactive<{
@@ -282,20 +283,34 @@ onBeforeMount(async () => {
   mapOptions.openGroups = openGroups
 })
 //排序
-const handleSort = (e:any) => {
-  console.log('sort =>', e)
+const handleSort =async (item: ProductModel, Sort:any) => {
+  await reqPostProduct({...item, Sort})
 }
 //勾选 / 取消勾选
-const checkedArr = ref<number[]>([])
+const checkedArr = ref<any>([])
 const handleSelectionChange = (e:ProductModel[]) => {
   checkedArr.value = e.map((item) => item.Id)
 }
 //批量处理
 const handleBatchUpdate = () => {
-
+  console.log('checkedArr => ', checkedArr.value)
 } 
 //新增  / 编辑
 const dialogShow = ref<boolean>(false)
+const meatDataRef = ref<any>()
+// watch(
+//   () => meatDataRef.value,
+//   async (nv) => {
+//     const options = banana.extract(nv)
+//     const base64 = await generatorGoodsIamge( options, mapOptions.openGroups )
+//     if (base64) {
+//       nv.ProductImageUrl.value = base64
+//     }
+//   },
+//   {
+//     deep:true
+//   }
+// )
 const handleAddedOrUpdate = (e?:any) => {
   formData.BuyGroupName.options = mapOptions.groups
   formData.Tags.options = mapOptions.tags
@@ -313,7 +328,7 @@ const handleAddedOrUpdate = (e?:any) => {
   dialogShow.value = true
 }
 //复制
-const handleCopy = () => {
+const handleCopy = (e:any) => {
   dialogShow.value = true
 }
 //删除
@@ -343,6 +358,7 @@ const handleDelete = (e:any) => {
   })
 }
 const handleCancle = () => {
+  Id.value = undefined
   Object.entries(formData).forEach(([key]) => {
     if (key !== 'Sort') {
       formData[key].value = ''

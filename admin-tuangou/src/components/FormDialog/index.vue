@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="props.show" :title="props.title" @close="$emit('cancle')">
-   <el-form :rules="rules" :model="formData">
+   <el-form :rules="rules.value" :model="formData">
     <el-form-item v-for="(item, key) in formData" :key="key" :label="item.label" :prop="key">
       <el-input v-if="item.is === 'form-input'" v-model="item.value" placeholder="请填写" clearable v-bind="item.props" />
       <el-select v-else-if="item.is === 'form-select'" v-model="item.value" placeholder="请选择" clearable v-bind="item.props">
@@ -71,14 +71,14 @@
 <script setup lang="ts">
 import { reqUploadImage } from '@/api/product';
 import { computed, reactive, ref } from 'vue'
-const $emit = defineEmits(['submit'])
+const $emit = defineEmits(['submit', 'cancle'])
 const props = defineProps(['show','formData', 'title', 'Id', 'metadata'])
 const rules = reactive<Record<string, any>>({})
 const computedProps = computed(() => {
   const formModel: Record<string, any> = {}
   const formRules: Record<string, any> = {}
   Object.entries(props.formData).forEach(([key, item]) => {
-    let { value, rules } = item
+    const { value, rules } = item as any
     formModel[key] = value
     formRules[key] = rules
   })

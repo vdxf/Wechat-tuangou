@@ -1,5 +1,5 @@
 <template>
-  <Table @request="handleRequest" :data="data">
+  <Table @request="handleRequest" ref="childRef">
     <ElTableColumn type="expand">
       <template #default="scope">
         <ElRow :gutter="20">
@@ -57,10 +57,10 @@ import { reqShareList } from '@/api/product';
 import Table from '@/components/Table/TableView.vue'
 import { ref } from 'vue';
 
-const data = ref()
+const childRef = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqShareList({PageIndex, PageSize, ...query})
- data.value = [res.Data, res.Count]
+ childRef.value.setData([res.Data, res.Count])
 }
 </script>
 <style scoped lang="scss">

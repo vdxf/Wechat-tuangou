@@ -1,5 +1,5 @@
 <template>
-  <Table @request="handleRequest" :data="data" ref="childRef">
+  <Table @request="handleRequest" ref="childRef">
     <template #actions>
       <el-button type="primary" plain :icon="Plus" @click="handleAddedOrUpdate">新增</el-button>
     </template>
@@ -11,10 +11,6 @@
             <span>Id</span>
             <span>{{ scope.row.Id }}</span>
           </ElCol>
-          <ElCol :span="12">
-            <span>排序</span>
-            <span>{{ scope.row.Sort }}</span>
-          </ElCol>
         </ElRow>
       </template>
     </ElTableColumn>
@@ -22,14 +18,13 @@
     <ElTableColumn prop="Name" label="名称" show-overflow-tooltip />
     <ElTableColumn label="开团时间" show-overflow-tooltip>
       <template #default="scope">
-        {{ scope.row }}
-        开团时间：{{ scope.row.GroupDate }} ~
-        {{ scope.row.GroupEndDate }}
+        开团时间：{{ formatDate(scope.row.GroupDate) }} ~
+        {{ formatDate(scope.row.GroupEndDate) }}
       </template>
     </ElTableColumn>
     <ElTableColumn label="创建时间" show-overflow-tooltip>
       <template #default="scope">
-        {{ scope.row.CreatedDate }}
+        {{ formatDate(scope.row.CreatedDate) }}
       </template>
     </ElTableColumn>
 
@@ -43,6 +38,7 @@
   <FormDialog :show="dialogShow" :title="title" :Id="Id" :formData="formData" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
+import { formatDate, getDayMillisecond } from '@daysnap/utils'
 import FormDialog from '@/components/FormDialog/index.vue'
 import { Plus } from '@element-plus/icons-vue'
 import { reqOpenGroupList, reqPostOpenGroup, reqDeleteOpenGroup } from '@/api/product';
@@ -53,10 +49,9 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 const childRef = ref()
 const title = ref<string>('')
 const Id = ref<number>()
-const data = ref()
 const handleRequest = async ([PageIndex, PageSize], query) => {
  const { Data:res } = await reqOpenGroupList({PageIndex, PageSize, ...query})
- data.value = [res.Data, res.Count]
+ childRef.value.setData([res.Data, res.Count])
 }
 //新增 / 编辑
 const dialogShow = ref<boolean>(false)
@@ -64,11 +59,19 @@ const handleAddedOrUpdate = (e?:any) => {
   title.value = e.Id ? '编辑' : '新增' 
   if (e.Id) {
     Id.value = e.Id
+    const groupData = ref<any>([])
     Object.entries(e).forEach(([key, value]) => {
-      if ( formData[key] ) {
+      console.log('key => ', key)
+      if (key === 'GroupDate') {
+        groupData.value[0] = value as string
+      } else if (key === 'GroupEndDate') {
+        groupData.value[1] = value as string
+      }
+      if (formData[key] && formData[key] !== 'GroupDate') {
         formData[key].value = value
       }
     })
+    formData.GroupDate.value = groupData.value
   }
   dialogShow.value = true
 }
@@ -99,20 +102,21 @@ const handleDelete = async (e:any) => {
   })
 }
 const handleCancle = () => {
+  Id.value = undefined
   Object.entries(formData).forEach(([key]) => {
-    if (key !== 'Sort') {
-      formData[key].value = ''
-    }
+    formData[key].value = ''
   })
   dialogShow.value = false
 }
 const handleSubmit = async (query: any, Id:any) => {
+  query.GroupEndDate = query.GroupDate[1]
+  query.GroupDate = query.GroupDate[0]
   await reqPostOpenGroup({...query, Id})
   childRef.value.handleReqTableList([1,10])
   dialogShow.value = false
   ElMessage.success('操作成功')
 }
-const formData = reactive({
+const formData = reactive<any>({
   Name: {
     label: '名称',
     value: '',
@@ -131,7 +135,6 @@ const formData = reactive({
       return [`${min} 10:00:00`, `${max} 10:00:00`]
     })(),
     is: 'form-date-picker',
-    width: '100%',
     get: (v) => {
       const [GroupDate, GroupEndDate] = v
       return { GroupDate, GroupEndDate }

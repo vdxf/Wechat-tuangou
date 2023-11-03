@@ -41,22 +41,22 @@
           v-model="item.value"
           v-bind="item.props"
         />
-        <div class="image-content" v-else-if="item.is === 'form-image-upload'">
-          <label class="image-box">
-            <el-icon v-if="!imgUrl" class="avatar-uploader-icon"><Plus /></el-icon>
-            <div class="image-choose">
-              <img v-if="imgUrl" :src="imgUrl" class="avatar" />
-            </div>
-            <input type="file" @change="handleUploadImage" style="opacity: 0;" />
-          </label>
-        </div>
-        <div class="upload-file"  v-else-if="item.is === 'form-file-upload'">
-          <el-button type="primary" icon="upload">
-            上传文件
-            <input type="file" @change="handleUpoadFiles" style="opacity: 0;">
-          </el-button>
-        </div>
-        
+        <ImageUpload 
+          v-else-if="item.is === 'form-image-upload'"
+          v-model="item.value"
+          v-bind="item.props"
+        />
+        <VideoUpload 
+          v-else-if="item.is === 'form-file-upload'"
+          v-model="item.value"
+          v-bind="item.props"
+        />
+        <Component
+          v-else-if="item.is"
+          v-model="item.value"
+          v-bind="{ ...item, ...item.props }"
+          :is="item.is"
+        />
     </el-form-item>
    </el-form>
    <template #footer>
@@ -69,10 +69,11 @@
 </template>
 
 <script setup lang="ts">
-import { reqUploadImage } from '@/api/product';
-import { computed, reactive, ref } from 'vue'
+import ImageUpload from './ImageUpload.vue'
+import VideoUpload from './VideoUpload.vue'
+import { computed, reactive } from 'vue'
 const $emit = defineEmits(['submit', 'cancle'])
-const props = defineProps(['show','formData', 'title', 'Id', 'metadata'])
+const props = defineProps(['show','formData', 'title', 'Id'])
 const rules = reactive<Record<string, any>>({})
 const computedProps = computed(() => {
   const formModel: Record<string, any> = {}
@@ -88,33 +89,6 @@ rules.value = computedProps.value.formRules
 const handleSubmit = () => {
   $emit('submit', computedProps.value.formModel, props.Id)
 }
-
-const files = ref('')
-const imgUrl = ref('')
-const handleUploadImage = async (event:any) => {
-  files.value = event.target.files
-  let formData = new FormData()
-  formData.append('file', files.value[0])
-
-  const res = await reqUploadImage()
-}
-const handleUpoadFiles = () => {}
 </script>
 <style scoped lang="scss">
-.image-content {
-  width: 180px;
-  height: 180px;
-  .image-box {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px dashed #119dc8;
-    input {
-      width: 100%;
-    }
-  }
-}
 </style>

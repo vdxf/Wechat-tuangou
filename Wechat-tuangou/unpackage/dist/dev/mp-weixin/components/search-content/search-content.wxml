@@ -1,1 +1,0 @@
-<view><view class="search-goods-list"><block wx:for="{{goodsList}}" wx:for-item="item" wx:for-index="__i0__" wx:key="Id"><view data-event-opts="{{[['tap',[['handleGoodsDetail',['$0'],[[['goodsList','Id',item.Id,'Id']]]]]]]}}" bindtap="__e"><goods-cart vue-id="{{'0bced4c2-1-'+__i0__}}" item="{{item}}" isHome="{{false}}" bind:__l="__l"></goods-cart></view></block></view></view>

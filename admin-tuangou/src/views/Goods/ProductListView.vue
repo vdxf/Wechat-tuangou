@@ -239,21 +239,20 @@
   <FormDialog :show="dialogShow" :formData="formData" :title="title" :Id="Id" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
-import { formatDate, isEmptyObject, debounce } from '@daysnap/utils'
-import banana from '@daysnap/banana'
 import FormDialog from '@/components/FormDialog/index.vue'
 import type { Brand, BuyGroup, OpenGroup, ProductModel } from '@/api/product/type'
 import { ImageType, VideoType } from '@/utils/enums'
 import Table from '@/components/Table/TableView.vue'
 import { Plus, Edit } from '@element-plus/icons-vue'
-import { onBeforeMount, reactive, ref, watch } from 'vue';
+import { markRaw, onBeforeMount, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import PriceNumber from '@/components/component/PriceNumber.vue'
 import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList, reqDeleteProductInfo } from '@/api/product'
 
 const title = ref<string>('')
 const Id = ref<number>()
 const childRef = ref()
-const handleRequest = async ([PageIndex, PageSize], query) => {
+const handleRequest = async ([PageIndex, PageSize]: any, query: any) => {
  const { Data:res } = await reqProductList({PageIndex, PageSize, ...query})
  childRef.value.setData([res.Data, res.Count])
 }
@@ -297,20 +296,6 @@ const handleBatchUpdate = () => {
 } 
 //新增  / 编辑
 const dialogShow = ref<boolean>(false)
-const meatDataRef = ref<any>()
-// watch(
-//   () => meatDataRef.value,
-//   async (nv) => {
-//     const options = banana.extract(nv)
-//     const base64 = await generatorGoodsIamge( options, mapOptions.openGroups )
-//     if (base64) {
-//       nv.ProductImageUrl.value = base64
-//     }
-//   },
-//   {
-//     deep:true
-//   }
-// )
 const handleAddedOrUpdate = (e?:any) => {
   formData.BuyGroupName.options = mapOptions.groups
   formData.Tags.options = mapOptions.tags
@@ -372,7 +357,7 @@ const handleSubmit = async (query:any, Id:any) => {
   dialogShow.value = false
   ElMessage.success('操作成功')
 }
-const formData = reactive({
+const formData = reactive<any>({
   Name: {
     label: '名称',
     value: '',
@@ -393,6 +378,7 @@ const formData = reactive({
   BrandName: {
     label: '品牌',
     value: '',
+    options: {},
     labelKey: 'Name',
     valueKey: 'Name',
     is: 'form-select',
@@ -413,7 +399,6 @@ const formData = reactive({
     label: '模板图片(750 * 600)',
     value: '',
     is: 'form-image-upload',
-    width: '45%',
     props: {
       imageType: ImageType.GOODS,
     },
@@ -423,7 +408,6 @@ const formData = reactive({
     label: '主图预览',
     value: '',
     is: 'form-image-upload',
-    width: '45%',
     props: {
       disabled: true,
       imageType: ImageType.GOODS,
@@ -443,6 +427,7 @@ const formData = reactive({
     label: '开团日期',
     is: 'form-select',
     value: '',
+    options: {},
     labelKey: 'Name',
     valueKey: 'Name',
     props: {
@@ -455,8 +440,8 @@ const formData = reactive({
     label: '商品轮播图(750 * 600)，最多上传10张',
     value: [],
     is: 'form-image-upload',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
       f.value = d.ProductBannerImageUrl ? d.ProductBannerImageUrl.split(';') : []
     },
     props: {
@@ -477,9 +462,9 @@ const formData = reactive({
     label: '团品实拍',
     value: [],
     is: 'form-file-upload',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
-      f.value = d.VideoUrls ? d.VideoUrls.split(';') : []
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
     },
     props: {
       max: 5,
@@ -490,10 +475,11 @@ const formData = reactive({
     label: '分组',
     value: [],
     is: 'form-select',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
       f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
     },
+    options: {},
     labelKey: 'Name',
     valueKey: 'Name',
     props: {
@@ -507,11 +493,12 @@ const formData = reactive({
     label: '标签',
     value: [],
     is: 'form-select',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
       const v = d.Tags || ''
       f.value = v ? v.split(';') : []
     },
+    options: {},
     labelKey: 'Name',
     valueKey: 'Name',
     props: {
@@ -531,7 +518,11 @@ const formData = reactive({
   },
   Price1: {
     label: '团购价1（默认RMB）',
-    value: null,
+    value: '',
+    is: markRaw(PriceNumber),
+    getSource: () => {
+      return { way: 2, price: formData.Price2.value }
+    },
     props: {
       min: 0,
       precision: 2,
@@ -541,7 +532,11 @@ const formData = reactive({
   },
   Price2: {
     label: '团购价2（新加坡币）',
-    value: null,
+    value: '',
+    is: markRaw(PriceNumber),
+    getSource: () => {
+      return { way: 1, price: formData.Price1.value }
+    },
     props: {
       min: 0,
       precision: 2,
@@ -637,8 +632,8 @@ const formData = reactive({
     label: '商品详情(最多上传25张)',
     value: [],
     is: 'form-image-upload',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
       f.value = d.Description ? d.Description.split(';') : []
     },
     props: {
@@ -670,8 +665,8 @@ const formData = reactive({
     label: '资质认证图片(最多上传5张)',
     value: [],
     is: 'form-image-upload',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
       f.value = d.Credential ? d.Credential.split(';') : []
     },
     width: '100%',
@@ -694,8 +689,8 @@ const formData = reactive({
     label: '关于售后图片(最多上传5张)',
     value: [],
     is: 'form-image-upload',
-    get: (v) => v.join(';'),
-    set: (d, f) => {
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
       f.value = d.AfterSales ? d.AfterSales.split(';') : []
     },
     width: '100%',

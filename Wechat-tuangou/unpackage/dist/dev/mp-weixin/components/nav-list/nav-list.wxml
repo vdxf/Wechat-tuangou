@@ -1,1 +1,0 @@
-<view class="nav-box"><block wx:for="{{buyGroupList}}" wx:for-item="item" wx:for-index="index" wx:key="Id"><view data-event-opts="{{[['tap',[['handleChangeNav',[index,'$0'],[[['buyGroupList','Id',item.Id]]]]]]]}}" class="{{['nav-item',currentIndex===index?'active':'']}}" bindtap="__e"><text>{{item.Name}}</text></view></block></view>

@@ -1,5 +1,0 @@
-export * from './brand'
-export * from './goods'
-export * from './group'
-export * from './open-group'
-export * from './tag'

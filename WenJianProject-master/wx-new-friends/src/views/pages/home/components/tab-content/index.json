@@ -1,9 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "wow-scroll": "/components/wow-scroll/index",
-    "wow-skeleton": "/components/wow-skeleton/index",
-    "wow-end": "/components/wow-end/index",
-    "goods-item": "/components/goods-item/index"
-  }
-}

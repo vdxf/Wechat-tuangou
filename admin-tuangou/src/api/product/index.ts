@@ -45,4 +45,12 @@ export const reqShareList = (data: GetProductList) => request<ClickParamsRespons
 //上传图片
 export const reqUploadImage = (data: {Basic: string; Suffix: string; ImageType: ImageType}) => request<UploadImage>('/Comm/UploadImage',data, { method: 'POST' })
 //上传视频
-export const reqUploadVideo = (data: {VideoFile: string; VideoType: VideoType; IsRawFileName: Boolean}) => request('/Comm/UploadImage',data, { method: 'POST' })
+export const reqUploadVideo = (data: {VideoFile: Blob; VideoType: VideoType; IsRawFileName: Boolean}) => {
+  const file = new FormData()
+  Object.entries(data).forEach(([key, item]) => {
+    file.append(key, item as any)
+  })
+  return request('/Comm/UploadVideo',file, { method: 'POST' })
+}
+//汇率换算
+export const reqGetExchangeRate = (data: {way: 1 | 2}) => request('/Product/GetExchangeRate', data, { method: 'GET' })

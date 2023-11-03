@@ -1,1 +1,0 @@
-<view class="choose-date"><view data-event-opts="{{[['tap',[['prevDate',['$event']]]]]}}" class="yesterday" bindtap="__e">前一天</view><view class="choose-box"><view class="today"><text>{{today}}</text></view></view><view data-event-opts="{{[['tap',[['nextDate',['$event']]]]]}}" class="tomorrow" bindtap="__e">后一天</view></view>

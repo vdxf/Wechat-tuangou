@@ -1,6 +1,7 @@
 <template>
   <Table @request="handleRequest" ref="childRef">
     <template #actions>
+      <el-button type="warning" plain :icon="Edit" @click="handleBatchUpdate()" :disabled="!checkedArr.length">批量处理</el-button>
       <el-button type="primary" plain :icon="Plus" @click="handleAddedOrUpdate()">新增</el-button>
     </template>
 
@@ -235,163 +236,81 @@
       </el-table>
     </template>
   </Table>
-  <el-dialog v-model="showDialog" :title="title" @close="handleCancle()">
-    <el-form :model="form" :rules="rules" inline ref="formRef">
-      <el-form-item prop="Name" label="名称">
-          <el-input v-model="form.Name" placeholder="请填写商品名称"/>
-      </el-form-item>
-      <el-form-item label="编号">
-          <el-input v-model="form.ProductNo" placeholder="请填写商品编号"/>
-      </el-form-item>
-      <el-form-item label="品牌">
-        <el-select v-model="form.BrandName" placeholder="请选择品牌" clearable>
-          <el-option v-for="option in formOptions.brands" :key="option.Id" :label="option.Name" :value="option.Name" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="小标题" prop="SubTitle">
-          <el-input v-model="form.SubTitle" placeholder="请填写商品小标题"/>
-      </el-form-item>
-      <el-form-item label="模板图片(750 * 600)" prop="ProductModelImageUrl">
-        <ImageUpload 
-          v-model="form.ProductModelImageUrl"
-        />
-      </el-form-item>
-      <el-form-item label="主图预览" >
-        <img v-if="form.ProductModelImageUrl" :src="form.ProductImageUrl" alt="img">
-      </el-form-item>
-      <el-form-item label="规格说明" >
-        <el-input v-model="form.Specification" placeholder="请填写规格说明" :maxlength="20" :showWordLimit="true"/>
-      </el-form-item>
-      <el-form-item label="开团日期" prop="OpenGroupId">
-        <el-select v-model="form.OpenGroupId" placeholder="请选择开团日期" clearable>
-          <el-option v-for="option in formOptions.openGroups" :key="option.Id" :label="option.Name" :value="option.Id" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="商品轮播图(750 * 600)，最多上传10张" :style="{width: '90%'}">
-        <BannerImage 
-          v-model="form.ProductBannerImageUrl" :max="10"
-        />
-      </el-form-item>
-      <el-form-item label="商品Banner视频" :style="{width: '100%'}">
-        <VideoUpload
-          :max="1"
-          v-model="form.ProductBannerVideoUrl"
-        />
-      </el-form-item>
-      <el-form-item label="团品实拍" :style="{width: '100%'}">
-        <VideoUpload
-          :max="5"
-          v-model="video"
-        />
-      </el-form-item>
-      <el-form-item label="分组" prop="BuyGroupName" :style="{width: '100%'}">
-        <el-select v-model="buygroups" placeholder="请选择商品分组" clearable filterable multiple>
-          <el-option v-for="option in formOptions.groups" :key="option.Id" :label="option.Name" :value="option.Name" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="标签" :style="{width: '100%'}">
-        <el-select v-model="tag" clearable filterable multiple multipleLimit="4">
-          <el-option v-for="option in formOptions.tags" :key="option.Id" :label="option.Name" :value="option.Name" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="单位" prop="Unit">
-        <el-input v-model="form.Unit" placeholder="请填写商品单位"/>
-      </el-form-item>
-      <el-form-item label="团购价1（默认RMB）" prop="Price1">
-        <Price v-model="form.Price1" :precision="2" :getSource="() => {
-          return { way: 2, price: form.Price2 }
-        }"/>
-      </el-form-item>
-      <el-form-item label="团购价2（新加坡币）">
-        <Price v-model="form.Price2" :precision="2" :getSource="() => {
-          return { way: 1, price: form.Price1 }
-        }"/>
-      </el-form-item>
-      <el-form-item label="分销商差价" prop="RetailPrice">
-        <el-input-number v-model="form.RetailPrice" :precision="2" :min="0" placeholder="请填写分销商差价" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="小批发商差价" prop="SmallWholesalePrice">
-        <el-input-number v-model="form.SmallWholesalePrice" :precision="2" :min="0" placeholder="请填写小批发商差价" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="中批发商差价" prop="MiddleWholesalePrice">
-        <el-input-number v-model="form.MiddleWholesalePrice" :precision="2" :min="0" placeholder="请填写中批发商差价" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="大批发商差价" prop="BigWholesalePrice">
-        <el-input-number v-model="form.BigWholesalePrice" :precision="2" :min="0" placeholder="请填写大批发商差价" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="推广费用" prop="PromotionCost">
-        <el-input-number v-model="form.PromotionCost" :precision="2" :min="0" placeholder="请填写商品推广费用" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="库存" prop="StockNum">
-        <el-input-number v-model="form.StockNum" :min="0" placeholder="请填写商品库存" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="排序" prop="Sort">
-        <el-input-number v-model="form.Sort" :min="0" placeholder="请填写排序" :style="{width: '70%'}" />
-      </el-form-item>
-      <el-form-item label="商品详情文案" :style="{width: '100%'}">
-          <el-input type="textarea" v-model="form.DescriptionInfo" placeholder="请填写商品详情文案"/>
-      </el-form-item>
-      <el-form-item label="商品详情(最多上传25张)" :style="{width: '100%'}">
-        <BannerImage 
-          v-model="form.Description" :max="25"
-        />
-      </el-form-item>
-      <el-form-item label="商品属性文案" :style="{width: '100%'}">
-          <el-input type="textarea" v-model="form.DescriptionInfo" placeholder="请填写商品属性文案"/>
-      </el-form-item>
-      <el-form-item label="资质认证文案" :style="{width: '100%'}">
-          <el-input type="textarea" v-model="form.DescriptionInfo" placeholder="请填写商品详情文案"/>
-      </el-form-item>
-      <el-form-item label="资质认证图片(最多上传5张)" :style="{width: '100%'}">
-        <BannerImage 
-          v-model="form.Credential" :max="5"
-        />
-      </el-form-item>
-      <el-form-item label="关于售后文案" :style="{width: '100%'}">
-          <el-input type="textarea" v-model="form.DescriptionInfo" placeholder="请填写关于售后文案"/>
-      </el-form-item>
-      <el-form-item label="关于售后图片(最多上传5张)" :style="{width: '100%'}">
-        <BannerImage 
-          v-model="form.AfterSales" :max="5"
-        />
-      </el-form-item>
-      <el-form-item label="是否上架">
-        <el-radio-group v-model="form.IsShelfed">
-          <el-radio :label="true" size="large">是</el-radio>
-          <el-radio :label="false" size="large" :style="{ marginLeft: '10px' }">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="handleCancle()">取消</el-button>
-        <el-button type="primary" @click="handleSubmit()">确认</el-button>
-      </span>
-    </template>
-  </el-dialog>
+  <FormDialog :show="dialogShow" :formData="formData" :title="title" :Id="Id" ref="formDialog" @cancle="handleCancle" @submit="handleSubmit"></FormDialog>
 </template>
 <script lang="ts" setup>
-import ImageUpload from '@/components/FormDialog/ImageUpload.vue'
-import BannerImage from '@/components/FormDialog/BannerListImage.vue'
-import VideoUpload from '@/components/FormDialog/VideoUpload.vue'
-import Price from '@/components/component/PriceNumber.vue'
+import FormDialog from '@/components/FormDialog/index.vue'
 import type { Brand, BuyGroup, OpenGroup, ProductModel } from '@/api/product/type'
 import { ImageType, VideoType } from '@/utils/enums'
 import Table from '@/components/Table/TableView.vue'
 import { Plus, Edit } from '@element-plus/icons-vue'
-import { markRaw, onBeforeMount, reactive, ref, watch } from 'vue';
+import { markRaw, onBeforeMount, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import PriceNumber from '@/components/component/PriceNumber.vue'
 import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList, reqDeleteProductInfo } from '@/api/product'
+
+const title = ref<string>('')
+const Id = ref<number>()
 const childRef = ref()
-const formRef = ref()
 const handleRequest = async ([PageIndex, PageSize]: any, query: any) => {
  const { Data:res } = await reqProductList({PageIndex, PageSize, ...query})
  childRef.value.setData([res.Data, res.Count])
 }
+//获取分组
+const mapOptions = reactive<{
+  groups: BuyGroup[]
+  tags: Brand[]
+  brands: Brand[]
+  openGroups: OpenGroup[]
+}>({
+  groups: [],
+  tags: [],
+  brands: [],
+  openGroups: [],
+})
+onBeforeMount(async () => {
+  const [{ Data: groups }, { Data: tags }, { Data: brands }, { Data: openGroups }] =
+    await Promise.all([
+      reqBuyGroupList({ PageIndex: 1, PageSize: 99999 }),
+      reqProductTagList({ PageIndex: 1, PageSize: 99999 }),
+      reqProductBrandList({ PageIndex: 1, PageSize: 99999 }),
+      reqOpenGroupList({ PageIndex: 1, PageSize: 99999 }),
+    ])
+  mapOptions.groups = groups
+  mapOptions.tags = tags
+  mapOptions.brands = brands
+  mapOptions.openGroups = openGroups
+})
 //排序
 const handleSort =async (item: ProductModel, Sort:any) => {
   await reqPostProduct({...item, Sort})
+}
+//勾选 / 取消勾选
+const checkedArr = ref<any>([])
+const handleSelectionChange = (e:ProductModel[]) => {
+  checkedArr.value = e.map((item) => item.Id)
+}
+//批量处理
+const handleBatchUpdate = () => {
+  console.log('checkedArr => ', checkedArr.value)
+} 
+//新增  / 编辑
+const dialogShow = ref<boolean>(false)
+const handleAddedOrUpdate = (e?:any) => {
+  formData.BuyGroupName.options = mapOptions.groups
+  formData.Tags.options = mapOptions.tags
+  formData.BrandName.options = mapOptions.brands
+  formData.OpenGroupId.options = mapOptions.openGroups
+  title.value = e?.Id ? '编辑' : '新增'
+  if (e?.Id) {
+    Id.value = e.Id
+    Object.entries(e).forEach(([key, value]) => {
+      if ( formData[key] ) {
+        formData[key].value = value
+      }
+    })
+  }
+  dialogShow.value = true
 }
 //复制
 const handleCopy = (e:any) => {
@@ -423,138 +342,378 @@ const handleDelete = (e:any) => {
     })
   })
 }
-const title = ref<string>('')
-const showDialog = ref<boolean>(false)
-const video = ref([])
-const buygroups = ref([])
-const tag = ref([])
-const form = reactive({
-  Id: undefined,
-  Name: '',
-  ProductNo: '',
-  BrandName: '',
-  SubTitle: '',
-  ProductModelImageUrl: '',
-  ProductImageUrl: '',
-  Specification: '',
-  OpenGroupId: '',
-  ProductBannerImageUrl: '',
-  ProductBannerVideoUrl: '',
-  VideoUrls: '',
-  BuyGroupName: '',
-  Tags: '',
-  Unit: '',
-  Price1: '',
-  Price2: '',
-  RetailPrice: '',
-  SmallWholesalePrice: '',
-  MiddleWholesalePrice: '',
-  BigWholesalePrice: '',
-  PromotionCost: '',
-  StockNum: '',
-  Sort: 1,
-  DescriptionInfo: '',
-  Description: '',
-  DescriptionAttri: '',
-  CredentialInfo: '',
-  Credential: '',
-  AfterSalesInfo: '',
-  AfterSales: '',
-  IsShelfed: true
-})
-watch(
-  () => [form.ProductModelImageUrl, video.value, buygroups.value, tag.value],
-  (nv) => { form.ProductImageUrl = nv[0]; form.VideoUrls = nv[1].join(';'); form.BuyGroupName = nv[2].join(';'); form.Tags = nv[3].join(';') },
-  {
-    immediate:true
-  }
-)
-const rules = reactive({
-  Name: [{ required: true, message: '请填写商品名称', trigger: 'blur' }],
-  SubTitle: [{ required: true, message: '请填写商品小标题', trigger: 'blur' }],
-  ProductModelImageUrl: [{ required: true, message: '请选择商品模板图片', trigger: 'blur' }],
-  OpenGroupId: [{ required: true, message: '请选择开团日期', trigger: 'blur' }],
-  BuyGroupName: [{ required: true, message: '请选择商品分组', trigger: 'blur' }],
-  Unit: [{ required: true, message: '请填写商品单位', trigger: 'blur' }],
-  Price1: [{ required: true, message: '请填写商品团购价', trigger: 'blur' }],
-  RetailPrice: [{ required: true, message: '请填写分销商差价', trigger: 'blur' }],
-  SmallWholesalePrice: [{ required: true, message: '请填写小批发商差价', trigger: 'blur' }],
-  MiddleWholesalePrice: [{ required: true, message: '请填写中批发商差价', trigger: 'blur' }],
-  BigWholesalePrice: [{ required: true, message: '请填写大批发商差价', trigger: 'blur' }],
-  PromotionCost: [{ required: true, message: '请填写商品推广费用', trigger: 'blur' }],
-  StockNum: [{ required: true, message: '请填写商品库存', trigger: 'blur' }],
-  Sort: [{ required: true, message: '请填写排序', trigger: 'blur' }],
-  IsShelfed: [{ required: true, message: '请选择是否上架', trigger: 'blur' }],
-})
-//新增 / 编辑
-const handleAddedOrUpdate = (e?:any) => {
-  showDialog.value = true
-  title.value = e?.Id ? '编辑' : '新增'
-  if (e?.Id) {
-    Object.entries(e).forEach(([key, value]) => {
-      form[key] = value
-    })
-    console.log('Id => ', form)
-  }
-}
-//获取分组
-const formOptions = reactive<{
-  groups: BuyGroup[]
-  tags: Brand[]
-  brands: Brand[]
-  openGroups: OpenGroup[]
-}>({
-  groups: [],
-  tags: [],
-  brands: [],
-  openGroups: [],
-})
-onBeforeMount(async () => {
-  const [{ Data: groups }, { Data: tags }, { Data: brands }, { Data: openGroups }] =
-    await Promise.all([
-      reqBuyGroupList({ PageIndex: 1, PageSize: 99999 }),
-      reqProductTagList({ PageIndex: 1, PageSize: 99999 }),
-      reqProductBrandList({ PageIndex: 1, PageSize: 99999 }),
-      reqOpenGroupList({ PageIndex: 1, PageSize: 99999 }),
-    ])
-  formOptions.groups = groups.Data
-  formOptions.tags = tags.Data
-  formOptions.brands = brands.Data
-  formOptions.openGroups = openGroups.Data
-})
 const handleCancle = () => {
-  formRef.value.resetFields()
-  form.Id = undefined
-  showDialog.value = false
-  console.log('form => ', form)
+  Id.value = undefined
+  Object.entries(formData).forEach(([key]) => {
+    if (key !== 'Sort') {
+      formData[key].value = ''
+    }
+  })
+  dialogShow.value = false
 }
-const handleSubmit = async () => {
-  await reqPostProduct({...form})
+const handleSubmit = async (query:any, Id:any) => {
+  await reqPostProduct({...query, Id})
   childRef.value.handleReqTableList([1,10])
-  showDialog.value = false
+  dialogShow.value = false
   ElMessage.success('操作成功')
 }
+const formData = reactive<any>({
+  Name: {
+    label: '名称',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品名称',
+    },
+    rules: [{ required: true, message: '请填写商品名称', trigger: 'blur' }],
+  },
+  ProductNo: {
+    label: '编号',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品编号',
+    },
+  },
+  BrandName: {
+    label: '品牌',
+    value: '',
+    options: {},
+    labelKey: 'Name',
+    valueKey: 'Name',
+    is: 'form-select',
+    props: {
+      placeholder: '请选择品牌',
+    },
+  },
+  SubTitle: {
+    label: '小标题',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品小标题',
+    },
+    rules: [{ required: true, message: '请填写商品小标题', trigger: 'blur' }],
+  },
+  ProductModelImageUrl: {
+    label: '模板图片(750 * 600)',
+    value: '',
+    is: 'form-image-upload',
+    props: {
+      imageType: ImageType.GOODS,
+    },
+    rules: [{ required: true, message: '请选择商品模板图片', trigger: 'blur' }],
+  },
+  ProductImageUrl: {
+    label: '主图预览',
+    value: '',
+    is: 'form-image-upload',
+    props: {
+      disabled: true,
+      imageType: ImageType.GOODS,
+    },
+  },
+  Specification: {
+    label: '规格说明',
+    value: '',
+    is: 'form-input',
+    props: {
+      maxlength: 20,
+      showWordLimit: true,
+      placeholder: '请填写规格说明',
+    },
+  },
+  OpenGroupId: {
+    label: '开团日期',
+    is: 'form-select',
+    value: '',
+    options: {},
+    labelKey: 'Name',
+    valueKey: 'Name',
+    props: {
+      filterable: true,
+      placeholder: '请选择开团日期',
+    },
+    rules: [{ required: true, message: '请选择开团日期', trigger: 'blur' }],
+  },
+  ProductBannerImageUrl: {
+    label: '商品轮播图(750 * 600)，最多上传10张',
+    value: [],
+    is: 'form-image-upload',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.ProductBannerImageUrl ? d.ProductBannerImageUrl.split(';') : []
+    },
+    props: {
+      max: 10,
+      imageType: ImageType.GOODS,
+    },
+  },
+  ProductBannerVideoUrl: {
+    label: '商品Banner视频',
+    value: '',
+    is: 'form-file-upload',
+    props: {
+      max: 1,
+      fileType: VideoType.GOODS,
+    },
+  },
+  VideoUrls: {
+    label: '团品实拍',
+    value: [],
+    is: 'form-file-upload',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
+    },
+    props: {
+      max: 5,
+      fileType: VideoType.GOODS,
+    },
+  },
+  BuyGroupName: {
+    label: '分组',
+    value: [],
+    is: 'form-select',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.BuyGroupName ? d.BuyGroupName.split(';') : []
+    },
+    options: {},
+    labelKey: 'Name',
+    valueKey: 'Name',
+    props: {
+      filterable: true,
+      multiple: true,
+      placeholder: '请选择商品分组',
+    },
+    rules: [{ required: true, message: '请选择商品分组', trigger: 'blur' }],
+  },
+  Tags: {
+    label: '标签',
+    value: [],
+    is: 'form-select',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      const v = d.Tags || ''
+      f.value = v ? v.split(';') : []
+    },
+    options: {},
+    labelKey: 'Name',
+    valueKey: 'Name',
+    props: {
+      filterable: true,
+      multiple: true,
+      multipleLimit: 4,
+    },
+  },
+  Unit: {
+    label: '单位',
+    value: '',
+    is: 'form-input',
+    props: {
+      placeholder: '请填写商品单位',
+    },
+    rules: [{ required: true, message: '请填写商品单位', trigger: 'blur' }],
+  },
+  Price1: {
+    label: '团购价1（默认RMB）',
+    value: '',
+    is: markRaw(PriceNumber),
+    getSource: () => {
+      return { way: 2, price: formData.Price2.value }
+    },
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写商品团购价',
+    },
+    rules: [{ required: true, message: '请填写商品团购价', trigger: 'blur' }],
+  },
+  Price2: {
+    label: '团购价2（新加坡币）',
+    value: '',
+    is: markRaw(PriceNumber),
+    getSource: () => {
+      return { way: 1, price: formData.Price1.value }
+    },
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写商品团购价',
+    },
+  },
+  RetailPrice: {
+    label: '分销商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写分销商差价',
+    },
+    rules: [{ required: true, message: '请填写分销商差价', trigger: 'blur' }],
+  },
+  SmallWholesalePrice: {
+    label: '小批发商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写小批发商差价',
+    },
+    rules: [{ required: true, message: '请填写小批发商差价', trigger: 'blur' }],
+  },
+  MiddleWholesalePrice: {
+    label: '中批发商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写中批发商差价',
+    },
+    rules: [{ required: true, message: '请填写中批发商差价', trigger: 'blur' }],
+  },
+  BigWholesalePrice: {
+    label: '大批发商差价',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写大批发商差价',
+    },
+    rules: [{ required: true, message: '请填写大批发商差价', trigger: 'blur' }],
+  },
+  PromotionCost: {
+    label: '推广费用',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 2,
+      placeholder: '请填写商品推广费用',
+    },
+    rules: [{ required: true, message: '请填写商品推广费用', trigger: 'blur' }],
+  },
+  StockNum: {
+    label: '库存',
+    value: null,
+    is: 'form-input-number',
+    props: {
+      min: 0,
+      precision: 0,
+      placeholder: '请填写商品库存',
+    },
+    rules: [{ required: true, message: '请填写商品库存', trigger: 'blur' }],
+  },
+  Sort: {
+    label: '排序',
+    value: 1,
+    is: 'form-input-number',
+    props: {
+      placeholder: '请填写排序',
+    },
+    rules: [{ required: true, message: '请填写排序', trigger: 'blur' }],
+  },
+  DescriptionInfo: {
+    label: '商品详情文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写商品详情文案',
+    },
+  },
+  Description: {
+    label: '商品详情(最多上传25张)',
+    value: [],
+    is: 'form-image-upload',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.Description ? d.Description.split(';') : []
+    },
+    props: {
+      max: 25,
+      imageType: ImageType.GOODS,
+    },
+  },
+  DescriptionAttri: {
+    label: '商品属性文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写商品属性文案',
+    },
+  },
+  CredentialInfo: {
+    label: '资质认证文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写商品详情文案',
+    },
+  },
+  Credential: {
+    label: '资质认证图片(最多上传5张)',
+    value: [],
+    is: 'form-image-upload',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.Credential ? d.Credential.split(';') : []
+    },
+    width: '100%',
+    props: {
+      max: 5,
+      imageType: ImageType.GOODS,
+    },
+  },
+  AfterSalesInfo: {
+    label: '关于售后文案',
+    value: '',
+    is: 'form-input',
+    width: '100%',
+    props: {
+      type: 'textarea',
+      placeholder: '请填写关于售后文案',
+    },
+  },
+  AfterSales: {
+    label: '关于售后图片(最多上传5张)',
+    value: [],
+    is: 'form-image-upload',
+    get: (v:any) => v.join(';'),
+    set: (d:any, f:any) => {
+      f.value = d.AfterSales ? d.AfterSales.split(';') : []
+    },
+    width: '100%',
+    props: {
+      max: 5,
+      imageType: ImageType.GOODS,
+    },
+  },
+  IsShelfed: {
+    is: 'form-radio',
+    value: '',
+    label: '是否上架',
+    options: [
+      { label: '是', value: true },
+      { label: '否', value: false },
+    ],
+    rules: [{ required: true, message: '请选择是否上架', trigger: 'blur' }],
+  },
+})
+
 </script>
 <style scoped lang="scss">
 @import '@/assets/sass/global.scss';
-.el-form {
-  display: flex;
-  flex-wrap: wrap;
-  .el-form-item {
-    display: block;
-    width: 45%;
-    margin-bottom: 20px;
-  }
-  .el-select {
-    width: 100%;
-  }
-  img {
-    display: block;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  }
-}
 .edit-group {
   .el-button {
     padding: 0;

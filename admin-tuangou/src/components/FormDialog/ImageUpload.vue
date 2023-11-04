@@ -1,7 +1,7 @@
 <template>
   <div class="image-content" >
     <label class="image-box">
-      <el-icon v-if="!base64Url" class="avatar-uploader-icon"><Plus /></el-icon>
+      <el-icon v-if="!base64Url"><Plus /></el-icon>
       <div class="image-choose">
         <img v-if="base64Url" :src="base64Url" />
       </div>
@@ -37,22 +37,25 @@ const handleUploadImage = async (event:any) => {
 
 <style scoped lang="scss">
 .image-content {
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
   .image-box {
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px dashed #119dc8;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
     input {
       width: 100%;
     }
     img {
       display: block;
-      width: 100%;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
     }
   }
 }

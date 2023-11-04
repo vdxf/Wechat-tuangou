@@ -1,12 +1,12 @@
 <template>
   <div class="upload-video">
-    <el-button type="primary" icon="upload" class="upload-btn">
+    <el-button type="primary" icon="upload" class="upload-btn" v-if="computeValue.length < props.max">
       上传文件
       <input type="file" @change="handleUpoadFiles">
     </el-button>
-    <ul>
+    <ul v-if="computeValue.length >= 1">
       <li v-for="(item, index) in computeValue" :key="index" class="files-item">
-        <a :href="item.Data" target="_blank">{{ item.Data }}</a>
+        <a :href="item" target="_blank">{{ item }}</a>
         <el-icon v-if="!disabled" @click="handleDelete(index)">
           <CircleCloseFilled />
         </el-icon>
@@ -21,8 +21,10 @@ import { FileUploadProps } from '@/utils/enums';
 import { isArray } from '@daysnap/utils';
 import { ElMessage } from 'element-plus';
 import { computed } from 'vue';
+// const props = defineProps
+
 const $emit = defineEmits(['update:modelValue'])
-const props = defineProps(FileUploadProps)
+const props = defineProps(FileUploadProps,'max')
 const computeValue:any = computed(() => {
   const { modelValue } = props
   return isArray(modelValue) ? modelValue : modelValue ? [modelValue] : []
@@ -52,7 +54,6 @@ const handleUpoadFiles = async (e:any) => {
   if (isArray(modelValue)) {
     value = [...modelValue, value]
   }
-  console.log('value => ', value)
   $emit('update:modelValue', value)
 }
 </script>
@@ -73,6 +74,7 @@ const handleUpoadFiles = async (e:any) => {
   align-items: center;
   margin-top: 4px;
   a {
+    width:100%;
     text-decoration: underline;
     color: #007bee;
     margin-right: 10px;

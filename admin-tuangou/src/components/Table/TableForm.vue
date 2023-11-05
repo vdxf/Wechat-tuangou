@@ -56,8 +56,6 @@ onBeforeMount(() => {
     show.value = false
   }
 })
-
-console.log('route => ', route.path)
 defineProps(['loading'])
 let form = reactive({
   Keywords: '',

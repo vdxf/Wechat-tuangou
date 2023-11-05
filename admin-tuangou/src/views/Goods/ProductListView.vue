@@ -9,7 +9,6 @@
         ref="multipleTableRef"
         :data="scope.data"
         style="width: 100%"
-        @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
         <el-table-column type="expand" width="48">
@@ -227,7 +226,6 @@
           <template #default="scope">
             <div class="edit-group">
               <el-button type="primary" link @click="handleAddedOrUpdate(scope.row)">编辑</el-button>
-              <el-button type="warning" link @click="handleCopy(scope.row)">复制</el-button>
               <el-button type="danger" link @click="handleDelete(scope.row)">删除</el-button>
             </div>
           </template>
@@ -392,10 +390,6 @@ const handleRequest = async ([PageIndex, PageSize]: any, query: any) => {
 //排序
 const handleSort =async (item: ProductModel, Sort:any) => {
   await reqPostProduct({...item, Sort})
-}
-//复制
-const handleCopy = (e:any) => {
-  dialogShow.value = true
 }
 //删除
 const handleDelete = (e:any) => {

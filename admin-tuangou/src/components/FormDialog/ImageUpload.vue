@@ -2,10 +2,18 @@
   <div class="image-content" >
     <label class="image-box">
       <el-icon v-if="!base64Url"><Plus /></el-icon>
-      <div class="image-choose">
-        <img v-if="base64Url" :src="base64Url" />
+      <div class="image-choose" v-else>
+        <el-image 
+          class="image-item"
+          :src="base64Url"
+          fit="cover"
+          :preview-src-list="imgUrl"
+          preview-teleported
+        >
+        </el-image>
+        <el-icon @click.prevent="handleClose"><Close /></el-icon>
       </div>
-      <input type="file" @change="handleUploadImage" style="opacity: 0;"/>
+      <input type="file" @change="handleUploadImage" style="opacity: 0;" :disabled="base64 !== ''"/>
     </label>
   </div>
 </template>
@@ -16,7 +24,8 @@ import { ImageType } from '@/utils/enums';
 import { ref } from 'vue';
 const $emit = defineEmits(['update:modelValue'])
 const base64Url = ref()
-const base64 = ref<string>()
+const base64 = ref<string>('')
+const imgUrl = ref<string>('')
 const handleUploadImage = async (event:any) => {
   const file = event.target.files[0]
   const reader = new FileReader()
@@ -28,10 +37,14 @@ const handleUploadImage = async (event:any) => {
       ImageType: ImageType.GOODS,
       Suffix: `.jpeg`, 
     })
-    const imgUrl = res.Data
-    $emit('update:modelValue', imgUrl)
+    imgUrl.value = res.Data
+    $emit('update:modelValue', imgUrl.value)
   }
   reader.readAsDataURL(file)
+}
+const handleClose = () => {
+  base64Url.value = ''
+  base64.value = ''
 }
 </script>
 
@@ -47,16 +60,33 @@ const handleUploadImage = async (event:any) => {
     justify-content: center;
     align-items: center;
     border: 1px dashed #ccc;
-    border-radius: 10px;
+    border-radius: 5px;
     input {
       width: 100%;
     }
-    img {
+    .image-item {
       display: block;
       width: 100px;
       height: 100px;
       object-fit: cover;
     }
+  }
+}
+.image-choose {
+  display: flex;
+  position: relative;
+  i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border: 2px solid #ff1010;
+    border-radius: 50%;
+    color: #ff1010;
+    margin-top: -6px;
+    margin-right: -6px;
   }
 }
 </style>

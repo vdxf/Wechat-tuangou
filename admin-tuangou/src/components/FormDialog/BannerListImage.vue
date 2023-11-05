@@ -6,9 +6,13 @@
     :http-request="handleUpload"
     :on-exceed="handleExceed"
     :on-remove="handleRemove"
+    :on-preview="handPreview"
   >
     <el-icon><Plus /></el-icon>
   </el-upload>
+  <el-dialog v-model="dialogVisible">
+    <img style="width: 100%; height: 100%;" w-full :src="base64Url" alt="Preview Image" />
+  </el-dialog>
  </div>
 </template>
 <script setup lang="ts">
@@ -16,12 +20,16 @@ import { reqUploadImage } from '@/api/product';
 import { ImageType } from '@/utils/enums';
 import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
+const dialogVisible = ref<boolean>(false)
 
 const handleExceed = () => {
   ElMessage({
     type: 'error',
     message: `图片最多只能上传${props.max}张`
   })
+}
+const handPreview = () => {
+  dialogVisible.value = true
 }
 //图片上传
 const base64Url = ref()
@@ -61,4 +69,11 @@ const handleRemove = (e:any) => {
     object-fit: cover;
   }
 }
+:deep(.el-dialog) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
 </style>

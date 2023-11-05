@@ -1,6 +1,7 @@
 import router from '@/router'
 import useUserStore from '@/stores/modules/user'
 import axios, { type AxiosRequestConfig } from 'axios'
+import { ElMessage } from 'element-plus'
 const ajax = axios.create({
   baseURL: '/api/admin',
   timeout: 10000
@@ -22,18 +23,27 @@ ajax.interceptors.response.use(
     const { data: respData, config } = response
     console.log(config, '请求结果 => ', respData)
     if (!respData) {
-      return Promise.reject(`网络繁忙，请稍后再试(1)`)
+      return ElMessage({
+        message: '网络繁忙，请稍后再试(1)',
+        type: 'warning',
+      })
     }
-    const { Status, Message } = respData
+    const { Status } = respData
     if ([201].includes(Status)) {
       const userInfo = useUserStore()
       userInfo.AccessToken = ''
       localStorage.removeItem('AccessToken')
       router.replace('/login')
-      return Promise.reject(`登录已失效，请重新登录`)
+      return ElMessage({
+        message: '登录已失效，请重新登录',
+        type: 'warning',
+      })
     }
     if (Status !== 0) {
-      return Promise.reject(Message || `网络繁忙，请稍后再试(2)`)
+      return ElMessage({
+        message: '网络繁忙，请稍后再试(2)',
+        type: 'warning',
+      })
     }
     return respData
   },
@@ -51,7 +61,10 @@ ajax.interceptors.response.use(
     } else {
       error = `网络繁忙，请稍后再试(4)`
     }
-    return Promise.reject(error)
+    return ElMessage({
+      message: error,
+      type: 'warning',
+    })
   }
 )
 

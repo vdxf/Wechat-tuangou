@@ -486,7 +486,6 @@ const handleAddedOrUpdate = (e?:any) => {
     Object.entries(e).forEach(([key, value]) => {
       form[key] = value
     })
-    console.log('Id => ', form)
   }
 }
 //获取分组

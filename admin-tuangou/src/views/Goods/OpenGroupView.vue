@@ -49,7 +49,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 const childRef = ref()
 const title = ref<string>('')
 const Id = ref<number>()
-const handleRequest = async ([PageIndex, PageSize], query) => {
+const handleRequest = async ([PageIndex, PageSize]:any, query:any) => {
  const { Data:res } = await reqOpenGroupList({PageIndex, PageSize, ...query})
  childRef.value.setData([res.Data, res.Count])
 }
@@ -135,16 +135,6 @@ const formData = reactive<any>({
       return [`${min} 10:00:00`, `${max} 10:00:00`]
     })(),
     is: 'form-date-picker',
-    get: (v) => {
-      const [GroupDate, GroupEndDate] = v
-      return { GroupDate, GroupEndDate }
-    },
-    set: (d, f) => {
-      const { GroupDate, GroupEndDate } = d
-      if (GroupDate && GroupEndDate) {
-        f.value = [GroupDate, GroupEndDate]
-      }
-    },
     props: {
       type: 'datetimerange',
       startPlaceholder: '开始时间',

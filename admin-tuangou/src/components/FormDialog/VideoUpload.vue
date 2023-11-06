@@ -21,10 +21,9 @@ import { FileUploadProps } from '@/utils/enums';
 import { isArray } from '@daysnap/utils';
 import { ElMessage } from 'element-plus';
 import { computed } from 'vue';
-// const props = defineProps
 
 const $emit = defineEmits(['update:modelValue'])
-const props = defineProps(FileUploadProps,'max')
+const props = defineProps(FileUploadProps)
 const computeValue:any = computed(() => {
   const { modelValue } = props
   return isArray(modelValue) ? modelValue : modelValue ? [modelValue] : []

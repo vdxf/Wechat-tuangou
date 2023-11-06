@@ -47,8 +47,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 const childRef = ref()
 const title = ref<string>('')
 const Id = ref<number>()
-const data = ref()
-const handleRequest = async ([PageIndex, PageSize], query) => {
+const handleRequest = async ([PageIndex, PageSize]:any, query:any) => {
  const { Data:res } = await reqProductTagList({PageIndex, PageSize, ...query})
  childRef.value.setData([res.Data, res.Count])
 }

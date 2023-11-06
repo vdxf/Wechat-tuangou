@@ -374,12 +374,10 @@ import BannerImage from '@/components/FormDialog/BannerListImage.vue'
 import VideoUpload from '@/components/FormDialog/VideoUpload.vue'
 import Price from '@/components/component/PriceNumber.vue'
 import type { Brand, BuyGroup, OpenGroup, ProductModel } from '@/api/product/type'
-import { ImageType, VideoType } from '@/utils/enums'
 import Table from '@/components/Table/TableView.vue'
-import { Plus, Edit } from '@element-plus/icons-vue'
-import { markRaw, onBeforeMount, reactive, ref, watch } from 'vue';
+import { Plus } from '@element-plus/icons-vue'
+import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import PriceNumber from '@/components/component/PriceNumber.vue'
 import { reqProductList, reqPostProduct, reqOpenGroupList,reqBuyGroupList, reqProductBrandList, reqProductTagList, reqDeleteProductInfo } from '@/api/product'
 const childRef = ref()
 const formRef = ref()
@@ -431,21 +429,21 @@ const form = reactive({
   ProductModelImageUrl: '',
   ProductImageUrl: '',
   Specification: '',
-  OpenGroupId: '',
+  OpenGroupId: 0,
   ProductBannerImageUrl: '',
   ProductBannerVideoUrl: '',
   VideoUrls: '',
   BuyGroupName: '',
   Tags: '',
   Unit: '',
-  Price1: '',
-  Price2: '',
-  RetailPrice: '',
-  SmallWholesalePrice: '',
-  MiddleWholesalePrice: '',
-  BigWholesalePrice: '',
-  PromotionCost: '',
-  StockNum: '',
+  Price1: 0,
+  Price2: 0,
+  RetailPrice: 0,
+  SmallWholesalePrice: 0,
+  MiddleWholesalePrice: 0,
+  BigWholesalePrice: 0,
+  PromotionCost: 0,
+  StockNum: 0,
   Sort: 1,
   DescriptionInfo: '',
   Description: '',
@@ -458,7 +456,7 @@ const form = reactive({
 })
 watch(
   () => [form.ProductModelImageUrl, video.value, buygroups.value, tag.value],
-  (nv) => { form.ProductImageUrl = nv[0]; form.VideoUrls = nv[1].join(';'); form.BuyGroupName = nv[2].join(';'); form.Tags = nv[3].join(';') },
+  (nv):any => { form.ProductImageUrl = nv[0] as string; form.VideoUrls = Array.prototype.join.call(nv[1], ';'); form.BuyGroupName = Array.prototype.join.call(nv[2], ';'); form.Tags = Array.prototype.join.call(nv[3], ';') },
   {
     immediate:true
   }

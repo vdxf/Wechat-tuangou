@@ -2,7 +2,7 @@ export const firstRoute = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/LoginView/index.vue'),
+    component: () => import('@/views/LoginView/LoginView.vue'),
     meta: {
       title: '登录',
       hidden: true
@@ -12,12 +12,12 @@ export const firstRoute = [
     path: '/',
     redirect: '/home',
     name: 'layout',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/LayoutView.vue'),
     meta: {},
     children: [
       {
         path: '/home',
-        component: () => import('@/views/HomeView/index.vue'),
+        component: () => import('@/views/HomeView/HomeView.vue'),
         meta: {
           title: '主页',
           icon: 'Odometer'
@@ -29,7 +29,7 @@ export const firstRoute = [
     path: '/goods',
     name: 'goods',
     redirect: '/goods/productList',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/LayoutView.vue'),
     meta: {
       title: '商品管理',
       icon: 'Goods'
@@ -74,12 +74,12 @@ export const firstRoute = [
   },
   {
     path: '/banner',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/LayoutView.vue'),
     meta: {},
     children: [
       {
         path: '/banner',
-        component: () => import('@/views/BannerView/index.vue'),
+        component: () => import('@/views/BannerView/BannerView.vue'),
         meta: {
           title: 'Banner管理',
           icon: 'Monitor'
@@ -90,7 +90,7 @@ export const firstRoute = [
   {
     path: '/data',
     redirect: '/data/share',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/LayoutView.vue'),
     meta: {
       title: '数据中心',
       icon: 'DataAnalysis'
@@ -115,7 +115,7 @@ export const firstRoute = [
   {
     path: '/:pathMatch(.*)*',
     name: '404',
-    component: () => import('@/views/NotFount/index.vue'),
+    component: () => import('@/views/NotFount/NotFountView.vue'),
     meta: {
       title: '404',
       hidden: true

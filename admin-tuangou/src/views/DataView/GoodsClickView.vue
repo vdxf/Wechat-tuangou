@@ -58,7 +58,7 @@ import Table from '@/components/Table/TableView.vue'
 import { ref } from 'vue';
 
 const childRef = ref()
-const handleRequest = async ([PageIndex, PageSize], query) => {
+const handleRequest = async ([PageIndex, PageSize]:any, query:any) => {
  const { Data:res } = await reqClickList({PageIndex, PageSize, ...query})
  childRef.value.setData([res.Data, res.Count])
 }

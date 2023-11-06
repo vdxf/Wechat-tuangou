@@ -1,4 +1,5 @@
 export interface UserState {
-  token: string | null;
+  AccessToken: string | null;
+  Id: string | null;
   menuRoutes: []
 }

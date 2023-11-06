@@ -28,15 +28,14 @@
           </el-icon>
           <span>{{ item.meta.title }}</span>
         </template>
-        <Menu :menuList="item.children"></Menu>
+        <MenuView :menuList="item.children"></MenuView>
       </el-sub-menu>
     </template>
   </template>
 </template>
-
 <script lang="ts">
 export default {
-  name: 'Menu'
+  name: 'MenuView'
 }
 </script>
 <script lang="ts" setup>

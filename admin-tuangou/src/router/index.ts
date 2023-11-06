@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { firstRoute } from './firstRoute'
 
+//@ts-ignore
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 Nprogress.configure({ showSpinner: false })
@@ -39,7 +40,7 @@ router.beforeEach((to: any, from: any, next: any) => {
   Nprogress.start()
 })
 
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   Nprogress.done()
   window.document.title = `${to.meta.title}` || '新友团'
 })

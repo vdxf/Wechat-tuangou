@@ -71,7 +71,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 const childRef = ref()
 const title = ref<string>('')
 const Id = ref<number>()
-const handleRequest = async ([PageIndex, PageSize], query) => {
+const handleRequest = async ([PageIndex, PageSize]:any, query:any) => {
  const { Data:res } = await reqBannerList({PageIndex, PageSize, ...query})
  childRef.value.setData([res.Data, res.Count])
 }
@@ -160,9 +160,6 @@ const formData = reactive<any>({
     label: '小程序AppId',
     value: '',
     is: 'form-input',
-    hidden: (_, __, metadata:any) => {
-      return metadata.BannerType.value !== BannerType.MINI
-    },
     props: {
       placeholder: '请填写小程序AppId',
     },

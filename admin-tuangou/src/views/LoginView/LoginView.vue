@@ -56,7 +56,7 @@ const handleLogin = async () => {
     loading.value = false
     ElMessage({
       type: 'warning',
-      message: error
+      message: error as any
     })
   }
 }

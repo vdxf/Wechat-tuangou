@@ -8,7 +8,7 @@ const useUserStore = defineStore('User', {
     return {
       AccessToken: localStorage.getItem("AccessToken"),
       Id: localStorage.getItem("Id"),
-      menuRoutes: firstRoute
+      menuRoutes: firstRoute as any
     }
   },
   actions: {
@@ -18,7 +18,7 @@ const useUserStore = defineStore('User', {
         localStorage.setItem("AccessToken", res.Data.AccessToken)
         localStorage.setItem("Id", res.Id)
         this.AccessToken = res.Data.AccessToken
-        this.Id = res.Data.Id
+        this.Id = res.Id
       } else {
         return Promise.reject(new Error(res.Message))
       }

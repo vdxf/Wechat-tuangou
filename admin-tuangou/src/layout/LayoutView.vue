@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import Logo from './logo/index.vue'
-import Menu from './menu/index.vue'
-import Tabbar from './tabbar/index.vue'
+import Logo from './logo/logoView.vue'
+import Menu from './menu/MenuView.vue'
+import Tabbar from './tabbar/TabbarView.vue'
 import useTabbarStore from '@/stores/modules/tabbar'
 const LayoutSetting = useTabbarStore() 
 
